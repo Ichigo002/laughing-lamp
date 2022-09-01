@@ -4,12 +4,13 @@
 HexMap::HexMap(SDL_Renderer* r, int seed)
 {
     this->r = r;
+    lastHeightHex = 0;
 
-    createEmptyMap(500, 200);
+    createEmptyMap(200, 100);
 
     generateNoiseMap(seed);
 
-    loadTileset("assets/tileset.png");
+    loadTileset("assets/tileset-3.png");
 }
 
 HexMap::~HexMap()
@@ -74,15 +75,23 @@ float HexMap::getMapValue(size_t row, size_t col)
 
 void HexMap::drawSingleHex(size_t out_col, size_t out_row, int input_col, int input_row)
 {
+    int x = out_col * HEX_WIDTH * MAP_SCALE;
+    int y = out_row * (HEX_HEIGHT * .75f) * MAP_SCALE;
+
+    if((out_row + 1) % 2 == 0)
+    {
+        x += HEX_WIDTH / 2 * MAP_SCALE;
+    }
+
+    destR.x = x;
+    destR.y = y;
+    destR.w = HEX_WIDTH * MAP_SCALE;
+    destR.h = HEX_HEIGHT * MAP_SCALE;
+
     srcR.x = input_col * HEX_WIDTH;
     srcR.y = input_row * HEX_HEIGHT;
     srcR.w = HEX_WIDTH;
     srcR.h = HEX_HEIGHT;
-
-    destR.x = out_col * HEX_WIDTH * MAP_SCALE;
-    destR.y = out_row * HEX_HEIGHT * MAP_SCALE;
-    destR.w = HEX_WIDTH * MAP_SCALE;
-    destR.h = HEX_HEIGHT * MAP_SCALE;
 
     SDL_RenderCopy(r, tileset, &srcR, &destR);
 }
@@ -141,16 +150,15 @@ void HexMap::drawRules(const float tmpV, int* src_row, int* src_col)
 {
     if(tmpV <= .3f)
     {
-        *src_row = 1;
+        *src_col = 1;
     }
     else if(tmpV > .7f)
     {
-        *src_col = 1;
+        *src_col = 0;
     } 
     else if(tmpV > .3f)
     {
-        *src_col = 1;
-        *src_row = 1;
+        *src_col = 2;
     }
     // etc conditions
 }

@@ -7,9 +7,9 @@
 #ifndef HEXMAP_H
 #define HEXMAP_H
 
-#define HEX_WIDTH 32
+#define HEX_WIDTH 28
 #define HEX_HEIGHT 32
-#define MAP_SCALE 0.125f
+#define MAP_SCALE 1
 #define MAP_NOISE 10
 
 class HexMap
@@ -35,6 +35,7 @@ private:
     SDL_Rect srcR, destR;
 
     float **map = nullptr;
+    int lastHeightHex;
     size_t mapWidth;
     size_t mapHeight;
 };
