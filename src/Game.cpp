@@ -1,5 +1,8 @@
 #include "Game.h"
 #include <iostream>
+#include "Vector2Int.h"
+
+SDL_Texture* tex;
 
 Game::Game()
 {
@@ -12,18 +15,25 @@ Game::Game()
     {
         Uint32 flags = SDL_WINDOW_SHOWN;
 
-        window = SDL_CreateWindow("Hello", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, flags);
+        window = SDL_CreateWindow("Laughing Lamp", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, flags);
         renderer = SDL_CreateRenderer(window, -1, 0);
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
         //FPS
         FPS = 60;
         frame_delay = 1000 / FPS;
 
+        SDL_Surface* sur = IMG_Load("src/player.png");
+        tex = SDL_CreateTextureFromSurface(renderer, sur);
+        SDL_FreeSurface(sur);
+        destRect.x = 10;
+        destRect.y = 10;
+        destRect.w = 32;
+        destRect.h = 32;
+
         running = true;
     }
-
 }
 
 Game::~Game()
@@ -76,8 +86,10 @@ void Game::handleEvents()
 void Game::render()
 {
     SDL_RenderClear(renderer);
-
     //Draw
+
+    SDL_RenderCopy(renderer, tex, NULL, &destRect);
+
 
     SDL_RenderPresent(renderer);
 }

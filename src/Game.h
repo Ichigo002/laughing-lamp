@@ -1,5 +1,6 @@
 #pragma once
 #include "../include/sdl/SDL.h"
+#include "../include/sdl/SDL_Image.h"
 
 class Game
 {
@@ -17,6 +18,9 @@ private:
     SDL_Renderer* renderer;
     SDL_Event event;
     bool running;
+
+    SDL_Texture* tex;
+    SDL_Rect srcRect, destRect;
 
     int FPS;
     int frame_delay;
