@@ -1,6 +1,10 @@
 #pragma once
 #include "../include/sdl/SDL.h"
 #include "../include/sdl/SDL_Image.h"
+#include "TextureManager.h"
+#include "Vector2Int.h"
+#include "HexMap.h"
+#include <cstdlib>
 
 class Game
 {
@@ -14,6 +18,7 @@ public:
     void render();
 
 private:
+    HexMap* map;
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Event event;
