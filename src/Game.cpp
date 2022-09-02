@@ -13,8 +13,10 @@ Game::Game()
     else
     {
         Uint32 flags = SDL_WINDOW_SHOWN;
+        flags += SDL_WINDOW_RESIZABLE;
+        flags += SDL_WINDOW_FULLSCREEN;
 
-        window = SDL_CreateWindow("Laughing Lamp", 2000, SDL_WINDOWPOS_CENTERED, 800, 600, flags);
+        window = SDL_CreateWindow("Laughing Lamp", 2000, SDL_WINDOWPOS_CENTERED, 1920, 1080, flags);
         renderer = SDL_CreateRenderer(window, -1, 0);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -36,7 +38,7 @@ Game::Game()
         // std::cin >> seed;
 
 
-        map = new HexMap(renderer, seed);
+        map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
 
         running = true;
     }

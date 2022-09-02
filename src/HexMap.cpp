@@ -1,26 +1,19 @@
 #include "HexMap.h"
 #include <iostream>
 
-HexMap::HexMap(SDL_Renderer* r, int seed)
+HexMap::HexMap(SDL_Renderer* r, int seed, const char* filename, size_t w, size_t h, Vector2Int offsetxy)
 {
     this->r = r;
-    lastHeightHex = 0;
 
-    createEmptyMap(200, 100);
-
-    generateNoiseMap(seed);
-
-    loadTileset("assets/tileset-3.png");
+    reinit(seed, filename, w, h, offsetxy);
 }
 
 HexMap::~HexMap()
 {
-    for (size_t i = 0; i < mapHeight; i++)
-    {
-        delete [] map[i];
-    }
-    delete [] map;
+    destroyMap();
 }
+
+
 
 void HexMap::draw()
 {
@@ -31,7 +24,7 @@ void HexMap::draw()
         {
             srcRow = 0;
             srcCol = 0;
-            drawRules(map[y][x], &srcRow, &srcCol);
+            drawRules(&map[y][x], &srcRow, &srcCol);
             drawSingleHex(x, y, srcCol, srcRow);
         }
         
@@ -39,7 +32,19 @@ void HexMap::draw()
     
 }
 
-void HexMap::editMapValue(size_t row, size_t col, const float v)
+void HexMap::reinit(int seed, const char* tileset_file, size_t w, size_t h, Vector2Int offset)
+{
+    srand(seed);
+    this->offset = offset;
+
+    destroyMap();
+    createEmptyMap(w, h);
+    generateNoiseMap(seed);
+    loadTileset(tileset_file);
+
+}
+
+void HexMap::editMapValue(size_t row, size_t col, float v)
 {
     if(row < mapHeight && col < mapWidth)
     {
@@ -83,8 +88,8 @@ void HexMap::drawSingleHex(size_t out_col, size_t out_row, int input_col, int in
         x += HEX_WIDTH / 2 * MAP_SCALE;
     }
 
-    destR.x = x;
-    destR.y = y;
+    destR.x = x + offset.x;
+    destR.y = y + offset.y;
     destR.w = HEX_WIDTH * MAP_SCALE;
     destR.h = HEX_HEIGHT * MAP_SCALE;
 
@@ -99,6 +104,21 @@ void HexMap::drawSingleHex(size_t out_col, size_t out_row, int input_col, int in
 void HexMap::loadTileset(const char* filename)
 {
     tileset = TextureManager::load(r, filename);
+}
+
+void HexMap::destroyMap()
+{
+    if(map == nullptr)
+    {
+        return;
+    }
+
+    for (size_t i = 0; i < mapHeight; i++)
+    {
+        delete [] map[i];
+    }
+    delete [] map;
+    map = nullptr;
 }
 
 void HexMap::createEmptyMap(size_t x, size_t y)
@@ -120,7 +140,7 @@ void HexMap::createEmptyMap(size_t x, size_t y)
     }
 }
 
-void HexMap::generateNoiseMap(const int seed)
+void HexMap::generateNoiseMap(int seed)
 {
     if(map == nullptr)
     {
@@ -146,19 +166,48 @@ void HexMap::generateNoiseMap(const int seed)
 
 // src_row, src_col - tiles in the tilest.png file
 // rules for value from noise map
-void HexMap::drawRules(const float tmpV, int* src_row, int* src_col)
+void HexMap::drawRules(const float* v, int* src_row, int* src_col)
 {
-    if(tmpV <= .3f)
+    
+    /* Water */
+    if(*v < .3f)
+    {
+        *src_col = 5;
+    }
+    /* Sand */
+    else if(*v < .42f)
+    {
+        *src_col = 3;
+    }
+    /* Grass Transition */
+    else if(*v < .46f)
     {
         *src_col = 1;
+        *src_row = 3;
     }
-    else if(tmpV > .7f)
+    /* Grass Std */
+    else if(*v < .7f)
     {
-        *src_col = 0;
-    } 
-    else if(tmpV > .3f)
+        *src_col = 1;
+        *src_row = 0;
+    }
+    /* Dirt before Mountain */
+    else if (*v <= .78f)
     {
         *src_col = 2;
+        *src_row = 0;
+    }
+    /* Stone */
+    else if (*v <= 1.0f)
+    {
+        *src_col = 4;
+        *src_row = 1;
     }
     // etc conditions
+}
+
+void HexMap::getRandSrcRow(int* src_row, int* src_col, int dest_col, int leng)
+{
+    *src_col = dest_col;
+    *src_row = rand() % leng;
 }
