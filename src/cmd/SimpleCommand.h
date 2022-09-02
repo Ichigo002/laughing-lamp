@@ -6,13 +6,15 @@
 class SimpleCommand
 {
 public:
-    SimpleCommand();
-    virtual ~SimpleCommand();
+    SimpleCommand() { }
+    virtual ~SimpleCommand() { }
 
-    std::string overloads = "";
-    std::string description = "";
+    std::string* overloads;
+    size_t overl_count;
+    std::string description;
+    std::string command_name;
 
-    virtual int process(std::string argv[], int argc);
+    virtual int process(const std::string argv[], int argc) { return -1; }
 };
 
 #endif

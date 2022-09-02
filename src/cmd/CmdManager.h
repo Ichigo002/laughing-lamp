@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <iterator>
 #include <string>
 
 #include "SimpleCommand.h"
@@ -23,13 +24,14 @@ public:
     void start();
     void end();
 
+    bool isLoopMode;
 private:
     void initCmds();
-    void addCommand(SimpleCommand cmd);
     void errorHandler(int code);
+    void printHelp();
+    void printCmdHelp(SimpleCommand* cmd);
 
-    bool isLoopMode;
-    std::vector<SimpleCommand> vec_cmd;
+    std::vector<SimpleCommand*> vec_cmd;
 };
 
 #endif

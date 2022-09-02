@@ -1,8 +1,6 @@
 #include "Game.h"
 #include <iostream>
 
-SDL_Texture* tex;
-
 Game::Game()
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -109,8 +107,6 @@ void Game::render()
     //Draw
 
     map->draw();
-    SDL_RenderCopy(renderer, tex, NULL, &destRect);
-
 
     SDL_RenderPresent(renderer);
 }

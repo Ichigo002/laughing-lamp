@@ -1,4 +1,3 @@
-#pragma once
 #include "../include/sdl/SDL.h"
 #include "../include/sdl/SDL_Image.h"
 #include "TextureManager.h"
@@ -6,6 +5,9 @@
 #include "HexMap.h"
 #include "cmd/CmdManager.h"
 #include <cstdlib>
+
+#ifndef GAME_H
+#define GAME_H
 
 class Game
 {
@@ -18,6 +20,10 @@ public:
     void update();
     void render();
 
+    HexMap* getHexMap() { return map; }
+    CmdManager* getCmdManager() { return cmdManager; }
+    void setRunning(bool i) { running = i; }
+    void setFPS(int fps) { FPS = fps; }
 private:
     HexMap* map;
     CmdManager* cmdManager;
@@ -35,3 +41,5 @@ private:
     int frame_time;
 
 };
+
+#endif
