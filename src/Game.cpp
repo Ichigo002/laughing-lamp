@@ -14,7 +14,7 @@ Game::Game()
     {
         Uint32 flags = SDL_WINDOW_SHOWN;
         flags += SDL_WINDOW_RESIZABLE;
-        flags += SDL_WINDOW_FULLSCREEN;
+        // flags += SDL_WINDOW_FULLSCREEN;
 
         window = SDL_CreateWindow("Laughing Lamp", 2000, SDL_WINDOWPOS_CENTERED, 1920, 1080, flags);
         renderer = SDL_CreateRenderer(window, -1, 0);
@@ -39,6 +39,7 @@ Game::Game()
 
 
         map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
+        cmdManager = new CmdManager();
 
         running = true;
     }
@@ -85,6 +86,17 @@ void Game::handleEvents()
     {
     case SDL_QUIT:
         running = false;
+        break;
+    case SDL_KEYDOWN:
+        switch (event.key.keysym.sym)
+        {
+        case SDLK_BACKQUOTE:
+            cmdManager->start();
+            break;
+        
+        default:
+            break;
+        }
         break;
     default:
         break;

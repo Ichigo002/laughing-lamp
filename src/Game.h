@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 #include "Vector2Int.h"
 #include "HexMap.h"
+#include "cmd/CmdManager.h"
 #include <cstdlib>
 
 class Game
@@ -19,6 +20,7 @@ public:
 
 private:
     HexMap* map;
+    CmdManager* cmdManager;
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Event event;

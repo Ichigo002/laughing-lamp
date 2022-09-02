@@ -168,7 +168,6 @@ void HexMap::generateNoiseMap(int seed)
 // rules for value from noise map
 void HexMap::drawRules(const float* v, int* src_row, int* src_col)
 {
-    
     /* Water */
     if(*v < .3f)
     {
