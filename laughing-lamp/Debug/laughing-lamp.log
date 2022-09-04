@@ -1,0 +1,24 @@
+﻿  Game.cpp
+D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Game.cpp(36,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  CmdManager.cpp
+  main.cpp
+  Generating Code...
+Game.obj : error LNK2019: unresolved external symbol _SDL_CreateWindow referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_DestroyWindow referenced in function "public: __thiscall Game::~Game(void)" (??1Game@@QAE@XZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_PollEvent referenced in function "public: void __thiscall Game::handleEvents(void)" (?handleEvents@Game@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_CreateRenderer referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_CreateTextureFromSurface referenced in function "public: static struct SDL_Texture * __cdecl TextureManager::load(struct SDL_Renderer *,char const *)" (?load@TextureManager@@SAPAUSDL_Texture@@PAUSDL_Renderer@@PBD@Z)
+HexMap.obj : error LNK2001: unresolved external symbol _SDL_CreateTextureFromSurface
+Game.obj : error LNK2019: unresolved external symbol _SDL_SetRenderDrawColor referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_RenderClear referenced in function "public: void __thiscall Game::render(void)" (?render@Game@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_RenderPresent referenced in function "public: void __thiscall Game::render(void)" (?render@Game@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_DestroyRenderer referenced in function "public: __thiscall Game::~Game(void)" (??1Game@@QAE@XZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_GetTicks referenced in function "public: void __thiscall Game::run(void)" (?run@Game@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_Delay referenced in function "public: void __thiscall Game::run(void)" (?run@Game@@QAEXXZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_Init referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+Game.obj : error LNK2019: unresolved external symbol _SDL_Quit referenced in function "public: __thiscall Game::~Game(void)" (??1Game@@QAE@XZ)
+Game.obj : error LNK2019: unresolved external symbol _IMG_Load referenced in function "public: static struct SDL_Texture * __cdecl TextureManager::load(struct SDL_Renderer *,char const *)" (?load@TextureManager@@SAPAUSDL_Texture@@PAUSDL_Renderer@@PBD@Z)
+HexMap.obj : error LNK2001: unresolved external symbol _IMG_Load
+HexMap.obj : error LNK2019: unresolved external symbol _SDL_RenderCopy referenced in function "private: void __thiscall HexMap::drawSingleHex(unsigned int,unsigned int,int,int)" (?drawSingleHex@HexMap@@AAEXIIHH@Z)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+D:\Documents\GitHub\laughing-lamp\laughing-lamp\Debug\laughing-lamp.exe : fatal error LNK1120: 16 unresolved externals
