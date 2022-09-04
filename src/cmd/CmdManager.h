@@ -24,7 +24,7 @@ public:
     void start();
     void end();
 
-    bool isLoopMode;
+    int t;
 private:
     void initCmds();
     void errorHandler(int code);

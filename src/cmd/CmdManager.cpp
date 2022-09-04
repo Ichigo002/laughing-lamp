@@ -1,11 +1,11 @@
 #include "CmdManager.h"
+#include "../Utilities.h"
 
 #include "LoopModeCommand.h"
-#include "../Utilities.h"
 
 CmdManager::CmdManager()
 {
-    isLoopMode = false;
+   // isLoopMode = false;
     initCmds();
 }
 
@@ -113,7 +113,7 @@ void CmdManager::start()
 
     errorHandler(code);
 
-    if(isLoopMode) start(); else end();
+  //  if(isLoopMode) start(); else end();
 }
 
 void CmdManager::end()
@@ -151,5 +151,5 @@ void CmdManager::errorHandler(int code)
         break;
     }
 
-    std::cout << msg << std::endl;
+    std::clog << msg << std::endl;
 }

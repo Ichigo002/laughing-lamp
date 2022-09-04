@@ -1,8 +1,11 @@
 #include "Game.h"
+#include "TextureManager.h"
+#include "Vector2Int.h"
 #include <iostream>
 
 Game::Game()
 {
+    st_game = this;
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         std::cout << "SDL INIT EVERYTHING failed" << std::endl;

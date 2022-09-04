@@ -1,4 +1,4 @@
-#include "../Game.h"
+#include "SimpleCommand.h"
 
 class LoopModeCommand : public SimpleCommand
 {
@@ -18,8 +18,8 @@ public:
     {
         if(argc != 2)
             return CM_ERROR_INVALID_OVERLOAD;
-        
-        //game.getCmdManager()->isLoopMode = argv[1] == "true" || argv[1] == "1";
+
+        cmdManager->t = 4;
 
         return CM_SUCCESS;
     }

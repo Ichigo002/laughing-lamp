@@ -1,5 +1,7 @@
-#pragma once
 #include <iostream>
+
+#ifndef VECTOR2INT_H
+#define VECTOR2INT_H
 
 class Vector2Int
 {
@@ -18,3 +20,5 @@ public:
     int x;
     int y;
 };
+
+#endif

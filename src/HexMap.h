@@ -1,7 +1,5 @@
 #include "../include/sdl/SDL.h"
 #include "../include/sdl/SDL_Image.h"
-#include "TextureManager.h"
-#include "PerlinNoise.h"
 #include "Vector2Int.h"
 #include <cstdlib>
 

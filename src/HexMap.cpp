@@ -1,4 +1,6 @@
 #include "HexMap.h"
+#include "TextureManager.h"
+#include "PerlinNoise.h"
 #include <iostream>
 
 HexMap::HexMap(SDL_Renderer* r, int seed, const char* filename, size_t w, size_t h, Vector2Int offsetxy)

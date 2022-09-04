@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../Game.h"
 
 #ifndef SIMPLECOMMAND_H
 #define SIMPLECOMMAND_H
