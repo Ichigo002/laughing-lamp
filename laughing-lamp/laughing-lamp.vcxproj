@@ -147,7 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\cmd\CmdManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\HexMap.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -155,9 +154,6 @@
     <ClCompile Include="src\Vector2Int.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\cmd\CmdManager.h" />
-    <ClInclude Include="src\cmd\LoopModeCommand.h" />
-    <ClInclude Include="src\cmd\SimpleCommand.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\HexMap.h" />
     <ClInclude Include="src\PerlinNoise.h" />

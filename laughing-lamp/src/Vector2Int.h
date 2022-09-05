@@ -1,7 +1,7 @@
-#include <iostream>
-
 #ifndef VECTOR2INT_H
 #define VECTOR2INT_H
+
+#include <iostream>
 
 class Vector2Int
 {

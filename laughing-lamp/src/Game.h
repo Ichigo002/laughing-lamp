@@ -6,13 +6,13 @@
 
 #include <cstdlib>
 #include "HexMap.h"
-#include "cmd/CmdManager.h"
+//#include "CmdManager.h"
 
 class Game;
 
 static Game* st_game;
 static HexMap* map;
-static CmdManager* cmdManager;
+//static CmdManager* cmdManager;
 
 class Game
 {

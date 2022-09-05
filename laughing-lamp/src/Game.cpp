@@ -40,7 +40,7 @@ Game::Game()
 
 
         map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
-        cmdManager = new CmdManager();
+//        cmdManager = new CmdManager();
 
         running = true;
     }
@@ -92,7 +92,7 @@ void Game::handleEvents()
         switch (event.key.keysym.sym)
         {
         case SDLK_BACKQUOTE:
-            cmdManager->start();
+//            cmdManager->start();
             break;
         
         default:

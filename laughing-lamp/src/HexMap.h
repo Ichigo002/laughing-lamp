@@ -1,10 +1,10 @@
+#ifndef HEXMAP_H
+#define HEXMAP_H
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Vector2Int.h"
 #include <cstdlib>
-
-#ifndef HEXMAP_H
-#define HEXMAP_H
 
 #define HEX_WIDTH 28
 #define HEX_HEIGHT 32

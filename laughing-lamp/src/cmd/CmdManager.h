@@ -1,12 +1,12 @@
+#ifndef CMDMANAGER_H
+#define CMDMANAGER_H
+
 #include <iostream>
 #include <vector>
 #include <iterator>
 #include <string>
 
 #include "SimpleCommand.h"
-
-#ifndef CMDMANAGER_H
-#define CMDMANAGER_H
 
 #define CM_SUCCESS 0
 #define CM_ERROR_NOT_FOUND 1
