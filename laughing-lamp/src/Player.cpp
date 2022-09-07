@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "TextureManager.h"
+#include "KeyboardHandler.h"
 
 Player::Player(SDL_Renderer* r)
 	:GameObject(r)
@@ -38,43 +39,18 @@ void Player::update()
 
 void Player::events(SDL_Event* eve)
 {
-	if (eve->type == SDL_KEYDOWN)
-	{
-		switch (eve->key.keysym.sym)
-		{
-		case SDLK_w:
-			velocity.y = -1;
-			break;
-		case SDLK_s:
-			velocity.y = 1;
-			break;
-		case SDLK_a:
-			velocity.x = -1;
-			break;
-		case SDLK_d:
-			velocity.x = 1;
-			break;
-		}
-	}
+	if (KeyboardHandler::pressedKey(SDLK_w, eve)) { velocity.y = -1; }
+	if (KeyboardHandler::releasedKey(SDLK_w, eve)) { velocity.y = 0; }
 
-	if (eve->type == SDL_KEYUP)
-	{
-		switch (eve->key.keysym.sym)
-		{
-		case SDLK_w:
-			velocity.y = 0;
-			break;
-		case SDLK_s:
-			velocity.y = 0;
-			break;
-		case SDLK_a:
-			velocity.x = 0;
-			break;
-		case SDLK_d:
-			velocity.x = 0;
-			break;
-		}
-	}
+	if (KeyboardHandler::pressedKey(SDLK_s, eve)) { velocity.y = 1; }
+	if (KeyboardHandler::releasedKey(SDLK_s, eve)) { velocity.y = 0; }
+
+	if (KeyboardHandler::pressedKey(SDLK_a, eve)) { velocity.x = -1; }
+	if (KeyboardHandler::releasedKey(SDLK_a, eve)) { velocity.x = 0; }
+
+	if (KeyboardHandler::pressedKey(SDLK_d, eve)) { velocity.x = 1; }
+	if (KeyboardHandler::releasedKey(SDLK_d, eve)) { velocity.x = 0; }
+
 
 	destR.x += speed * velocity.x;
 	destR.y += speed * velocity.y;

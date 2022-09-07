@@ -1,6 +1,6 @@
 ﻿  Player.cpp
-D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Player.cpp(28,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Player.cpp(29,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Player.cpp(79,31): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Player.cpp(80,31): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Player.cpp(30,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Player.cpp(55,31): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Player.cpp(56,31): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
   laughing-lamp.vcxproj -> D:\Documents\GitHub\laughing-lamp\laughing-lamp\Debug\laughing-lamp.exe

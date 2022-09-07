@@ -158,6 +158,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\HexMap.h" />
+    <ClInclude Include="src\KeyboardHandler.h" />
     <ClInclude Include="src\PerlinNoise.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\TextureManager.h" />
