@@ -147,19 +147,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\HexMap.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PerlinNoise.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Vector2Int.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\HexMap.h" />
     <ClInclude Include="src\PerlinNoise.h" />
+    <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Utilities.h" />
     <ClInclude Include="src\Vector2Int.h" />

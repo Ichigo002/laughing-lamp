@@ -2,6 +2,10 @@
 #include "TextureManager.h"
 #include "Vector2Int.h"
 #include <iostream>
+#include "Player.h"
+#include "GameObject.h"
+
+GameObject* player;
 
 Game::Game()
 {
@@ -40,6 +44,8 @@ Game::Game()
 
 
         map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
+        player = new Player(renderer);
+        player->loadTexture();
 
         running = true;
     }
@@ -75,20 +81,22 @@ void Game::run()
 
 void Game::update()
 {
-
+    player->update();
 }
 
 void Game::handleEvents()
 {
-    SDL_PollEvent(&event);
+    SDL_PollEvent(&_event);
 
-    switch (event.type)
+    player->events(&_event);
+
+    switch (_event.type)
     {
     case SDL_QUIT:
         running = false;
         break;
     case SDL_KEYDOWN:
-        switch (event.key.keysym.sym)
+        switch (_event.key.keysym.sym)
         {
         case SDLK_BACKQUOTE:
 //            cmdManager->start();
@@ -109,6 +117,7 @@ void Game::render()
     //Draw
 
     map->draw();
+    player->draw();
 
     SDL_RenderPresent(renderer);
 }

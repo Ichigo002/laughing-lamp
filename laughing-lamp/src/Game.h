@@ -29,7 +29,7 @@ public:
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-    SDL_Event event;
+    SDL_Event _event;
     bool running;
 
     SDL_Texture* tex;
