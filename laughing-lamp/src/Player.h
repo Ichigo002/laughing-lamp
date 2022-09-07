@@ -18,6 +18,8 @@ public:
 	void draw() override;
 
 private:
+	void idleAnimation();
+
 	MotionAnimation* animation;
 	Vector2Int velocity;
 	Vector2Int pos;

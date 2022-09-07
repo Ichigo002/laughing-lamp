@@ -101,5 +101,5 @@ void MotionAnimation::setDefaultConstructor()
 	setDelays(100);
 	setStartRowAndCol(0, 0);
 	setVH(false);
-	start();
+	stop();
 }
