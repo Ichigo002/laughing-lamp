@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "Vector2Int.h"
+#include "MotionAnimation.h"
 #include <iostream>
 
 class Player : public GameObject
@@ -17,6 +18,7 @@ public:
 	void draw() override;
 
 private:
+	MotionAnimation* animation;
 	Vector2Int velocity;
 	Vector2Int pos;
 	float speed;

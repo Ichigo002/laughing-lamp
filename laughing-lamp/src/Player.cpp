@@ -11,6 +11,10 @@ Player::Player(SDL_Renderer* r)
 	speed = 3;
 
 	velocity.x = velocity.y = 0;
+	pos.x = 100;
+	pos.y = 100;
+
+	animation = new MotionAnimation(&srcR, 3, 200);
 }
 
 Player::~Player()
@@ -20,26 +24,27 @@ Player::~Player()
 
 void Player::loadTexture()
 {
-	tex = TextureManager::load(render, "assets/player.png");
-	srcR.w = 12;
-	srcR.h = 32;
+	tex = TextureManager::load(render, "assets/player-animation.png");
+	srcR.w = 41;
+	srcR.h = 55;
 	srcR.x = 0;
 	srcR.y = 0;
 
 	destR.w = srcR.w * renderingScale;
 	destR.h = srcR.h * renderingScale;
-	destR.x = 100;
-	destR.y = 150;
 }
 
 void Player::update()
 {
-	
+	animation->update();
+
+	destR.x = pos.x;
+	destR.y = pos.y;
 }
 
 void Player::events(SDL_Event* eve)
 {
-	if (KeyboardHandler::pressedKey(SDLK_w, eve)) { velocity.y = -1; }
+	if (KeyboardHandler::pressedKey(SDLK_w, eve)) { velocity.y = -1; animation->start(); }
 	if (KeyboardHandler::releasedKey(SDLK_w, eve)) { velocity.y = 0; }
 
 	if (KeyboardHandler::pressedKey(SDLK_s, eve)) { velocity.y = 1; }
@@ -52,8 +57,8 @@ void Player::events(SDL_Event* eve)
 	if (KeyboardHandler::releasedKey(SDLK_d, eve)) { velocity.x = 0; }
 
 
-	destR.x += speed * velocity.x;
-	destR.y += speed * velocity.y;
+	pos.x += speed * velocity.x;
+	pos.y += speed * velocity.y;
 }
 
 void Player::draw()

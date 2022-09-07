@@ -150,6 +150,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\HexMap.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MotionAnimation.cpp" />
     <ClCompile Include="src\PerlinNoise.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Vector2Int.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\HexMap.h" />
     <ClInclude Include="src\KeyboardHandler.h" />
+    <ClInclude Include="src\MotionAnimation.h" />
     <ClInclude Include="src\PerlinNoise.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\TextureManager.h" />
