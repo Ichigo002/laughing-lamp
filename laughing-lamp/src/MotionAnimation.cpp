@@ -56,8 +56,8 @@ void MotionAnimation::setVH(bool v)
 
 void MotionAnimation::setStartRowAndCol(int row, int column)
 {
-	if (row > 0) { st_row = row; }
-	if (column > 0) { st_col = column; }
+	if (row >= 0) { st_row = row; }
+	if (column >= 0) { st_col = column; }
 }
 
 void MotionAnimation::update()
@@ -71,7 +71,7 @@ void MotionAnimation::update()
 			src->x = st_col * src->w;
 			src->y = src->h * tmp_dlv;
 		}
-		else
+		else 
 		{
 			src->x = src->w * tmp_dlv;
 			src->y = st_row * src->h;

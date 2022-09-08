@@ -49,29 +49,32 @@ void Player::events(SDL_Event* eve)
 	if (KeyboardHandler::pressedKey(SDLK_w, eve)) 
 	{ 
 		velocity.y = -1; 
+		animation->setDelays(200);
 		animation->start(1,0); 
 	}
 	if (KeyboardHandler::releasedKey(SDLK_w, eve)) 
 	{ 
-		velocity.x = 0;
+		velocity.y = 0;
 		idleAnimation();
 	}
 	// S
 	if (KeyboardHandler::pressedKey(SDLK_s, eve)) 
 	{ 
 		velocity.y = 1;
-		animation->start(0,0); 
+		animation->setDelays(150);
+		animation->start(0, 0); 
 	}
 	if (KeyboardHandler::releasedKey(SDLK_s, eve)) 
-	{ 
-		velocity.x = 0;
+	{
+		velocity.y = 0;
 		idleAnimation();
 	}
 	// A
 	if (KeyboardHandler::pressedKey(SDLK_a, eve)) 
 	{ 
 		velocity.x = -1;
-		animation->start(2, 0); 
+		animation->setDelays(150);
+		animation->start(2, 0);
 	}
 	if (KeyboardHandler::releasedKey(SDLK_a, eve)) 
 	{ 
@@ -82,6 +85,7 @@ void Player::events(SDL_Event* eve)
 	if (KeyboardHandler::pressedKey(SDLK_d, eve)) 
 	{ 
 		velocity.x = 1;
+		animation->setDelays(150);
 		animation->start(3, 0);
 	}
 	if (KeyboardHandler::releasedKey(SDLK_d, eve)) 

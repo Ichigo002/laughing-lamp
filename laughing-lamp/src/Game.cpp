@@ -95,17 +95,6 @@ void Game::handleEvents()
     case SDL_QUIT:
         running = false;
         break;
-    case SDL_KEYDOWN:
-        switch (_event.key.keysym.sym)
-        {
-        case SDLK_BACKQUOTE:
-//            cmdManager->start();
-            break;
-        
-        default:
-            break;
-        }
-        break;
     default:
         break;
     }
