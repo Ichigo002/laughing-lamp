@@ -1,3 +1,3 @@
-﻿  Game.cpp
-D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Game.cpp(40,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  laughing-lamp.vcxproj -> D:\Documents\GitHub\laughing-lamp\laughing-lamp\Debug\laughing-lamp.exe
+﻿  GameObjectManager.cpp
+Game.obj : error LNK2019: unresolved external symbol "public: void __thiscall GameObjectManager::add<class Player>(class Player *)" (??$add@VPlayer@@@GameObjectManager@@QAEXPAVPlayer@@@Z) referenced in function "public: __thiscall Game::Game(void)" (??0Game@@QAE@XZ)
+D:\Documents\GitHub\laughing-lamp\laughing-lamp\Debug\laughing-lamp.exe : fatal error LNK1120: 1 unresolved externals

@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\HexMap.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MotionAnimation.cpp" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\HexMap.h" />
     <ClInclude Include="src\KeyboardHandler.h" />
     <ClInclude Include="src\MotionAnimation.h" />

@@ -6,11 +6,7 @@
 
 #include <cstdlib>
 #include "HexMap.h"
-
-class Game;
-
-static Game* st_game;
-static HexMap* map;
+#include "GameObjectManager.h"
 
 class Game
 {
@@ -28,6 +24,9 @@ public:
     void setFPS(int fps) { FPS = fps; }
 
 private:
+    HexMap* map;
+    GameObjectManager* gameObjectMng;
+
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Event _event;

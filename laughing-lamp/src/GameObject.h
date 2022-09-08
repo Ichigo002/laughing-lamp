@@ -32,7 +32,6 @@ protected:
 	SDL_Rect srcR, destR;
 	std::string tagname;
 	float renderingScale;
-
 };
 
 #endif

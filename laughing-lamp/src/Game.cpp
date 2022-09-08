@@ -9,7 +9,6 @@ GameObject* player;
 
 Game::Game()
 {
-    st_game = this;
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         std::cout << "SDL INIT EVERYTHING failed" << std::endl;
@@ -44,8 +43,12 @@ Game::Game()
 
 
         map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
-        player = new Player(renderer);
-        player->loadTexture();
+
+        gameObjectMng = new GameObjectManager(renderer);
+
+        gameObjectMng->add(new Player(renderer));
+        //player = new Player(renderer);
+        //player->loadTexture();
 
         running = true;
     }
@@ -81,6 +84,7 @@ void Game::run()
 
 void Game::update()
 {
+    gameObjectMng->update();
     player->update();
 }
 
@@ -88,6 +92,7 @@ void Game::handleEvents()
 {
     SDL_PollEvent(&_event);
 
+    gameObjectMng->events(&_event);
     player->events(&_event);
 
     switch (_event.type)
@@ -106,6 +111,7 @@ void Game::render()
     //Draw
 
     map->draw();
+    gameObjectMng->draw();
     player->draw();
 
     SDL_RenderPresent(renderer);
