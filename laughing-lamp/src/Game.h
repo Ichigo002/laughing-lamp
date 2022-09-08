@@ -18,6 +18,7 @@ public:
     Game();
     ~Game();
 
+    /*Main loop game*/
     void run();
     void handleEvents();
     void update();

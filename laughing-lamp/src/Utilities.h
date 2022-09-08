@@ -3,6 +3,7 @@
 
 namespace Utilities
 {
+    /* Split the string into vector of strings each time when it finds splitter sign */
     std::vector<std::string> split(const std::string splitter, std::string line)
     {
         std::vector<std::string> arr;

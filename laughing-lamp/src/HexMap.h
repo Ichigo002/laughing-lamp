@@ -8,7 +8,7 @@
 
 #define HEX_WIDTH 28
 #define HEX_HEIGHT 32
-#define MAP_SCALE 1
+#define MAP_SCALE 2
 #define MAP_NOISE 40
 
 class HexMap
