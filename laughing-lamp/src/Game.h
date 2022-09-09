@@ -25,7 +25,7 @@ public:
 
 private:
     HexMap* map;
-    GameObjectManager* gameObjectMng;
+    GameObjectManager* gom;
 
     SDL_Window* window;
     SDL_Renderer* renderer;

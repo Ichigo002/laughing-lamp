@@ -243,3 +243,21 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+laughing-lamp/.vs/laughing-lamp/v16/ipch/AutoPCH/ac90a4391f3d5982/GAME.ipch
+*.ipch
+laughing-lamp/Debug/vc142.pdb
+laughing-lamp/Debug/vc142.idb
+laughing-lamp/Debug/Vector2Int.obj
+laughing-lamp/Debug/PerlinNoise.obj
+laughing-lamp/Debug/main.obj
+laughing-lamp/Debug/laughing-lamp.tlog/link.command.1.tlog
+laughing-lamp/Debug/laughing-lamp.tlog/CL.write.1.tlog
+laughing-lamp/Debug/laughing-lamp.tlog/CL.read.1.tlog
+laughing-lamp/Debug/laughing-lamp.tlog/CL.command.1.tlog
+laughing-lamp/Debug/laughing-lamp.pdb
+laughing-lamp/Debug/laughing-lamp.log
+laughing-lamp/Debug/HexMap.obj
+laughing-lamp/Debug/Game.obj
+laughing-lamp/.vs/laughing-lamp/v16/Browse.VC.db
+laughing-lamp/.vs/laughing-lamp/v16/.suo
+laughing-lamp/laughing-lamp.vcxproj

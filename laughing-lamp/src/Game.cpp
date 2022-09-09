@@ -43,17 +43,19 @@ Game::Game()
 
         map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
 
-        gameObjectMng = new GameObjectManager(renderer);
+        gom = new GameObjectManager(renderer);
 
         //Player p(renderer);
 
-        gameObjectMng->add<Player>();
-        gameObjectMng->add<Wall>(0, 100);
-        gameObjectMng->add<Wall>(100, 100);
-        gameObjectMng->add<Wall>(200, 720);
-        gameObjectMng->add<Wall>(550, 400);
-        gameObjectMng->add<Wall>(660, 150);
-        gameObjectMng->add<Wall>(760, 520);
+        gom->add<Player>();
+        gom->add<Wall>(0, 100);
+        gom->add<Wall>(100, 100);
+        gom->add<Wall>(200, 720);
+        gom->add<Wall>(550, 400);
+        gom->add<Wall>(660, 150);
+        gom->add<Wall>(760, 520);
+
+        std::cout << gom->eraseAllBy("Wall");
 
         running = true;
     }
@@ -89,14 +91,14 @@ void Game::run()
 
 void Game::update()
 {
-    gameObjectMng->update();
+    gom->update();
 }
 
 void Game::handleEvents()
 {
     SDL_PollEvent(&_event);
 
-    gameObjectMng->events(&_event);
+    gom->events(&_event);
 
     switch (_event.type)
     {
@@ -114,7 +116,7 @@ void Game::render()
     //Draw
 
     map->draw();
-    gameObjectMng->draw();
+    gom->draw();
 
     SDL_RenderPresent(renderer);
 }

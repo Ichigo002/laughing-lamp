@@ -1,3 +1,0 @@
-﻿  Game.cpp
-D:\Documents\GitHub\laughing-lamp\laughing-lamp\src\Game.cpp(38,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  laughing-lamp.vcxproj -> D:\Documents\GitHub\laughing-lamp\laughing-lamp\Debug\laughing-lamp.exe
