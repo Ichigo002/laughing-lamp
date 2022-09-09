@@ -5,8 +5,6 @@
 #include "Player.h"
 #include "GameObject.h"
 
-GameObject* player;
-
 Game::Game()
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -46,9 +44,9 @@ Game::Game()
 
         gameObjectMng = new GameObjectManager(renderer);
 
-        gameObjectMng->add(new Player(renderer));
-        //player = new Player(renderer);
-        //player->loadTexture();
+        //Player p(renderer);
+
+        gameObjectMng->add<Player>();
 
         running = true;
     }
@@ -85,7 +83,6 @@ void Game::run()
 void Game::update()
 {
     gameObjectMng->update();
-    player->update();
 }
 
 void Game::handleEvents()
@@ -93,7 +90,6 @@ void Game::handleEvents()
     SDL_PollEvent(&_event);
 
     gameObjectMng->events(&_event);
-    player->events(&_event);
 
     switch (_event.type)
     {
@@ -112,7 +108,6 @@ void Game::render()
 
     map->draw();
     gameObjectMng->draw();
-    player->draw();
 
     SDL_RenderPresent(renderer);
 }
