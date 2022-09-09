@@ -11,6 +11,7 @@ public:
     static SDL_Texture* load(SDL_Renderer* renderer, const char* filename)
     {
         SDL_Surface* tmpSrf = IMG_Load(filename);
+
         return SDL_CreateTextureFromSurface(renderer, tmpSrf);
     }
 };

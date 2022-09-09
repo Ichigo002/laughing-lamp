@@ -3,6 +3,7 @@
 #include "Vector2Int.h"
 #include <iostream>
 #include "Player.h"
+#include "Wall.h"
 #include "GameObject.h"
 
 Game::Game()
@@ -47,6 +48,12 @@ Game::Game()
         //Player p(renderer);
 
         gameObjectMng->add<Player>();
+        gameObjectMng->add<Wall>(0, 100);
+        gameObjectMng->add<Wall>(100, 100);
+        gameObjectMng->add<Wall>(200, 720);
+        gameObjectMng->add<Wall>(550, 400);
+        gameObjectMng->add<Wall>(660, 150);
+        gameObjectMng->add<Wall>(760, 520);
 
         running = true;
     }

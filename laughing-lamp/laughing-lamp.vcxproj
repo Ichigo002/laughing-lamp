@@ -155,6 +155,7 @@
     <ClCompile Include="src\PerlinNoise.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Vector2Int.cpp" />
+    <ClCompile Include="src\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Utilities.h" />
     <ClInclude Include="src\Vector2Int.h" />
+    <ClInclude Include="src\Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,7 +8,10 @@
 class GameObject
 {
 public:
-	GameObject(SDL_Renderer* r) {}
+	GameObject(SDL_Renderer* r) 
+	{
+		render = r;
+	}
 	~GameObject() {}
 
 	/* Here you can load all needed textures*/

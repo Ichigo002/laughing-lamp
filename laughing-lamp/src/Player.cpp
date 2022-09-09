@@ -5,7 +5,6 @@
 Player::Player(SDL_Renderer* r)
 	:GameObject(r)
 {
-	render = r;
 	tagname = "Player";
 	renderingScale = 2;
 	speed = 3;
