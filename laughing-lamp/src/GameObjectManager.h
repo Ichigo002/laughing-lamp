@@ -18,10 +18,10 @@ public:
 	GameObjectManager(SDL_Renderer* r);
 	~GameObjectManager();
 
-	/* Add the new GameObject ot the pool */
+	/* Add the new GameObject to the pool */
 	/* mArgs: Additional arguments for initialized object if it has anything*/
 	template<class T, typename... TArgs>
-	T& add(TArgs&&... mArgs);
+	T* add(TArgs&&... mArgs);
 
 	/* Update all objects */
 	void update();
@@ -50,6 +50,9 @@ public:
 	/* If index is out of range then returns false*/
 	bool checkIndex(size_t id);
 private:
+	/* Returns empty index for object */
+	/* If there's no empty index, then returns the dbit.size() + 1 */
+	size_t getEmptyIndex();
 
 	boost::dynamic_bitset<> dbit; // keep info is empty the vector index or not
 	std::vector<GameObject*> pool; // All Gameobjects
@@ -61,14 +64,25 @@ private:
 #endif
 
 template<class T, typename ...TArgs>
-inline T& GameObjectManager::add(TArgs && ...mArgs)
+inline T* GameObjectManager::add(TArgs && ...mArgs)
 {
 	T* obj = new T(render, std::forward<TArgs>(mArgs)...);
-	pool.emplace_back(obj);
-	dbit.push_back(true);
-	obj->__initUniq__(lastID);
-	lastID++;
+	size_t ix = getEmptyIndex();
 
+	if (ix > dbit.size())
+	{
+		pool.emplace_back(obj);
+		dbit.push_back(true);
+	}
+	else
+	{
+		dbit[ix] = true;
+		pool[ix] = obj;
+	}
+
+	obj->__initUniq__(lastID);
 	obj->loadTexture();
-	return *obj;
+
+	lastID++;
+	return obj;
 }

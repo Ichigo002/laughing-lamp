@@ -55,9 +55,6 @@ Game::Game()
         gom->add<Wall>(660, 150);
         gom->add<Wall>(760, 520);
 
-        gom->eraseAllBy("Wall");
-        
-
         running = true;
     }
 }
