@@ -43,13 +43,10 @@ public:
 	/* You can get the unique ID by method GameObject::getUniqueID(); */
 	void eraseObject(size_t uniq);
 
+private:
 	/* Returns the number of all objects */
 	size_t getSizePool();
 
-	/* Check is the index empty */
-	/* If index is out of range then returns false*/
-	bool checkIndex(size_t id);
-private:
 	/* Returns empty index for object */
 	/* If there's no empty index, then returns the dbit.size() + 1 */
 	size_t getEmptyIndex();

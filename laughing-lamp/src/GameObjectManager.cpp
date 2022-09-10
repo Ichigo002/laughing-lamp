@@ -84,11 +84,6 @@ size_t GameObjectManager::getSizePool()
 	return dbit.count();
 }
 
-bool GameObjectManager::checkIndex(size_t id)
-{
-	return !(id > dbit.size()) && dbit[id] == true;
-}
-
 size_t GameObjectManager::getEmptyIndex()
 {
 	for (size_t i = 0; i < dbit.size(); i++)
