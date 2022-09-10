@@ -1,8 +1,9 @@
 #include "GameObjectManager.h"
 
-GameObjectManager::GameObjectManager(SDL_Renderer* r)
+GameObjectManager::GameObjectManager(SDL_Renderer* r, Camera* cam)
 {
 	render = r;
+	camera = cam;
 	lastID = 0;
 }
 

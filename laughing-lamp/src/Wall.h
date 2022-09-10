@@ -3,13 +3,14 @@
 
 #include "GameObject.h"
 #include "Vector2Int.h"
+#include "Camera.h"
 #include "MotionAnimation.h"
 #include <iostream>
 
 class Wall : public GameObject
 {
 public:
-	explicit Wall(SDL_Renderer* r, int x, int y);
+	explicit Wall(SDL_Renderer* r, Camera* cam, int x, int y);
 	~Wall();
 	
 	void loadTexture() override;

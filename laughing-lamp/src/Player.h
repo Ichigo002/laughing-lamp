@@ -4,12 +4,13 @@
 #include "GameObject.h"
 #include "Vector2Int.h"
 #include "MotionAnimation.h"
+#include "Camera.h"
 #include <iostream>
 
 class Player : public GameObject
 {
 public:
-	explicit Player(SDL_Renderer* r);
+	explicit Player(SDL_Renderer* r, Camera* cam);
 	~Player();
 	
 	void loadTexture() override;

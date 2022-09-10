@@ -2,8 +2,8 @@
 #include "TextureManager.h"
 #include "KeyboardHandler.h"
 
-Wall::Wall(SDL_Renderer* r, int x, int y)
-	:GameObject(r)
+Wall::Wall(SDL_Renderer* r, Camera* cam, int x, int y)
+	:GameObject(r, cam)
 {
 	tagname = "Wall";
 	renderingScale = 2;
@@ -30,8 +30,8 @@ void Wall::loadTexture()
 
 void Wall::update()
 {
-	destR.x = pos.x;
-	destR.y = pos.y;
+	destR.x = pos.x + camera->getMoveSet().x;
+	destR.y = pos.y + camera->getMoveSet().y;
 }
 
 void Wall::events(SDL_Event* eve)

@@ -43,17 +43,18 @@ Game::Game()
          std::cout << "New Seed: " << seed << std::endl;
         // std::cin >> seed;
 
+        cam = new Camera(Screen_W, Screen_H);
 
         map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
 
-        gom = new GameObjectManager(renderer);
+        gom = new GameObjectManager(renderer, cam);
 
-        cam = new Camera(Screen_W, Screen_H);
         cam->set(0, 0);
 
         //Player p(renderer);
 
         gom->add<Player>();
+
         gom->add<Wall>(0, 100);
         gom->add<Wall>(100, 100);
         gom->add<Wall>(200, 720);

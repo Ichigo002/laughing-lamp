@@ -7,7 +7,6 @@ Camera::Camera(int screen_w, int screen_h)
 
 Camera::~Camera()
 {
-
 }
 
 Vector2Int Camera::getMoveSet()
@@ -15,10 +14,27 @@ Vector2Int Camera::getMoveSet()
 	return Vector2Int(cam.x*-1,cam.y*-1);
 }
 
+Vector2Int Camera::getWHScreen()
+{
+	return Vector2Int(cam.w, cam.h);
+}
+
+SDL_Renderer* Camera::getRender()
+{
+	return render;
+}
+
+int Camera::draw(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR)
+{
+	destR->x += getMoveSet().x;
+	destR->y += getMoveSet().y;
+	return SDL_RenderCopy(render, texture, srcR, destR);
+}
+
 void Camera::set(int x, int y)
 {
-	cam.x = x;
-	cam.y = y;
+	cam.x = x - cam.w / 2;
+	cam.y = y - cam.h / 2;
 }
 
 void Camera::set(Vector2Int v)

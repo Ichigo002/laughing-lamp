@@ -2,16 +2,16 @@
 #include "TextureManager.h"
 #include "KeyboardHandler.h"
 
-Player::Player(SDL_Renderer* r)
-	:GameObject(r)
+Player::Player(SDL_Renderer* r, Camera* cam)
+	:GameObject(r, cam)
 {
 	tagname = "Player";
 	renderingScale = 2;
 	speed = 3;
 
 	velocity.x = velocity.y = 0;
-	pos.x = 100;
-	pos.y = 100;
+	pos.x = 300;
+	pos.y = 300;
 
 	animation = new MotionAnimation(&srcR, 3, 200);
 	idleAnimation();
@@ -38,6 +38,7 @@ void Player::update()
 {
 	animation->update();
 
+	camera->set(pos);
 	destR.x = pos.x;
 	destR.y = pos.y;
 }

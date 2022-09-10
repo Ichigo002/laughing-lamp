@@ -3,28 +3,30 @@
 
 #include <SDL.h>
 #include <iostream>
+#include "Camera.h"
 
 /*Abstract class*/
 class GameObject
 {
 public:
-	GameObject(SDL_Renderer* r) 
+	GameObject(SDL_Renderer* r, Camera* cam) 
 	{
 		render = r;
+		camera = cam;
 	}
-	~GameObject() {}
+	~GameObject() { }
 
 	/* Here you can load all needed textures*/
-	virtual void loadTexture() {}
+	virtual void loadTexture() { }
 
 	/* Method called every time. You can put there different move algorithms etc.*/
-	virtual void update() {}
+	virtual void update() { }
 
 	/*Handle all events for this object*/
-	virtual void events(SDL_Event* eve) {}
+	virtual void events(SDL_Event* eve) { }
 
 	/* Called on every global draw to display on screen */
-	virtual void draw() {}
+	virtual void draw() { }
 
 	/* Returns the tagname of object. */
 	std::string getTag() { return tagname;  }
@@ -60,6 +62,7 @@ public:
 
 protected:
 	SDL_Renderer* render;
+	Camera* camera;
 	SDL_Texture* tex;
 	SDL_Rect srcR, destR;
 	std::string tagname;

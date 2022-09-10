@@ -2,6 +2,7 @@
 #define GAME_OBJECT_MANAGER_H
 
 #include "GameObject.h"
+#include "Camera.h"
 #include <SDL.h>
 #include <vector>
 #include <bitset>
@@ -15,7 +16,7 @@ constexpr size_t MAX_NUMBER_OBJECTS = 64;
 class GameObjectManager
 {
 public:
-	GameObjectManager(SDL_Renderer* r);
+	GameObjectManager(SDL_Renderer* r, Camera* cam);
 	~GameObjectManager();
 
 	/* Add the new GameObject to the pool */
@@ -59,6 +60,7 @@ private:
 	std::vector<GameObject*> pool; // All Gameobjects
 	std::size_t lastID;
 	SDL_Renderer* render;
+	Camera* camera;
 
 };
 
@@ -67,7 +69,7 @@ private:
 template<class T, typename ...TArgs>
 inline T* GameObjectManager::add(TArgs && ...mArgs)
 {
-	T* obj = new T(render, std::forward<TArgs>(mArgs)...);
+	T* obj = new T(render, camera, std::forward<TArgs>(mArgs)...);
 	size_t ix = getEmptyIndex();
 
 	if (ix > dbit.size())
