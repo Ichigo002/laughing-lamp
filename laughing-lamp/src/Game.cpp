@@ -55,7 +55,8 @@ Game::Game()
         gom->add<Wall>(660, 150);
         gom->add<Wall>(760, 520);
 
-        std::cout << gom->eraseAllBy("Wall");
+        gom->eraseAllBy("Wall");
+        
 
         running = true;
     }

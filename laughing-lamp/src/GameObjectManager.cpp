@@ -47,7 +47,7 @@ void GameObjectManager::cleanPool()
 	pool.clear();
 }
 
-int GameObjectManager::eraseAllBy(std::string tagname)
+int GameObjectManager::eraseByTag(std::string tagname)
 {
 	int rmv = 0;
 	for (auto& obj : pool)
@@ -63,23 +63,18 @@ int GameObjectManager::eraseAllBy(std::string tagname)
 	return rmv;
 }
 
-void GameObjectManager::eraseObject(GameObject* obj)
-{
-	eraseObject(obj->getUniqueID());
-}
-
 void GameObjectManager::eraseObject(size_t uniq)
 {
-	for (size_t i = 0; i < pool.size(); i++)
+	for (size_t i = 0; i < dbit.size(); i++)
 	{
-		if (pool[i] == nullptr)
-			break;
-		if (pool[i]->getUniqueID() == uniq)
+		if (dbit[i] == true)
 		{
-			pool[i] = nullptr;
-			dbit.set(i, false);
+			if (pool[i]->getUniqueID() == uniq)
+			{
+				dbit[i] = false;
+				pool[i] = nullptr;
 
-			return;
+			}
 		}
 	}
 }
@@ -92,4 +87,14 @@ size_t GameObjectManager::getSizePool()
 bool GameObjectManager::checkIndex(size_t id)
 {
 	return !(id > dbit.size()) && dbit[id] == true;
+}
+
+size_t GameObjectManager::getEmptyIndex()
+{
+	for (size_t i = 0; i < dbit.size(); i++)
+	{
+		if (dbit[i] == false)
+			return i;
+	}
+	return dbit.size() + 1;
 }

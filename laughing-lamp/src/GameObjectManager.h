@@ -37,10 +37,7 @@ public:
 
 	/* Erease all objects with the same tagnames */
 	/* Returns the number of deleted objects */
-	int eraseAllBy(std::string tagname);
-
-	/* Erase Object by pointer */
-	void eraseObject(GameObject* obj);
+	int eraseByTag(std::string tagname);
 
 	/* Erase Object by unique ID of object. */
 	/* You can get the unique ID by method GameObject::getUniqueID(); */
