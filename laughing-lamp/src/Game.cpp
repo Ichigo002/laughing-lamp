@@ -15,11 +15,14 @@ Game::Game()
     }
     else
     {
+        int Screen_W = 1920;
+        int Screen_H = 1080;
+
         Uint32 flags = SDL_WINDOW_SHOWN;
         flags += SDL_WINDOW_RESIZABLE;
         // flags += SDL_WINDOW_FULLSCREEN;
 
-        window = SDL_CreateWindow("Laughing Lamp", 2000, SDL_WINDOWPOS_CENTERED, 1920, 1080, flags);
+        window = SDL_CreateWindow("Laughing Lamp", 2000, SDL_WINDOWPOS_CENTERED, Screen_W, Screen_H, flags);
         renderer = SDL_CreateRenderer(window, -1, 0);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -44,6 +47,9 @@ Game::Game()
         map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
 
         gom = new GameObjectManager(renderer);
+
+        cam = new Camera(Screen_W, Screen_H);
+        cam->set(0, 0);
 
         //Player p(renderer);
 

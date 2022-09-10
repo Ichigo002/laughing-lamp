@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include "HexMap.h"
 #include "GameObjectManager.h"
+#include "Camera.h"
 
 class Game
 {
@@ -26,6 +27,7 @@ public:
 private:
     HexMap* map;
     GameObjectManager* gom;
+    Camera* cam;
 
     SDL_Window* window;
     SDL_Renderer* renderer;

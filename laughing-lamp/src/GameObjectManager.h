@@ -43,6 +43,10 @@ public:
 	/* You can get the unique ID by method GameObject::getUniqueID(); */
 	void eraseObject(size_t uniq);
 
+	GameObject* getObject(std::string tagname); // return first found
+	GameObject* GetObjects(std::string tagname); // return array of objects
+	GameObject* getObject(size_t uniq);
+
 private:
 	/* Returns the number of all objects */
 	size_t getSizePool();
