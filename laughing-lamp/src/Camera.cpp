@@ -1,8 +1,9 @@
 #include "Camera.h"
 
-Camera::Camera(int screen_w, int screen_h)
+Camera::Camera(SDL_Renderer* r, int screen_w, int screen_h)
 {
 	cam = { 0, 0, screen_w, screen_h };
+	render = r;
 }
 
 Camera::~Camera()
@@ -24,10 +25,20 @@ SDL_Renderer* Camera::getRender()
 	return render;
 }
 
-int Camera::draw(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR)
+int Camera::drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR)
 {
 	destR->x += getMoveSet().x;
 	destR->y += getMoveSet().y;
+	return SDL_RenderCopy(render, texture, srcR, destR);
+}
+
+int Camera::drawStatic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR)
+{
+	return SDL_RenderCopy(render, texture, srcR, destR);
+}
+
+int Camera::drawGUI(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR)
+{
 	return SDL_RenderCopy(render, texture, srcR, destR);
 }
 

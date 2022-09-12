@@ -10,8 +10,8 @@ Player::Player(SDL_Renderer* r, Camera* cam)
 	speed = 3;
 
 	velocity.x = velocity.y = 0;
-	pos.x = 300;
-	pos.y = 300;
+	pos.x = cam->getWHScreen().x / 2;
+	pos.y = cam->getWHScreen().y / 2;
 
 	animation = new MotionAnimation(&srcR, 3, 200);
 	idleAnimation();
@@ -32,6 +32,8 @@ void Player::loadTexture()
 
 	destR.w = srcR.w * renderingScale;
 	destR.h = srcR.h * renderingScale;
+	destR.x = pos.x;
+	destR.y = pos.y;
 }
 
 void Player::update()
@@ -39,8 +41,6 @@ void Player::update()
 	animation->update();
 
 	camera->set(pos);
-	destR.x = pos.x;
-	destR.y = pos.y;
 }
 
 void Player::events(SDL_Event* eve)

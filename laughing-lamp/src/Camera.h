@@ -19,8 +19,14 @@ public:
 	/* Returns the renderer of game */
 	SDL_Renderer* getRender();
 
-	/* Draw the texture on the screen  */
-	int draw(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR);
+	/* Draw the object which is active in the game world  */
+	int drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR);
+
+	/* Draw the object who do not get involved into moving by camera */
+	int drawStatic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR);
+
+	/* Draw GUI */
+	int drawGUI(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR);
 
 	void set(int x, int y);
 	void set(Vector2Int v);

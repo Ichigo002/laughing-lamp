@@ -38,14 +38,17 @@ Game::Game()
         destRect.h = 32;
 
                    //Here you can put seed to game
-        srand(time(NULL));
-        int seed = rand() % 1000000000;
-         std::cout << "New Seed: " << seed << std::endl;
+       // srand(time(NULL));
+        //int seed = rand() % 1000000000;
+       //  std::cout << "New Seed: " << seed << std::endl;
         // std::cin >> seed;
 
-        cam = new Camera(Screen_W, Screen_H);
+        cam = new Camera(renderer, Screen_W, Screen_H);
 
-        map = new HexMap(renderer, seed, "assets/tileset-terrain.png", 400, 400, Vector2Int(-HEX_WIDTH/2, -HEX_HEIGHT/2));
+        map = new HexMap(cam, "assets/tileset-terrain.png");
+        map->setChunkSize(64);
+        map->setFactors(.5f, 2);
+        map->generateWorld();
 
         gom = new GameObjectManager(renderer, cam);
 
@@ -96,6 +99,7 @@ void Game::run()
 
 void Game::update()
 {
+    map->updateAnimation();
     gom->update();
 }
 

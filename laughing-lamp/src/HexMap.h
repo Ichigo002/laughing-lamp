@@ -4,43 +4,85 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Vector2Int.h"
+#include "Camera.h"
+#include "Chunk.h"
+#include <vector>
 #include <cstdlib>
 
 #define HEX_WIDTH 28
 #define HEX_HEIGHT 32
-#define MAP_SCALE 2
-#define MAP_NOISE 40
+
+/* Direct position to source to take the hex picture */
+struct TileEncode
+{
+    int srcX;
+    int srcY;
+};
 
 class HexMap
 {
 public:
-    HexMap(SDL_Renderer* r, int seed, const char* filename, size_t w, size_t h, Vector2Int offset);
+    /// <param name="camera">Camera for rendering</param>
+    /// <param name="tileset_path">Path or filename to tileset picture (*.png)</param>
+    HexMap(Camera* camera, const char* tileset_path);
     ~HexMap();
 
-    void reinit(int seed, const char* tileset_file, size_t w, size_t h, Vector2Int offset);
+    /* Set seed for map */
+    /* If seed is not set then it generates randomly */
+    void setSeed(int seed);
+
+    /* Set parameters for map */
+    /// <param name="render_scale">Rendering scale of hexagons</param>
+    /// <param name="noise_scale">Perlin Noise value generating of map</param>
+    void setFactors(float render_scale, float noise_scale = 40);
+
+    /* Set size of single Chunk of map*/
+    void setChunkSize(int size);
+
+    /* Updates animations of water, lava, grass etc... */
+    void updateAnimation();
+
+    /* Draw map */
     void draw();
-    void editMapValue(size_t row, size_t col, float v);
-    float getMapValue(size_t row, size_t col);
+
+    /* Changing the values or seed of map after generate map makes no changes because there are used only during baking map */
+    void generateWorld();
 
 private:
+    /* Generate single chunk */
+    void generateChunk(Vector2Int pos);
+    
+    /* Encode Tile into int number */
+    /// <param name="nv">noise value for which tile will be encoded</param>
+    int encodeTileFor(const double* nv);
 
-    void drawSingleHex(size_t out_row, size_t out_col, int input_row, int input_col);
-    void loadTileset(const char* filename);
-    void destroyMap();
-    void createEmptyMap(size_t x, size_t y);
-    void generateNoiseMap(int seed);
-    void drawRules(const float* tmpV, int* src_row, int* src_col);
+    /* Decode value into source Rect x and y */
+    inline TileEncode decodeTile(int v);
+
+    /* Draw rules what tile should be used*/
+    void drawRules(const double* v, int* src_row, int* src_col);
+
+    /* Draw single Chunk */
+    void drawChunk(const Chunk* chunk);
+
+    /* Draw Simple Hexagon */
+   // void drawHex(size_t out_row, size_t out_col, int input_row, int input_col);
+
+    /* Get Random source from file to make mixed terrain*/
     void getRandSrcRow(int* src_row, int* src_col, int dest_col, int leng);
 
-    SDL_Renderer* r;
+    int seed;
+    float render_scale;
+    float noise_scale;
+    int chunk_size;
+
+    std::vector<Chunk*> map;
+    std::vector<TileEncode> encoded_tiles;
+
+    Camera* camera;
     SDL_Texture* tileset;
     SDL_Rect srcR, destR;
 
-    float **map = nullptr;
-    size_t mapWidth;
-    size_t mapHeight;
-
-    Vector2Int offset;
 };
 
 #endif
