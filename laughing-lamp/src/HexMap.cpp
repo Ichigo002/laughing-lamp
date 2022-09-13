@@ -110,9 +110,9 @@ void HexMap::generateWorld()
     int w = HEX_WIDTH * chunk_size * render_scale;
     int h = HEX_HEIGHT * .75f * chunk_size * render_scale;
     //Generate Chunks
-    for (int y = -2; y < 3; y++)
+    for (int y = -10; y < 10; y++)
     {
-        for (int x = -3; x < 3; x++)
+        for (int x = -10; x < 10; x++)
         {
             generateChunk(Vector2Int(w * x, h * y));
         }
