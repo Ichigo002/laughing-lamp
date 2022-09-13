@@ -13,7 +13,7 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     seed = rand() % 9000000000;
 
     render_scale = 2;
-    noise_scale = 40;
+    noise_scale = 2;
     chunk_size = 16;
 
     anim_delay = 300;
@@ -209,7 +209,7 @@ void HexMap::drawRules(const double* v, int* row, int* col)
     /* Sand */
     else if (*v < .42f)
     {
-        *col = 3;
+        getRandSrcRow(row, col, 3, 3);
     }
     /* Grass Transition */
     else if (*v < .46f)
@@ -220,20 +220,17 @@ void HexMap::drawRules(const double* v, int* row, int* col)
     /* Grass Std */
     else if (*v < .7f)
     {
-        *col = 1;
-        *row = 0;
+        getRandSrcRow(row, col, 1, 6);
     }
     /* Dirt before Mountain */
     else if (*v <= .78f)
     {
-        *col = 2;
-        *row = 0;
+        getRandSrcRow(row, col, 2, 3);
     }
     /* Stone */
     else if (*v <= 1.0f)
     {
-        *col = 4;
-        *row = 1;
+        getRandSrcRow(row, col, 4, 3);
     }
     // etc conditions
 }
