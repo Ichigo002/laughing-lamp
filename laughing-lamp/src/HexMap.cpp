@@ -15,6 +15,9 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     render_scale = 2;
     noise_scale = 40;
     chunk_size = 16;
+
+    anim_delay = 300;
+    anim_once = false;
 }
 
 HexMap::~HexMap()
@@ -41,7 +44,47 @@ void HexMap::setChunkSize(int size)
 
 void HexMap::updateAnimation()
 {
-    // TO DO
+    if (static_cast<int>((SDL_GetTicks() / anim_delay) % 2) == 0)
+    {
+        anim_once = true;
+        return;
+    }
+
+    if (!anim_once)
+        return;
+
+    anim_once = false;
+
+    int r = 0, c = 5;
+    int water_id1 = encodeTile(&r, &c);
+    r = 1;
+    int water_id2 = encodeTile(&r, &c);
+    r = 2;
+    int water_id3 = encodeTile(&r, &c);
+
+    for (auto& chunk : map)
+    {
+        SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * render_scale, chunk_size * HEX_HEIGHT * .75f * render_scale };
+        if (camera->isIntoViewport(&rc))
+        {
+            for (size_t y = 0; y < chunk->size; y++)
+            {
+                for (size_t x = 0; x < chunk->size; x++)
+                {
+                    if (chunk->map[y][x] == water_id1 ||
+                        chunk->map[y][x] == water_id2 || 
+                        chunk->map[y][x] == water_id3)
+                    {
+                       r = (decodeTile(chunk->map[y][x]).srcY / HEX_HEIGHT) + 1;
+                       if (r > 2) r = 0;
+                        chunk->map[y][x] = encodeTile(&r, &c);
+                    }
+                }
+            }
+        }
+
+        
+    }
 }
 
 void HexMap::draw()
@@ -93,13 +136,15 @@ void HexMap::generateChunk(Vector2Int pos)
     double pxs = 0;
     double pys = 0;
 
+    int _r = 0, _c = 0; // r row, c col
+
     if (pos.x != 0) { pxs = pos.x / xWidth * chunk_size; }
     if (pos.y > 0) { pys = (pos.y / yHeight + 1) * chunk_size; }
     if (pos.y < 0) { pys = (pos.y / yHeight - 1) * chunk_size; }
 
-    for (size_t y = 0; y < chunk_size; y++)
+    for (size_t y = 0; y < c->size; y++)
     {
-        for (size_t x = 0; x < chunk_size; x++)
+        for (size_t x = 0; x < c->size; x++)
         {
             rel_x = x + pxs;
             rel_y = y + pys;
@@ -114,17 +159,17 @@ void HexMap::generateChunk(Vector2Int pos)
 
             double n = pn.noise(noise_scale * px, noise_scale * py, .8f);
 
-            c->map[y][x] = encodeTileFor(&n);
+            drawRules(&n, &_r, &_c);
+            c->map[y][x] = encodeTile(&_r, &_c);
         }
     }
 
     map.push_back(c);
 }
 
-int HexMap::encodeTileFor(const double* tmpV)
+int HexMap::encodeTile(const int* row, const int* col)
 {
-    int r = 0, c = 0; // r row, c col
-    drawRules(tmpV, &r, &c);
+    int r = *row, c = *col;
 
     r *= HEX_HEIGHT;
     c *= HEX_WIDTH;
@@ -153,10 +198,13 @@ inline TileEncode HexMap::decodeTile(int v)
 // rules for value from noise map
 void HexMap::drawRules(const double* v, int* row, int* col)
 {
+    *row = 0;
+    *col = 0;
     /* Water */
     if (*v < .3f)
     {
         *col = 5;
+        *row = 0;
     }
     /* Sand */
     else if (*v < .42f)
@@ -216,28 +264,6 @@ void HexMap::drawChunk(const Chunk* chunk)
         }
     }
 }
-
-/*void HexMap::drawHex(size_t out_col, size_t out_row, int input_col, int input_row)
-{
-    int x = out_col * HEX_WIDTH * MAP_SCALE;
-    int y = out_row * (HEX_HEIGHT * .75f) * MAP_SCALE;
-
-    if((out_row + 1) % 2 == 0)
-    {
-        x += HEX_WIDTH / 2 * MAP_SCALE;
-    }
-    destR.x = x + offset.x;
-    destR.y = y + offset.y;
-    destR.w = HEX_WIDTH * MAP_SCALE;
-    destR.h = HEX_HEIGHT * MAP_SCALE;
-
-    srcR.x = input_col * HEX_WIDTH;
-    srcR.y = input_row * HEX_HEIGHT;
-    srcR.w = HEX_WIDTH;
-    srcR.h = HEX_HEIGHT;
-
-    SDL_RenderCopy(r, tileset, &srcR, &destR);
-}*/
 
 void HexMap::getRandSrcRow(int* src_row, int* src_col, int dest_col, int leng)
 {

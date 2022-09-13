@@ -55,7 +55,7 @@ private:
     
     /* Encode Tile into int number */
     /// <param name="nv">noise value for which tile will be encoded</param>
-    int encodeTileFor(const double* nv);
+    int encodeTile(const int* row, const int* col);
 
     /* Decode value into source Rect x and y */
     inline TileEncode decodeTile(int v);
@@ -84,6 +84,8 @@ private:
     SDL_Texture* tileset;
     SDL_Rect srcR, destR;
 
+    int anim_delay;
+    bool anim_once;
 };
 
 #endif

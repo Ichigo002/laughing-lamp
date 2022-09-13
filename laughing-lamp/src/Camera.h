@@ -39,6 +39,8 @@ public:
 private:
 	SDL_Rect cam;
 	SDL_Renderer* render;
+
+	int extra_offset; // additionl field where objects are rendered
 };
 
 #endif

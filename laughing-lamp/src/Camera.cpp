@@ -1,9 +1,11 @@
 #include "Camera.h"
+#include "Chunk.h"
 
 Camera::Camera(SDL_Renderer* r, int screen_w, int screen_h)
 {
 	cam = { 0, 0, screen_w, screen_h };
 	render = r;
+	extra_offset = 100;
 }
 
 Camera::~Camera()
@@ -73,10 +75,10 @@ void Camera::move(Vector2Int v)
 bool Camera::isIntoViewport(const SDL_Rect* rect)
 {
 	if (
-		rect->x + rect->w >= cam.x &&
-		cam.x + cam.w >= rect->x &&
-		rect->y + rect->h >= cam.y &&
-		cam.y + cam.h >= rect->y
+		rect->x + rect->w >= cam.x - extra_offset &&
+		cam.x + cam.w + extra_offset >= rect->x &&
+		rect->y + rect->h >= cam.y - extra_offset &&
+		cam.y + cam.h + extra_offset >= rect->y
 		)
 	{
 		return true;
