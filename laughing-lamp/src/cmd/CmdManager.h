@@ -5,6 +5,7 @@
 #include <vector>
 #include <iterator>
 #include <string>
+#include "../Game.h"
 
 #include "SimpleCommand.h"
 
@@ -33,5 +34,17 @@ private:
 
     std::vector<SimpleCommand*> vec_cmd;
 };
+
+static CmdManager* cmd;
+
+static void cmd_init()
+{
+    cmd = new CmdManager();
+}
+
+static void cmd_execute()
+{
+    cmd->start();
+}
 
 #endif

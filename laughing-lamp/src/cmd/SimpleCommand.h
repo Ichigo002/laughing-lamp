@@ -2,8 +2,7 @@
 #define SIMPLECOMMAND_H
 
 #include <iostream>
-#include "Game.h"
-
+#include "../Game.h"
 
 class SimpleCommand
 {

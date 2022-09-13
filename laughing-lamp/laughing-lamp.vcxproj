@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\cmd\CmdManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\HexMap.cpp" />
@@ -161,6 +162,9 @@
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Chunk.h" />
+    <ClInclude Include="src\cmd\CmdManager.h" />
+    <ClInclude Include="src\cmd\LoopModeCommand.h" />
+    <ClInclude Include="src\cmd\SimpleCommand.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameObjectManager.h" />

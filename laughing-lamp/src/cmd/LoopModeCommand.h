@@ -19,8 +19,6 @@ public:
         if(argc != 2)
             return CM_ERROR_INVALID_OVERLOAD;
 
-        cmdManager->t = 4;
-
         return CM_SUCCESS;
     }
 };

@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "TextureManager.h"
+#include "KeyboardHandler.h"
 #include "Vector2Int.h"
 #include <iostream>
 #include "Player.h"
@@ -44,6 +45,9 @@ Game::Game()
         // std::cin >> seed;
 
         cam = new Camera(renderer, Screen_W, Screen_H);
+
+        static_game = this;
+        cmd_init();
 
         map = new HexMap(cam, "assets/tileset-terrain.png");
         map->debug_mode = false;
@@ -111,6 +115,9 @@ void Game::handleEvents()
     SDL_PollEvent(&_event);
 
     gom->events(&_event);
+
+    if (KeyboardHandler::pressedKey(SDLK_BACKQUOTE, &_event))
+        cmd_execute();
 
     switch (_event.type)
     {

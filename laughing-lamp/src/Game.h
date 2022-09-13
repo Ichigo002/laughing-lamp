@@ -8,6 +8,7 @@
 #include "HexMap.h"
 #include "GameObjectManager.h"
 #include "Camera.h"
+#include "cmd/CmdManager.h"
 
 class Game
 {
@@ -24,10 +25,14 @@ public:
     void setRunning(bool i) { running = i; }
     void setFPS(int fps) { FPS = fps; }
 
+    HexMap* getHexMap() { return map; }
+    Camera* getCamera() { return cam; }
+    GameObjectManager* getGameObjectManager() { return gom; }
 private:
     HexMap* map;
     GameObjectManager* gom;
     Camera* cam;
+    
 
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -43,5 +48,7 @@ private:
     int frame_time;
 
 };
+
+static Game* static_game;
 
 #endif
