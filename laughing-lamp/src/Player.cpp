@@ -7,12 +7,11 @@ Player::Player(SDL_Renderer* r, Camera* cam)
 {
 	tagname = "Player";
 	renderingScale = 2;
-	speed = 3;
+	speed = 10;
 
 	velocity.x = velocity.y = 0;
 	pos.x = cam->getWHScreen().x / 2;
 	pos.y = cam->getWHScreen().y / 2;
-
 	animation = new MotionAnimation(&srcR, 3, 200);
 	idleAnimation();
 }
@@ -39,7 +38,7 @@ void Player::loadTexture()
 void Player::update()
 {
 	animation->update();
-
+	//std::cout << "Player pos: " << pos << std::endl;
 	camera->set(pos);
 }
 

@@ -46,6 +46,7 @@ Game::Game()
         cam = new Camera(renderer, Screen_W, Screen_H);
 
         map = new HexMap(cam, "assets/tileset-terrain.png");
+        map->debug_mode = true;
         map->setChunkSize(64);
         map->setFactors(.5f, 2);
         map->generateWorld();
@@ -58,12 +59,14 @@ Game::Game()
 
         gom->add<Player>();
 
+       /* 
         gom->add<Wall>(0, 100);
         gom->add<Wall>(100, 100);
         gom->add<Wall>(200, 720);
         gom->add<Wall>(550, 400);
         gom->add<Wall>(660, 150);
         gom->add<Wall>(760, 520);
+       */
 
         running = true;
     }

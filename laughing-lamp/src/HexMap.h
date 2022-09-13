@@ -48,6 +48,7 @@ public:
     /* Changing the values or seed of map after generate map makes no changes because there are used only during baking map */
     void generateWorld();
 
+    bool debug_mode = false;
 private:
     /* Generate single chunk */
     void generateChunk(Vector2Int pos);

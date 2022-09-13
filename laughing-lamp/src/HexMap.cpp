@@ -1,6 +1,7 @@
 #include "HexMap.h"
 #include "TextureManager.h"
 #include "PerlinNoise.h"
+#include <math.h>
 #include <iostream>
 
 HexMap::HexMap(Camera* camera, const char* tileset_path)
@@ -57,10 +58,22 @@ void HexMap::generateWorld()
     map.clear();
     encoded_tiles.clear();
 
-    //Generate Chunks
-    generateChunk(Vector2Int(0,0));
-    generateChunk(Vector2Int(HEX_WIDTH * chunk_size * render_scale * 1, HEX_HEIGHT * chunk_size * render_scale * 0));
+    srcR.w = HEX_WIDTH;
+    srcR.h = HEX_HEIGHT;
 
+    destR.w = HEX_WIDTH * render_scale;
+    destR.h = HEX_HEIGHT * render_scale;
+
+    int w = HEX_WIDTH * chunk_size * render_scale;
+    int h = HEX_HEIGHT * .75f * chunk_size * render_scale;
+    //Generate Chunks
+    for (int y = -2; y < 3; y++)
+    {
+        for (int x = -3; x < 3; x++)
+        {
+            generateChunk(Vector2Int(w * x, h * y));
+        }
+    }
 }
 
 void HexMap::generateChunk(Vector2Int pos)
@@ -68,12 +81,36 @@ void HexMap::generateChunk(Vector2Int pos)
     PerlinNoise pn(seed);
     Chunk* c = new Chunk(pos, chunk_size);
 
+    int xWidth = HEX_WIDTH * chunk_size * render_scale;
+    int yHeight = HEX_HEIGHT * chunk_size * render_scale;
+
+    if(debug_mode)
+        std::cout << "Chunk at: " << pos << std::endl;
+
+    double rel_x = 0;
+    double rel_y = 0;
+
+    double pxs = 0;
+    double pys = 0;
+
+    if (pos.x != 0) { pxs = pos.x / xWidth * chunk_size; }
+    if (pos.y > 0) { pys = (pos.y / yHeight + 1) * chunk_size; }
+    if (pos.y < 0) { pys = (pos.y / yHeight - 1) * chunk_size; }
+
     for (size_t y = 0; y < chunk_size; y++)
     {
         for (size_t x = 0; x < chunk_size; x++)
         {
-            double px = (double)x / ((double)chunk_size);
-            double py = (double)y / ((double)chunk_size);
+            rel_x = x + pxs;
+            rel_y = y + pys;
+
+            if (debug_mode && x == 0 && y == 0)
+            {
+                std::cout << "| rel_x = " << rel_x << std::endl;
+                std::cout << "| rel_y = " << rel_y << std::endl << std::endl;
+            }
+            double px = rel_x / ((double)chunk_size);
+            double py = rel_y / ((double)chunk_size);
 
             double n = pn.noise(noise_scale * px, noise_scale * py, .8f);
 
@@ -162,8 +199,6 @@ void HexMap::drawChunk(const Chunk* chunk)
             TileEncode t = decodeTile(chunk->map[y][x]);
             srcR.x = t.srcX;
             srcR.y = t.srcY;
-            srcR.w = HEX_WIDTH;
-            srcR.h = HEX_HEIGHT;
 
             destR.x = x * HEX_WIDTH * render_scale + chunk->pos.x;
             destR.y = y * (HEX_HEIGHT * .75f) * render_scale + chunk->pos.y;
@@ -172,9 +207,6 @@ void HexMap::drawChunk(const Chunk* chunk)
             {
                 destR.x += HEX_WIDTH / 2 * render_scale;
             }
-
-            destR.w = HEX_WIDTH * render_scale;
-            destR.h = HEX_HEIGHT * render_scale;
 
             camera->drawDynamic(tileset, &srcR, &destR);
         }
