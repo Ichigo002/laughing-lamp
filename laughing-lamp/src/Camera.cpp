@@ -8,6 +8,7 @@ Camera::Camera(SDL_Renderer* r, int screen_w, int screen_h)
 
 Camera::~Camera()
 {
+
 }
 
 Vector2Int Camera::getMoveSet()
@@ -25,8 +26,13 @@ SDL_Renderer* Camera::getRender()
 	return render;
 }
 
-int Camera::drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR)
+int Camera::drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR, bool only_in_viewport)
 {
+	if (only_in_viewport)
+	{
+		if (!isIntoViewport(destR)) { return 0; }
+	}
+
 	destR->x += getMoveSet().x;
 	destR->y += getMoveSet().y;
 	return SDL_RenderCopy(render, texture, srcR, destR);
@@ -62,4 +68,19 @@ void Camera::move(int x, int y)
 void Camera::move(Vector2Int v)
 {
 	move(v.x, v.y);
+}
+
+bool Camera::isIntoViewport(const SDL_Rect* rect)
+{
+	if (
+		rect->x + rect->w >= cam.x &&
+		cam.x + cam.w >= rect->x &&
+		rect->y + rect->h >= cam.y &&
+		cam.y + cam.h >= rect->y
+		)
+	{
+		return true;
+	}
+
+	return false;
 }

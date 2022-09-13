@@ -46,9 +46,9 @@ Game::Game()
         cam = new Camera(renderer, Screen_W, Screen_H);
 
         map = new HexMap(cam, "assets/tileset-terrain.png");
-        map->debug_mode = true;
-        map->setChunkSize(64);
-        map->setFactors(.5f, 2);
+        map->debug_mode = false;
+        map->setChunkSize(16);
+        map->setFactors(2, 1);
         map->generateWorld();
 
         gom = new GameObjectManager(renderer, cam);

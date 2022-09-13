@@ -7,7 +7,7 @@ Player::Player(SDL_Renderer* r, Camera* cam)
 {
 	tagname = "Player";
 	renderingScale = 2;
-	speed = 10;
+	speed = 5;
 
 	velocity.x = velocity.y = 0;
 	pos.x = cam->getWHScreen().x / 2;

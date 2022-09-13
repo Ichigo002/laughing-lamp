@@ -192,6 +192,10 @@ void HexMap::drawRules(const double* v, int* row, int* col)
 
 void HexMap::drawChunk(const Chunk* chunk)
 {
+    SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * render_scale, chunk_size * HEX_HEIGHT * .75f * render_scale};
+    if (!camera->isIntoViewport(&rc))
+        return;
+
     for (size_t y = 0; y < chunk->size; y++)
     {
         for (size_t x = 0; x < chunk->size; x++)
