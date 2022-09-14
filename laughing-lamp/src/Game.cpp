@@ -6,16 +6,13 @@
 #include "game-objects/Player.h"
 #include "game-objects/Wall.h"
 #include "game-objects/GameObject.h"
-#include <SDL_ttf.h>
-
-SDL_Texture* message;
-SDL_Rect msgR = {0,0, 100, 100 * 1.7};
+#include "GUI/GUI_Text.h"
 
 Game::Game()
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        std::cout << "SDL INIT EVERYTHING failed" << std::endl;
+        std::cout << "INIT failed" << std::endl;
         running = false;
     }
     else
@@ -70,16 +67,15 @@ Game::Game()
         gom->add<Wall>(660, 150);
         gom->add<Wall>(760, 520);
        */
-        TTF_Init();
+
+        txt = new GUI_Text(cam, "assets/fonts/Lato-Black.ttf", 200);
+
+        txt->setText("Hello World! fdsgsh grg a hb rhga");
+        txt->setRect(0, 0, 40 * TXT_RATIO, 40);
+
+        txt->make();
 
         running = true;
-        TTF_Font* Sans = TTF_OpenFont("assets/fonts/Lato-Regular.ttf", 24);
-
-        SDL_Color c = { 80, 136, 255 };
-
-        SDL_Surface* surfmsg = TTF_RenderText_Solid(Sans, "6", c);
-
-        message = SDL_CreateTextureFromSurface(renderer, surfmsg);
     }
 }
 
@@ -145,6 +141,8 @@ void Game::render()
 
     map->draw();
     gom->draw();
-    SDL_RenderCopy(renderer, message, NULL, &msgR);
+
+    txt->draw();
+
     SDL_RenderPresent(renderer);
 }
