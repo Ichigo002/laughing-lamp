@@ -6,6 +6,10 @@
 #include "game-objects/Player.h"
 #include "game-objects/Wall.h"
 #include "game-objects/GameObject.h"
+#include <SDL_ttf.h>
+
+SDL_Texture* message;
+SDL_Rect msgR = {0,0, 100, 100 * 1.7};
 
 Game::Game()
 {
@@ -43,10 +47,10 @@ Game::Game()
 
         static_game = this;
         cmd_init();
-
+        
         map = new HexMap(cam, "assets/textures/terrain-v2.png");
         map->setChunkSize(16);
-        map->setFactors(.5f, .6f);
+        map->setFactors(2, .5f);
         map->setSeed(seed);
         map->generateWorld();
 
@@ -66,8 +70,16 @@ Game::Game()
         gom->add<Wall>(660, 150);
         gom->add<Wall>(760, 520);
        */
+        TTF_Init();
 
         running = true;
+        TTF_Font* Sans = TTF_OpenFont("assets/fonts/Lato-Regular.ttf", 24);
+
+        SDL_Color c = { 80, 136, 255 };
+
+        SDL_Surface* surfmsg = TTF_RenderText_Solid(Sans, "6", c);
+
+        message = SDL_CreateTextureFromSurface(renderer, surfmsg);
     }
 }
 
@@ -133,6 +145,6 @@ void Game::render()
 
     map->draw();
     gom->draw();
-
+    SDL_RenderCopy(renderer, message, NULL, &msgR);
     SDL_RenderPresent(renderer);
 }
