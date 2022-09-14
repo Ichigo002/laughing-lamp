@@ -44,7 +44,6 @@ Game::Game()
         cmd_init();
 
         map = new HexMap(cam, "assets/textures/terrain-v2.png");
-        map->debug_mode = true;
         map->setChunkSize(16);
         map->setFactors(.5f, .6f);
         map->generateWorld();

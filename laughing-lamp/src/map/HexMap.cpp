@@ -120,7 +120,7 @@ void HexMap::generateWorld()
     //Generate Chunks
     for (int y = -10; y < 10; y++)
     {
-        for (int x = -1; x < 3; x++)
+        for (int x = -10; x < 10; x++)
         {
             generateChunk(Vector2Int(w * x, h * y));
         }
@@ -134,7 +134,7 @@ void HexMap::generateChunk(Vector2Int pos)
     Chunk* c = new Chunk(pos, chunk_size);
 
     int xWidth = HEX_WIDTH * chunk_size * render_scale;
-    int yHeight = HEX_HEIGHT * chunk_size * render_scale;
+    int yHeight = HEX_HEIGHT * chunk_size * render_scale * .75f;
 
     if(debug_mode)
         std::cout << "Chunk at: " << pos << std::endl;
@@ -148,13 +148,14 @@ void HexMap::generateChunk(Vector2Int pos)
     int _r = 0, _c = 0; // r row, c col
 
     if (pos.x != 0) { pxs = static_cast<double>(pos.x) / xWidth * chunk_size; }
+    if (pos.y != 0) { pys = static_cast<double>(pos.y) / yHeight * chunk_size; }
 
-    if (pos.y > 0) 
+    /*if (pos.y > 0)
     {
         pys = (static_cast<double>(pos.y) / yHeight + 1) * chunk_size; 
     }
     if (pos.y < 0) { pys = (static_cast<double>(pos.y) / yHeight - 1) * chunk_size; }
-
+    */
     for (size_t y = 0; y < c->size; y++)
     {
         for (size_t x = 0; x < c->size; x++)
