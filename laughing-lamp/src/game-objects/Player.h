@@ -2,9 +2,9 @@
 #define PLAYER_H
 
 #include "GameObject.h"
-#include "Vector2Int.h"
-#include "MotionAnimation.h"
-#include "Camera.h"
+#include "../utility/Vector2Int.h"
+#include "../animations/MotionAnimation.h"
+#include "../utility/Camera.h"
 #include <iostream>
 
 class Player : public GameObject

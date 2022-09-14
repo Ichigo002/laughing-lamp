@@ -2,7 +2,7 @@
 #define GAME_OBJECT_MANAGER_H
 
 #include "GameObject.h"
-#include "Camera.h"
+#include "../utility/Camera.h"
 #include <SDL.h>
 #include <vector>
 #include <bitset>

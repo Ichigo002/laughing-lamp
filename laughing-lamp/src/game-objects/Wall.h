@@ -2,9 +2,9 @@
 #define WALL_H
 
 #include "GameObject.h"
-#include "Vector2Int.h"
-#include "Camera.h"
-#include "MotionAnimation.h"
+#include "../utility/Vector2Int.h"
+#include "../utility/Camera.h"
+#include "../animations/MotionAnimation.h"
 #include <iostream>
 
 class Wall : public GameObject

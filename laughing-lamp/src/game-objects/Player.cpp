@@ -1,6 +1,6 @@
 #include "Player.h"
-#include "TextureManager.h"
-#include "KeyboardHandler.h"
+#include "../utility/TextureManager.h"
+#include "../utility/KeyboardHandler.h"
 
 Player::Player(SDL_Renderer* r, Camera* cam)
 	:GameObject(r, cam)

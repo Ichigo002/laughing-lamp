@@ -5,9 +5,9 @@
 #include <SDL_image.h>
 
 #include <cstdlib>
-#include "HexMap.h"
-#include "GameObjectManager.h"
-#include "Camera.h"
+#include "map/HexMap.h"
+#include "game-objects/GameObjectManager.h"
+#include "utility/Camera.h"
 #include "cmd/CmdManager.h"
 
 class Game

@@ -1,7 +1,7 @@
 #ifndef CHUNK_H
 #define CHUNK_H
 
-#include "Vector2Int.h"
+#include "../utility/Vector2Int.h"
 
 /* Element of world generating*/
 class Chunk

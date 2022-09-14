@@ -1,11 +1,11 @@
 #include "Game.h"
-#include "TextureManager.h"
-#include "KeyboardHandler.h"
-#include "Vector2Int.h"
+#include "utility/TextureManager.h"
+#include "utility/KeyboardHandler.h"
+#include "utility/Vector2Int.h"
 #include <iostream>
-#include "Player.h"
-#include "Wall.h"
-#include "GameObject.h"
+#include "game-objects/Player.h"
+#include "game-objects/Wall.h"
+#include "game-objects/GameObject.h"
 
 Game::Game()
 {

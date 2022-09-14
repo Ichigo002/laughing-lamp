@@ -18,6 +18,38 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\animations\MotionAnimation.cpp" />
+    <ClCompile Include="src\cmd\CmdManager.cpp" />
+    <ClCompile Include="src\game-objects\GameObjectManager.cpp" />
+    <ClCompile Include="src\game-objects\Player.cpp" />
+    <ClCompile Include="src\game-objects\Wall.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\map\HexMap.cpp" />
+    <ClCompile Include="src\perlin-noise\PerlinNoise.cpp" />
+    <ClCompile Include="src\utility\Camera.cpp" />
+    <ClCompile Include="src\utility\Vector2Int.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\animations\MotionAnimation.h" />
+    <ClInclude Include="src\cmd\CmdManager.h" />
+    <ClInclude Include="src\cmd\LoopModeCommand.h" />
+    <ClInclude Include="src\cmd\SimpleCommand.h" />
+    <ClInclude Include="src\game-objects\GameObject.h" />
+    <ClInclude Include="src\game-objects\GameObjectManager.h" />
+    <ClInclude Include="src\game-objects\Player.h" />
+    <ClInclude Include="src\game-objects\Wall.h" />
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\map\Chunk.h" />
+    <ClInclude Include="src\map\HexMap.h" />
+    <ClInclude Include="src\perlin-noise\PerlinNoise.h" />
+    <ClInclude Include="src\utility\Camera.h" />
+    <ClInclude Include="src\utility\KeyboardHandler.h" />
+    <ClInclude Include="src\utility\TextureManager.h" />
+    <ClInclude Include="src\utility\Utilities.h" />
+    <ClInclude Include="src\utility\Vector2Int.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -146,38 +178,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\cmd\CmdManager.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GameObjectManager.cpp" />
-    <ClCompile Include="src\HexMap.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MotionAnimation.cpp" />
-    <ClCompile Include="src\PerlinNoise.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\Vector2Int.cpp" />
-    <ClCompile Include="src\Wall.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\Chunk.h" />
-    <ClInclude Include="src\cmd\CmdManager.h" />
-    <ClInclude Include="src\cmd\LoopModeCommand.h" />
-    <ClInclude Include="src\cmd\SimpleCommand.h" />
-    <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\GameObject.h" />
-    <ClInclude Include="src\GameObjectManager.h" />
-    <ClInclude Include="src\HexMap.h" />
-    <ClInclude Include="src\KeyboardHandler.h" />
-    <ClInclude Include="src\MotionAnimation.h" />
-    <ClInclude Include="src\PerlinNoise.h" />
-    <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\TextureManager.h" />
-    <ClInclude Include="src\Utilities.h" />
-    <ClInclude Include="src\Vector2Int.h" />
-    <ClInclude Include="src\Wall.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

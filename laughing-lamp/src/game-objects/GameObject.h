@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 #include <iostream>
-#include "Camera.h"
+#include "../utility/Camera.h"
 
 /*Abstract class*/
 class GameObject

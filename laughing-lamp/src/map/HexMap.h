@@ -3,8 +3,8 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Vector2Int.h"
-#include "Camera.h"
+#include "../utility/Vector2Int.h"
+#include "../utility/Camera.h"
 #include "Chunk.h"
 #include <vector>
 #include <cstdlib>

@@ -1,6 +1,6 @@
-#include "HexMap.h"
-#include "TextureManager.h"
-#include "PerlinNoise.h"
+#include "../map/HexMap.h"
+#include "../utility/TextureManager.h"
+#include "../perlin-noise/PerlinNoise.h"
 #include <math.h>
 #include <iostream>
 

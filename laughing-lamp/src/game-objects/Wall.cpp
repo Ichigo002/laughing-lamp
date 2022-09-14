@@ -1,6 +1,6 @@
 #include "Wall.h"
-#include "TextureManager.h"
-#include "KeyboardHandler.h"
+#include "../utility/TextureManager.h"
+#include "../utility/KeyboardHandler.h"
 
 Wall::Wall(SDL_Renderer* r, Camera* cam, int x, int y)
 	:GameObject(r, cam)

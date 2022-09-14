@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include "Chunk.h"
 
 Camera::Camera(SDL_Renderer* r, int screen_w, int screen_h)
 {
