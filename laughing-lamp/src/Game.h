@@ -3,12 +3,14 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <vector>
 
 #include <cstdlib>
 #include "map/HexMap.h"
 #include "game-objects/GameObjectManager.h"
 #include "utility/Camera.h"
 #include "cmd/CmdManager.h"
+#include "GUI/GUI_Text.h"
 
 class Game
 {
@@ -32,11 +34,14 @@ private:
     HexMap* map;
     GameObjectManager* gom;
     Camera* cam;
+
+    std::vector<GUI_Text*> debug_txts;
     
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Event _event;
     bool running;
+    bool debug_mode;
 
     int FPS;
     int frame_delay;

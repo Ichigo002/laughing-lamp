@@ -27,7 +27,7 @@ public:
 	void setText(const char* txt);
 
 	/* set the color of text */
-	void SetColor(int r, int g, int b, int a);
+	void SetColor(int r, int g, int b);
 
 	/* set Destination Rect of Text on the screen */
 	void setRect(SDL_Rect* destR);

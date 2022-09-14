@@ -1,12 +1,11 @@
+#include <iostream>
 #include "Game.h"
 #include "utility/TextureManager.h"
 #include "utility/KeyboardHandler.h"
 #include "utility/Vector2Int.h"
-#include <iostream>
 #include "game-objects/Player.h"
 #include "game-objects/Wall.h"
 #include "game-objects/GameObject.h"
-#include "GUI/GUI_Text.h"
 
 Game::Game()
 {
@@ -55,27 +54,35 @@ Game::Game()
 
         cam->set(0, 0);
 
-        //Player p(renderer);
-
         gom->add<Player>();
 
-       /* 
-        gom->add<Wall>(0, 100);
-        gom->add<Wall>(100, 100);
-        gom->add<Wall>(200, 720);
-        gom->add<Wall>(550, 400);
-        gom->add<Wall>(660, 150);
-        gom->add<Wall>(760, 520);
-       */
-
-        txt = new GUI_Text(cam, "assets/fonts/Lato-Black.ttf", 200);
-
-        txt->setText("Hello World! fdsgsh grg a hb rhga");
-        txt->setRect(0, 0, 40 * TXT_RATIO, 40);
-
-        txt->make();
-
         running = true;
+       
+        // DEBUG TEXT INFO
+        // DEBUG TEXT INFO
+        debug_mode = false;
+
+        debug_txts.push_back(new GUI_Text(cam, "assets/fonts/Lato-Regular.ttf", 200));
+        debug_txts.push_back(new GUI_Text(cam, "assets/fonts/Lato-Regular.ttf", 200));
+        debug_txts.push_back(new GUI_Text(cam, "assets/fonts/Lato-Regular.ttf", 200));
+
+        debug_txts[0]->setText("Laughing Lamp / 1.0");
+        debug_txts[0]->setRect(10, 0, 40 * TXT_RATIO, 40);
+
+        debug_txts[1]->setText("60 FPS");
+        debug_txts[1]->setRect(10, 85, 40 * TXT_RATIO, 40);
+
+        debug_txts[2]->setText("XYZ: ");
+        debug_txts[2]->setRect(10, 130, 40 * TXT_RATIO, 40);
+
+
+
+
+        for (auto& txt : debug_txts)
+        {
+            txt->SetColor(255, 255, 255);
+            txt->make();
+        }
     }
 }
 
@@ -124,10 +131,10 @@ void Game::handleEvents()
 
     if (KeyboardHandler::pressedKey(SDLK_F8, &_event))
     {
-        if(map->debug_mode)
-            map->debug_mode = false;
+        if(debug_mode)
+            debug_mode = false;
         else
-            map->debug_mode = true;
+            debug_mode = true;
     }
 
     if(_event.type == SDL_QUIT)
@@ -142,7 +149,10 @@ void Game::render()
     map->draw();
     gom->draw();
 
-    txt->draw();
+    for (auto& txt : debug_txts)
+    {
+        txt->draw();
+    }
 
     SDL_RenderPresent(renderer);
 }

@@ -47,12 +47,11 @@ void GUI_Text::setText(const char* txt)
 	_make = false;
 }
 
-void GUI_Text::SetColor(int r, int g, int b, int a)
+void GUI_Text::SetColor(int r, int g, int b)
 {
 	clr.r = r;
 	clr.g = g;
 	clr.b = b;
-	clr.a = a;
 	_make = false;
 }
 
@@ -95,7 +94,7 @@ void GUI_Text::initBase()
 	path = "assets/fonts/Lato-Regular.ttf";
 	txt = "Default Text";
 	pt_size = 150;
-	clr = { 0, 0, 0, 255 };
+	clr = { 0, 0, 0 };
 	rect = new SDL_Rect();
 	rect->x = 0;
 	rect->y = 0;
