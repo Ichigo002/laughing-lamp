@@ -21,7 +21,7 @@ public:
 
 	/* Draw the object which is active in the game world  */
 	/// <param name="only_in_viewport">If true then texture is rendered only when object is in viewport</param>
-	int drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR, bool only_in_viewport = true);
+	int drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR, bool only_in_viewport = true);
 
 	/* Draw the object who do not get involved into moving by camera */
 	int drawStatic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR);

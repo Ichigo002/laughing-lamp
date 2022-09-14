@@ -32,27 +32,21 @@ Game::Game()
         FPS = 60;
         frame_delay = 1000 / FPS;
 
-        tex = TextureManager::load(renderer, "assets/player.png");
-        destRect.x = 10;
-        destRect.y = 10;
-        destRect.w = 32;
-        destRect.h = 32;
-
                    //Here you can put seed to game
-       // srand(time(NULL));
-        //int seed = rand() % 1000000000;
-       //  std::cout << "New Seed: " << seed << std::endl;
-        // std::cin >> seed;
+         srand(time(NULL));
+        int seed = rand() % 1000000000;
+         std::cout << "New Seed: " << seed << std::endl;
+         //std::cin >> seed;
 
         cam = new Camera(renderer, Screen_W, Screen_H);
 
         static_game = this;
         cmd_init();
 
-        map = new HexMap(cam, "assets/tileset-terrain.png");
-        map->debug_mode = false;
+        map = new HexMap(cam, "assets/textures/terrain-v2.png");
+        map->debug_mode = true;
         map->setChunkSize(16);
-        map->setFactors(3, .6f);
+        map->setFactors(.5f, .6f);
         map->generateWorld();
 
         gom = new GameObjectManager(renderer, cam);
@@ -119,14 +113,16 @@ void Game::handleEvents()
     if (KeyboardHandler::pressedKey(SDLK_BACKQUOTE, &_event))
         cmd_execute();
 
-    switch (_event.type)
+    if (KeyboardHandler::pressedKey(SDLK_F8, &_event))
     {
-    case SDL_QUIT:
-        running = false;
-        break;
-    default:
-        break;
+        if(map->debug_mode)
+            map->debug_mode = false;
+        else
+            map->debug_mode = true;
     }
+
+    if(_event.type == SDL_QUIT)
+        running = false;
 }
 
 void Game::render()

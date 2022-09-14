@@ -23,7 +23,7 @@ Player::~Player()
 
 void Player::loadTexture()
 {
-	tex = TextureManager::load(render, "assets/player-animation.png");
+	tex = TextureManager::load(render, "assets/textures/player.png");
 	srcR.w = 41;
 	srcR.h = 55;
 	srcR.x = 0;

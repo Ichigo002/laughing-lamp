@@ -33,14 +33,10 @@ private:
     GameObjectManager* gom;
     Camera* cam;
     
-
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Event _event;
     bool running;
-
-    SDL_Texture* tex;
-    SDL_Rect srcRect, destRect;
 
     int FPS;
     int frame_delay;

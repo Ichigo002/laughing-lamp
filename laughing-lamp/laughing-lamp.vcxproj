@@ -34,6 +34,7 @@
   <ItemGroup>
     <ClInclude Include="src\animations\MotionAnimation.h" />
     <ClInclude Include="src\cmd\CmdManager.h" />
+    <ClInclude Include="src\cmd\DebugCommand.h" />
     <ClInclude Include="src\cmd\LoopModeCommand.h" />
     <ClInclude Include="src\cmd\SimpleCommand.h" />
     <ClInclude Include="src\game-objects\GameObject.h" />

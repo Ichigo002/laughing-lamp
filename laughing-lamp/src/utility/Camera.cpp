@@ -27,16 +27,17 @@ SDL_Renderer* Camera::getRender()
 	return render;
 }
 
-int Camera::drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, SDL_Rect* destR, bool only_in_viewport)
+int Camera::drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR, bool only_in_viewport)
 {
+	SDL_Rect r = *destR;
 	if (only_in_viewport)
 	{
 		if (!isIntoViewport(destR)) { return 0; }
 	}
 
-	destR->x += getMoveSet().x;
-	destR->y += getMoveSet().y;
-	return SDL_RenderCopy(render, texture, srcR, destR);
+	r.x += getMoveSet().x;
+	r.y += getMoveSet().y;
+	return SDL_RenderCopy(render, texture, srcR, &r);
 }
 
 int Camera::drawStatic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR)

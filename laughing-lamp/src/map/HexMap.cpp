@@ -93,6 +93,14 @@ void HexMap::draw()
     {
         drawChunk(chunk);
     }
+    if (debug_mode)
+    {
+        srcR.x = 0;
+        srcR.y = HEX_HEIGHT * 3;
+        destR.x = 0;
+        destR.y = 0;
+        camera->drawDynamic(tileset, &srcR, &destR);
+    }
 }
 
 void HexMap::generateWorld()
@@ -112,11 +120,12 @@ void HexMap::generateWorld()
     //Generate Chunks
     for (int y = -10; y < 10; y++)
     {
-        for (int x = -10; x < 10; x++)
+        for (int x = -1; x < 3; x++)
         {
             generateChunk(Vector2Int(w * x, h * y));
         }
     }
+
 }
 
 void HexMap::generateChunk(Vector2Int pos)
@@ -138,9 +147,13 @@ void HexMap::generateChunk(Vector2Int pos)
 
     int _r = 0, _c = 0; // r row, c col
 
-    if (pos.x != 0) { pxs = pos.x / xWidth * chunk_size; }
-    if (pos.y > 0) { pys = (pos.y / yHeight + 1) * chunk_size; }
-    if (pos.y < 0) { pys = (pos.y / yHeight - 1) * chunk_size; }
+    if (pos.x != 0) { pxs = static_cast<double>(pos.x) / xWidth * chunk_size; }
+
+    if (pos.y > 0) 
+    {
+        pys = (static_cast<double>(pos.y) / yHeight + 1) * chunk_size; 
+    }
+    if (pos.y < 0) { pys = (static_cast<double>(pos.y) / yHeight - 1) * chunk_size; }
 
     for (size_t y = 0; y < c->size; y++)
     {
@@ -212,11 +225,11 @@ void HexMap::drawRules(const double* v, int* row, int* col)
         getRandSrcRow(row, col, 3, 3);
     }
     /* Grass Transition */
-    else if (*v < .46f)
+    /*else if (*v < .46f)
     {
         *col = 1;
         *row = 3;
-    }
+    }*/
     /* Grass Std */
     else if (*v < .7f)
     {
@@ -225,7 +238,7 @@ void HexMap::drawRules(const double* v, int* row, int* col)
     /* Dirt before Mountain */
     else if (*v <= .78f)
     {
-        getRandSrcRow(row, col, 2, 3);
+        getRandSrcRow(row, col, 2, 1);
     }
     /* Stone */
     else if (*v <= 1.0f)
@@ -257,7 +270,24 @@ void HexMap::drawChunk(const Chunk* chunk)
                 destR.x += HEX_WIDTH / 2 * render_scale;
             }
 
+
             camera->drawDynamic(tileset, &srcR, &destR);
+
+            if (debug_mode)
+            {
+                if (y % 2 == 0 && x == 0)
+                {
+                    srcR.x = 0;
+                    srcR.y = HEX_HEIGHT * 2;
+                    camera->drawDynamic(tileset, &srcR, &destR);
+                }
+                if (y == 0 && x % 2 == 0)
+                {
+                    srcR.x = 0;
+                    srcR.y = HEX_HEIGHT * 1;
+                    camera->drawDynamic(tileset, &srcR, &destR);
+                }
+            }
         }
     }
 }
