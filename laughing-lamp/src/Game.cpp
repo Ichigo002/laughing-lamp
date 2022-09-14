@@ -35,6 +35,7 @@ Game::Game()
                    //Here you can put seed to game
          srand(time(NULL));
         int seed = rand() % 1000000000;
+        seed = 26313;
          std::cout << "New Seed: " << seed << std::endl;
          //std::cin >> seed;
 
@@ -46,6 +47,7 @@ Game::Game()
         map = new HexMap(cam, "assets/textures/terrain-v2.png");
         map->setChunkSize(16);
         map->setFactors(.5f, .6f);
+        map->setSeed(seed);
         map->generateWorld();
 
         gom = new GameObjectManager(renderer, cam);

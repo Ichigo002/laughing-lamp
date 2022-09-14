@@ -76,6 +76,7 @@ private:
     float render_scale;
     float noise_scale;
     int chunk_size;
+    float ratioAtoB; // Ratio aspect of width & Height of hexagon
 
     std::vector<Chunk*> map;
     std::vector<TileEncode> encoded_tiles;

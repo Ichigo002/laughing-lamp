@@ -15,6 +15,7 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     render_scale = 2;
     noise_scale = 2;
     chunk_size = 16;
+    ratioAtoB = .75f;
 
     anim_delay = 300;
     anim_once = false;
@@ -116,7 +117,7 @@ void HexMap::generateWorld()
     destR.h = HEX_HEIGHT * render_scale;
 
     int w = HEX_WIDTH * chunk_size * render_scale;
-    int h = HEX_HEIGHT * .75f * chunk_size * render_scale;
+    int h = HEX_HEIGHT * ratioAtoB * chunk_size * render_scale;
     //Generate Chunks
     for (int y = -10; y < 10; y++)
     {
@@ -131,10 +132,11 @@ void HexMap::generateWorld()
 void HexMap::generateChunk(Vector2Int pos)
 {
     PerlinNoise pn(seed);
+    pos.y += 200;
     Chunk* c = new Chunk(pos, chunk_size);
 
     int xWidth = HEX_WIDTH * chunk_size * render_scale;
-    int yHeight = HEX_HEIGHT * chunk_size * render_scale * .75f;
+    int yHeight = HEX_HEIGHT * ratioAtoB * chunk_size * render_scale;
 
     if(debug_mode)
         std::cout << "Chunk at: " << pos << std::endl;
@@ -150,12 +152,6 @@ void HexMap::generateChunk(Vector2Int pos)
     if (pos.x != 0) { pxs = static_cast<double>(pos.x) / xWidth * chunk_size; }
     if (pos.y != 0) { pys = static_cast<double>(pos.y) / yHeight * chunk_size; }
 
-    /*if (pos.y > 0)
-    {
-        pys = (static_cast<double>(pos.y) / yHeight + 1) * chunk_size; 
-    }
-    if (pos.y < 0) { pys = (static_cast<double>(pos.y) / yHeight - 1) * chunk_size; }
-    */
     for (size_t y = 0; y < c->size; y++)
     {
         for (size_t x = 0; x < c->size; x++)
