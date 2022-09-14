@@ -19,6 +19,8 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
 
     anim_delay = 300;
     anim_once = false;
+
+    current_water_anim = 0;
 }
 
 HexMap::~HexMap()
@@ -76,16 +78,16 @@ void HexMap::updateAnimation()
                         chunk->map[y][x] == water_id2 || 
                         chunk->map[y][x] == water_id3)
                     {
-                       r = (decodeTile(chunk->map[y][x]).srcY / HEX_HEIGHT) + 1;
-                       if (r > 2) r = 0;
+                        r = current_water_anim;
                         chunk->map[y][x] = encodeTile(&r, &c);
                     }
                 }
             }
         }
-
-        
     }
+
+    current_water_anim++;
+    if (current_water_anim > 2) current_water_anim = 0;
 }
 
 void HexMap::draw()

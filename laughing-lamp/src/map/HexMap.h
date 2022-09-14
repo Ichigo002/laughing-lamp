@@ -87,6 +87,8 @@ private:
 
     int anim_delay;
     bool anim_once;
+
+    int current_water_anim;
 };
 
 #endif
