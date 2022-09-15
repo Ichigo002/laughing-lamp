@@ -35,6 +35,8 @@ public:
 	void move(int x, int y);
 	void move(Vector2Int v);
 
+	Vector2Int getPos() { return Vector2Int(cam.x, cam.y); }
+
 	bool isIntoViewport(const SDL_Rect* rect);
 private:
 	SDL_Rect cam;

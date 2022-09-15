@@ -80,6 +80,39 @@ void GameObjectManager::eraseObject(size_t uniq)
 	}
 }
 
+GameObject* GameObjectManager::getObject(std::string tagname)
+{
+	for (auto& obj : pool)
+	{
+		if (obj->getTag() == tagname)
+			return obj;
+	}
+	return nullptr;
+}
+
+std::vector<GameObject*> GameObjectManager::GetObjects(std::string tagname)
+{
+	std::vector<GameObject*> v;
+
+	for (auto& obj : pool)
+	{
+		if (obj->getTag() == tagname)
+			v.push_back(obj);
+	}
+
+	return v;
+}
+
+GameObject* GameObjectManager::getObject(size_t uniq)
+{
+	for (auto& obj : pool)
+	{
+		if (obj->getUniqueID() == uniq)
+			return obj;
+	}
+	return nullptr;
+}
+
 size_t GameObjectManager::getSizePool()
 {
 	return dbit.count();

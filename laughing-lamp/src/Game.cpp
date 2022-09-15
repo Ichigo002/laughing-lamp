@@ -6,6 +6,7 @@
 #include "game-objects/Player.h"
 #include "game-objects/Wall.h"
 #include "game-objects/GameObject.h"
+#include <string>
 
 Game::Game()
 {
@@ -21,9 +22,9 @@ Game::Game()
 
         Uint32 flags = SDL_WINDOW_SHOWN;
         flags += SDL_WINDOW_RESIZABLE;
-        // flags += SDL_WINDOW_FULLSCREEN;
+       //  flags += SDL_WINDOW_FULLSCREEN;
 
-        window = SDL_CreateWindow("Laughing Lamp", 2000, SDL_WINDOWPOS_CENTERED, Screen_W, Screen_H, flags);
+        window = SDL_CreateWindow("Laughing Lamp", 1950, SDL_WINDOWPOS_CENTERED, Screen_W, Screen_H, flags);
         renderer = SDL_CreateRenderer(window, -1, 0);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -62,24 +63,16 @@ Game::Game()
         // DEBUG TEXT INFO
         debug_mode = false;
 
-        debug_txts.push_back(new GUI_Text(cam, "assets/fonts/Lato-Regular.ttf", 200));
-        debug_txts.push_back(new GUI_Text(cam, "assets/fonts/Lato-Regular.ttf", 200));
-        debug_txts.push_back(new GUI_Text(cam, "assets/fonts/Lato-Regular.ttf", 200));
+        const int fontpt = 36;
 
-        debug_txts[0]->setText("Laughing Lamp / 1.0");
-        debug_txts[0]->setRect(10, 0, 40 * TXT_RATIO, 40);
-
-        debug_txts[1]->setText("60 FPS");
-        debug_txts[1]->setRect(10, 85, 40 * TXT_RATIO, 40);
-
-        debug_txts[2]->setText("XYZ: ");
-        debug_txts[2]->setRect(10, 130, 40 * TXT_RATIO, 40);
-
-
-
+        debug_txts.push_back(new GUI_Text(cam, "Laughing Lamp / 1.0", 5, 0));
+        debug_txts.push_back(new GUI_Text(cam, "60 FPS", 5, fontpt * 1));
+        debug_txts.push_back(new GUI_Text(cam, "Player Pos XYZ:", 5, fontpt * 3));
+        debug_txts.push_back(new GUI_Text(cam, "0000 / 0000", 5, fontpt * 4));
 
         for (auto& txt : debug_txts)
         {
+            txt->setSize(fontpt - 4);
             txt->SetColor(255, 255, 255);
             txt->make();
         }
@@ -118,6 +111,16 @@ void Game::update()
 {
     map->updateAnimation();
     gom->update();
+
+    if (debug_mode)
+    {
+        // Player pos dispalying
+        Vector2Int p = cam->getPos();
+        p.x += cam->getWHScreen().x / 2;
+        p.y += cam->getWHScreen().y / 2;
+        debug_txts[3]->setText((std::to_string(p.x) + " / " + std::to_string(p.y)).c_str());
+        debug_txts[3]->make();
+    }
 }
 
 void Game::handleEvents()
@@ -135,6 +138,8 @@ void Game::handleEvents()
             debug_mode = false;
         else
             debug_mode = true;
+
+        map->debug_mode = debug_mode;
     }
 
     if(_event.type == SDL_QUIT)
@@ -149,10 +154,11 @@ void Game::render()
     map->draw();
     gom->draw();
 
-    for (auto& txt : debug_txts)
-    {
-        txt->draw();
-    }
+    if(debug_mode)
+        for (auto& txt : debug_txts)
+        {
+            txt->draw();
+        }
 
     SDL_RenderPresent(renderer);
 }

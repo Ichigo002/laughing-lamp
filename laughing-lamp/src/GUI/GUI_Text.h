@@ -12,16 +12,14 @@ class GUI_Text
 public:
 	GUI_Text(Camera* c);
 	GUI_Text(Camera* c, const char* path, int ptsize);
+	GUI_Text(Camera* c, const char* text, int pos_x, int pos_y);
 	~GUI_Text();
 
-	/* In order correctly work of program this method MUST be firstly or secondly called */
 	/* set font from the path for this text */
 	void setFont(const char* path);
 
-	/* In order correctly work of program this method MUST be firstly or secondly called */
-	/* Set resolution of loaded font in points */
 	/* if resolution is higher, pixels are smaller during scaling */
-	void setRes(int pt);
+	void setSize(int pt);
 
 	/* set text to display on next frame */
 	void setText(const char* txt);
@@ -32,8 +30,8 @@ public:
 	/* set Destination Rect of Text on the screen */
 	void setRect(SDL_Rect* destR);
 
-	/* set Destination Rect of Text on the screen */
-	void setRect(int x, int y, int w, int h);
+	/* Set position on the screen */
+	void SetPosition(int x, int y);
 
 	/* make ready text to render */
 	void make();
