@@ -99,14 +99,32 @@ void HexMap::updateAnimation()
 
 void HexMap::updateGenerator()
 {
+    /* RIGHT SIDE */
+
+    // Finds the furthest x value
     int xpos = 0;
     for (int i = 0; i < map.size(); i++)
     {
-        if (xpos < map[i]->pos.x)
-            xpos = map[i]->pos.x;
+        if (xpos < map[i]->pos.x + w_chunk)
+            xpos = map[i]->pos.x + w_chunk;
+    }
+    // Check if camera is out of map
+    if (xpos < camera->getPos().x + camera->getWHScreen().x)
+    {
+        // calculate new chunk on top of viewport's border
+        int ncx = int(camera->getPos().y / h_chunk) - 1;
+        int ypos = ncx * h_chunk;
+
+        int w = 0;
+        // generate new chunks until is not bottom of viewport
+        while (ypos + (w-1) * h_chunk < camera->getPos().y + camera->getWHScreen().y)
+        {
+            generateChunk(Vector2Int(xpos, ypos + w * h_chunk));
+            w++;
+        }
     }
 
-    generateChunk(Vector2Int(xpos + w_chunk, 0));
+    /* BOTTOM SIDE */
 }
 
 void HexMap::draw()
