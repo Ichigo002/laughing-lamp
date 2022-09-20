@@ -112,8 +112,8 @@ void HexMap::updateGenerator()
     if (xpos < camera->getPos().x + camera->getWHScreen().x)
     {
         // calculate new chunk on top of viewport's border
-        int ncx = int(camera->getPos().y / h_chunk) - 1;
-        int ypos = ncx * h_chunk;
+        int ncy = int(camera->getPos().y / h_chunk) - 1;
+        int ypos = ncy * h_chunk;
 
         int w = 0;
         // generate new chunks until is not bottom of viewport
