@@ -25,7 +25,8 @@
     <ClCompile Include="src\game-objects\Player.cpp" />
     <ClCompile Include="src\game-objects\Wall.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GUI\GUI_Text.cpp" />
+    <ClCompile Include="src\GUI\FontAsset.cpp" />
+    <ClCompile Include="src\GUI\UIText.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map\HexMap.cpp" />
     <ClCompile Include="src\perlin-noise\PerlinNoise.cpp" />
@@ -43,7 +44,9 @@
     <ClInclude Include="src\game-objects\Player.h" />
     <ClInclude Include="src\game-objects\Wall.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GUI\FontAsset.h" />
     <ClInclude Include="src\GUI\GUI_Text.h" />
+    <ClInclude Include="src\GUI\UIText.h" />
     <ClInclude Include="src\map\Chunk.h" />
     <ClInclude Include="src\map\HexMap.h" />
     <ClInclude Include="src\perlin-noise\PerlinNoise.h" />

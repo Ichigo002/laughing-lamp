@@ -10,7 +10,8 @@
 #include "game-objects/GameObjectManager.h"
 #include "utility/Camera.h"
 #include "cmd/CmdManager.h"
-#include "GUI/GUI_Text.h"
+#include "GUI/UIText.h"
+#include "GUI/FontAsset.h"
 
 class Game
 {
@@ -35,18 +36,22 @@ private:
     GameObjectManager* gom;
     Camera* cam;
 
-    std::vector<GUI_Text*> debug_txts;
-    
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Event _event;
     bool running;
     bool debug_mode;
 
+    std::vector<UIText*> debug_txt;
+    FontAsset* debug_font;
+
     int FPS;
     int frame_delay;
     Uint32 frame_start;
     int frame_time;
+
+    float ticks;
+    int frames;
 
 };
 

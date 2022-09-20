@@ -21,6 +21,8 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     anim_once = false;
 
     current_water_anim = 0;
+
+    far_pp.x = far_pp.y = far_np.x = far_np.y = 0;
 }
 
 HexMap::~HexMap()
@@ -43,6 +45,11 @@ void HexMap::setFactors(float render_scale, float noise_scale)
 void HexMap::setChunkSize(int size)
 {
     chunk_size = size;
+}
+
+Vector2Int HexMap::getChunkForXY(Vector2Int pos)
+{
+    return Vector2Int(pos.x / (HEX_WIDTH * chunk_size * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * chunk_size * render_scale));
 }
 
 void HexMap::updateAnimation()
@@ -90,6 +97,18 @@ void HexMap::updateAnimation()
     if (current_water_anim > 2) current_water_anim = 0;
 }
 
+void HexMap::updateGenerator()
+{
+    int xpos = 0;
+    for (int i = 0; i < map.size(); i++)
+    {
+        if (xpos < map[i]->pos.x)
+            xpos = map[i]->pos.x;
+    }
+
+    generateChunk(Vector2Int(xpos + w_chunk, 0));
+}
+
 void HexMap::draw()
 {
     for (auto& chunk : map)
@@ -106,7 +125,7 @@ void HexMap::draw()
     }
 }
 
-void HexMap::generateWorld()
+void HexMap::setupWorld()
 {
     // Setup for generating
     map.clear();
@@ -118,23 +137,15 @@ void HexMap::generateWorld()
     destR.w = HEX_WIDTH * render_scale;
     destR.h = HEX_HEIGHT * render_scale;
 
-    int w = HEX_WIDTH * chunk_size * render_scale;
-    int h = HEX_HEIGHT * ratioAtoB * chunk_size * render_scale;
-    //Generate Chunks
-    for (int y = -10; y < 10; y++)
-    {
-        for (int x = -10; x < 10; x++)
-        {
-            generateChunk(Vector2Int(w * x, h * y));
-        }
-    }
+    w_chunk = HEX_WIDTH * chunk_size * render_scale;
+    h_chunk = HEX_HEIGHT * ratioAtoB * chunk_size * render_scale;
 
+    generateChunk(Vector2Int(0, 0));
 }
 
 void HexMap::generateChunk(Vector2Int pos)
 {
     PerlinNoise pn(seed);
-    pos.y += 200;
     Chunk* c = new Chunk(pos, chunk_size);
 
     int xWidth = HEX_WIDTH * chunk_size * render_scale;

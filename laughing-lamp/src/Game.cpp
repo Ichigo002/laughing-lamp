@@ -7,6 +7,7 @@
 #include "game-objects/Wall.h"
 #include "game-objects/GameObject.h"
 #include <string>
+#include <SDL_ttf.h>
 
 Game::Game()
 {
@@ -36,7 +37,6 @@ Game::Game()
                    //Here you can put seed to game
          srand(time(NULL));
         int seed = rand() % 1000000000;
-        seed = 26313;
          std::cout << "New Seed: " << seed << std::endl;
          //std::cin >> seed;
 
@@ -49,7 +49,7 @@ Game::Game()
         map->setChunkSize(16);
         map->setFactors(2, .5f);
         map->setSeed(seed);
-        map->generateWorld();
+        map->setupWorld();
 
         gom = new GameObjectManager(renderer, cam);
 
@@ -57,24 +57,26 @@ Game::Game()
 
         gom->add<Player>();
 
+        frames = 0;
+        ticks = 0;
         running = true;
        
         // DEBUG TEXT INFO
         // DEBUG TEXT INFO
         debug_mode = false;
 
-        const int fontpt = 36;
+        SDL_Color clr = { 0, 0, 0 };
+        debug_font = new FontAsset(renderer, "assets/fonts/Lato-Regular.ttf", 36, clr);
 
-        debug_txts.push_back(new GUI_Text(cam, "Laughing Lamp / 1.0", 5, 0));
-        debug_txts.push_back(new GUI_Text(cam, "60 FPS", 5, fontpt * 1));
-        debug_txts.push_back(new GUI_Text(cam, "Player Pos XYZ:", 5, fontpt * 3));
-        debug_txts.push_back(new GUI_Text(cam, "0000 / 0000", 5, fontpt * 4));
+        debug_txt.push_back(new UIText(debug_font, "Laughing Lamp / v1.0.0"));
+        debug_txt.push_back(new UIText(debug_font, "FPS: "));
+        debug_txt.push_back(new UIText(debug_font, "======================"));
+        debug_txt.push_back(new UIText(debug_font, "Player Pos 000/ 000"));
+        debug_txt.push_back(new UIText(debug_font, "Chunk"));
 
-        for (auto& txt : debug_txts)
+        for (size_t i = 0; i < debug_txt.size(); i++)
         {
-            txt->setSize(fontpt - 4);
-            txt->SetColor(255, 255, 255);
-            txt->make();
+            debug_txt[i]->setStartingPos(5, i * 40);
         }
     }
 }
@@ -83,7 +85,6 @@ Game::~Game()
 {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-
     SDL_Quit();
 }
 
@@ -92,16 +93,29 @@ void Game::run()
     while (running)
     {
         frame_start = SDL_GetTicks();
+        frames++;
 
         handleEvents();
         update();
         render();
 
         frame_time = SDL_GetTicks() - frame_start;
+        ticks += frame_time;
 
-        if(frame_delay > frame_time)
+        if (ticks >= 1000)
+        {
+            if (debug_mode)
+                debug_txt[1]->setText("FPS: " + std::to_string(frames) + "  (SET: "+std::to_string(FPS)+")");
+
+            ticks = 0;
+            frames = 0;
+        }
+
+
+        if (frame_delay > frame_time)
         {
             SDL_Delay(frame_delay - frame_time);
+            ticks += frame_delay - frame_time;
         }
     }
     
@@ -109,7 +123,14 @@ void Game::run()
 
 void Game::update()
 {
+    //surf = TTF_RenderText_Solid(font, "Hello", txtc);
+    //tex = SDL_CreateTextureFromSurface(renderer, surf);
+    //SDL_FreeSurface(surf);
+
+    //SDL_QueryTexture(tex, nullptr, nullptr, &txtR.w, &txtR.h);
+
     map->updateAnimation();
+    map->updateGenerator();
     gom->update();
 
     if (debug_mode)
@@ -118,8 +139,11 @@ void Game::update()
         Vector2Int p = cam->getPos();
         p.x += cam->getWHScreen().x / 2;
         p.y += cam->getWHScreen().y / 2;
-        debug_txts[3]->setText((std::to_string(p.x) + " / " + std::to_string(p.y)).c_str());
-        debug_txts[3]->make();
+        debug_txt[3]->setText("XY: " + std::to_string(p.x) + " / " + std::to_string(p.y));
+        
+        Vector2Int pch = map->getChunkForXY(p);
+
+        debug_txt[4]->setText("Chunk: " + std::to_string(pch.x) + " / " + std::to_string(pch.y));
     }
 }
 
@@ -154,8 +178,9 @@ void Game::render()
     map->draw();
     gom->draw();
 
-    if(debug_mode)
-        for (auto& txt : debug_txts)
+    //UI
+    if (debug_mode)
+        for (auto& txt : debug_txt)
         {
             txt->draw();
         }

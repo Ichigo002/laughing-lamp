@@ -39,14 +39,20 @@ public:
     /* Set size of single Chunk of map*/
     void setChunkSize(int size);
 
+    /* Return the vector of position chunk for coordinates X & Y*/
+    Vector2Int getChunkForXY(Vector2Int pos);
+
     /* Updates animations of water, lava, grass etc... */
     void updateAnimation();
+
+    /* Generates new terrain for new camera position */
+    void updateGenerator();
 
     /* Draw map */
     void draw();
 
     /* Changing the values or seed of map after generate map makes no changes because there are used only during baking map */
-    void generateWorld();
+    void setupWorld();
 
     bool debug_mode = false;
 private:
@@ -87,6 +93,14 @@ private:
 
     int anim_delay;
     bool anim_once;
+
+    int w_chunk;
+    int h_chunk;
+
+    Vector2Int far_pp, far_np;
+    //far_pp -> far positive position
+    //far_np -> far negative position
+    int generate_offset = 100;
 
     int current_water_anim;
 };
