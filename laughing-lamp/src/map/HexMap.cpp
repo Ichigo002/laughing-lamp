@@ -102,24 +102,24 @@ void HexMap::updateGenerator()
     /* RIGHT SIDE */
 
     // Finds the furthest x value
-    int xpos = 0;
+    Vector2Int pos(0,0);
     for (int i = 0; i < map.size(); i++)
     {
-        if (xpos < map[i]->pos.x + w_chunk)
-            xpos = map[i]->pos.x + w_chunk;
+        if (pos.x < map[i]->pos.x + w_chunk)
+            pos.x = map[i]->pos.x + w_chunk;
     }
     // Check if camera is out of map
-    if (xpos < camera->getPos().x + camera->getWHScreen().x)
+    if (pos.x < camera->getPos().x + camera->getWHScreen().x)
     {
-        // calculate new chunk on top of viewport's border
+        // calculate new chunk's y on top of viewport's border
         int ncy = int(camera->getPos().y / h_chunk) - 1;
-        int ypos = ncy * h_chunk;
+        pos.y = ncy * h_chunk;
 
         int w = 0;
         // generate new chunks until is not bottom of viewport
-        while (ypos + (w-1) * h_chunk < camera->getPos().y + camera->getWHScreen().y)
+        while (pos.y + (w-1) * h_chunk < camera->getPos().y + camera->getWHScreen().y)
         {
-            generateChunk(Vector2Int(xpos, ypos + w * h_chunk));
+            generateChunk(Vector2Int(pos.x, pos.y + w * h_chunk));
             w++;
         }
     }
