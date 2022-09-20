@@ -19,7 +19,7 @@ Vector2Int Camera::getMoveSet()
 
 Vector2Int Camera::getWHScreen()
 {
-	return Vector2Int(cam.w - 350, cam.h - 350);
+	return Vector2Int(cam.w, cam.h);
 }
 
 SDL_Renderer* Camera::getRender()

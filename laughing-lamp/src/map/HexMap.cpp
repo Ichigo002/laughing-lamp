@@ -21,8 +21,6 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     anim_once = false;
 
     current_water_anim = 0;
-
-    far_pp.x = far_pp.y = far_np.x = far_np.y = 0;
 }
 
 HexMap::~HexMap()
@@ -50,6 +48,11 @@ void HexMap::setChunkSize(int size)
 Vector2Int HexMap::getChunkForXY(Vector2Int pos)
 {
     return Vector2Int(pos.x / (HEX_WIDTH * chunk_size * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * chunk_size * render_scale));
+}
+
+Vector2Int HexMap::getTileForXY(Vector2Int pos)
+{
+    return Vector2Int(pos.x / (HEX_WIDTH * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * render_scale));
 }
 
 void HexMap::updateAnimation()
@@ -102,12 +105,22 @@ void HexMap::updateGenerator()
     /* RIGHT SIDE */
 
     // Finds the furthest x value
-    Vector2Int pos(0,0);
+    Vector2Int pos(0, 0);
     for (int i = 0; i < map.size(); i++)
     {
         if (pos.x < map[i]->pos.x + w_chunk)
             pos.x = map[i]->pos.x + w_chunk;
     }
+
+
+    // TEMPORARY
+    if (map.size() == 0)// TEMPORARY
+    {// TEMPORARY
+        pos.x = int(camera->getPos().x / w_chunk) * w_chunk;// TEMPORARY
+        pos.y = int(camera->getPos().y / h_chunk) * w_chunk;// TEMPORARY
+    }// TEMPORARY
+
+
     // Check if camera is out of map
     if (pos.x < camera->getPos().x + camera->getWHScreen().x)
     {
@@ -157,18 +170,13 @@ void HexMap::setupWorld()
 
     w_chunk = HEX_WIDTH * chunk_size * render_scale;
     h_chunk = HEX_HEIGHT * ratioAtoB * chunk_size * render_scale;
-
-    generateChunk(Vector2Int(0, 0));
 }
 
 void HexMap::generateChunk(Vector2Int pos)
 {
     PerlinNoise pn(seed);
     Chunk* c = new Chunk(pos, chunk_size);
-
-    int xWidth = HEX_WIDTH * chunk_size * render_scale;
-    int yHeight = HEX_HEIGHT * ratioAtoB * chunk_size * render_scale;
-
+    
     if(debug_mode)
         std::cout << "Chunk at: " << pos << std::endl;
 
@@ -180,8 +188,8 @@ void HexMap::generateChunk(Vector2Int pos)
 
     int _r = 0, _c = 0; // r row, c col
 
-    if (pos.x != 0) { pxs = static_cast<double>(pos.x) / xWidth * chunk_size; }
-    if (pos.y != 0) { pys = static_cast<double>(pos.y) / yHeight * chunk_size; }
+    if (pos.x != 0) { pxs = static_cast<double>(pos.x) / w_chunk * chunk_size; }
+    if (pos.y != 0) { pys = static_cast<double>(pos.y) / h_chunk * chunk_size; }
 
     for (size_t y = 0; y < c->size; y++)
     {

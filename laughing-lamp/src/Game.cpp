@@ -69,10 +69,12 @@ Game::Game()
         debug_font = new FontAsset(renderer, "assets/fonts/Lato-Regular.ttf", 36, clr);
 
         debug_txt.push_back(new UIText(debug_font, "Laughing Lamp / v1.0.0"));
+        debug_txt.push_back(new UIText(debug_font, "Seed: " + std::to_string(seed)));
         debug_txt.push_back(new UIText(debug_font, "FPS: "));
-        debug_txt.push_back(new UIText(debug_font, "======================"));
-        debug_txt.push_back(new UIText(debug_font, "Player Pos 000/ 000"));
-        debug_txt.push_back(new UIText(debug_font, "Chunk"));
+        debug_txt.push_back(new UIText(debug_font, "==================="));
+        debug_txt.push_back(new UIText(debug_font, "Game pos"));
+        debug_txt.push_back(new UIText(debug_font, "Global Pos 000/ 000"));
+        debug_txt.push_back(new UIText(debug_font, "Chunk pos"));
 
         for (size_t i = 0; i < debug_txt.size(); i++)
         {
@@ -105,7 +107,7 @@ void Game::run()
         if (ticks >= 1000)
         {
             if (debug_mode)
-                debug_txt[1]->setText("FPS: " + std::to_string(frames) + "  (SET: "+std::to_string(FPS)+")");
+                debug_txt[2]->setText("FPS: " + std::to_string(frames) + "  (SET: "+std::to_string(FPS)+")");
 
             ticks = 0;
             frames = 0;
@@ -139,11 +141,15 @@ void Game::update()
         Vector2Int p = cam->getPos();
         p.x += cam->getWHScreen().x / 2;
         p.y += cam->getWHScreen().y / 2;
-        debug_txt[3]->setText("XY: " + std::to_string(p.x) + " / " + std::to_string(p.y));
+        debug_txt[4]->setText("GLB XY: " + std::to_string(p.x) + " / " + std::to_string(p.y));
         
-        Vector2Int pch = map->getChunkForXY(p);
+        Vector2Int p1 = map->getTileForXY(p);
 
-        debug_txt[4]->setText("Chunk: " + std::to_string(pch.x) + " / " + std::to_string(pch.y));
+        debug_txt[5]->setText("LCL XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
+        
+        p1 = map->getChunkForXY(p);
+
+        debug_txt[6]->setText("Chunk: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
     }
 }
 
@@ -164,6 +170,14 @@ void Game::handleEvents()
             debug_mode = true;
 
         map->debug_mode = debug_mode;
+    }
+
+    if (KeyboardHandler::pressedKey(SDLK_F7, &_event))
+    {
+        int seed = rand() % 1000000000;
+        map->setSeed(seed);
+        map->setupWorld();
+        debug_txt[1]->setText("Seed: " + std::to_string(seed));
     }
 
     if(_event.type == SDL_QUIT)

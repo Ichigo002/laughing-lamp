@@ -42,6 +42,9 @@ public:
     /* Return the vector of position chunk for coordinates X & Y*/
     Vector2Int getChunkForXY(Vector2Int pos);
 
+    /* Return the vector of position tile for coordinates X & Y*/
+    Vector2Int getTileForXY(Vector2Int pos);
+
     /* Updates animations of water, lava, grass etc... */
     void updateAnimation();
 
@@ -96,11 +99,6 @@ private:
 
     int w_chunk;
     int h_chunk;
-
-    Vector2Int far_pp, far_np;
-    //far_pp -> far positive position
-    //far_np -> far negative position
-    int generate_offset = 100;
 
     int current_water_anim;
 };
