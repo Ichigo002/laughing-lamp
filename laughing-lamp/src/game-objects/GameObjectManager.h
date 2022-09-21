@@ -69,7 +69,7 @@ private:
 template<class T, typename ...TArgs>
 inline T* GameObjectManager::add(TArgs && ...mArgs)
 {
-	T* obj = new T(render, camera, std::forward<TArgs>(mArgs)...);
+	T* obj = new T(camera, std::forward<TArgs>(mArgs)...);
 	size_t ix = getEmptyIndex();
 
 	if (ix > dbit.size())

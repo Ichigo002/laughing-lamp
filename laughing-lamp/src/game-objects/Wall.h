@@ -10,7 +10,7 @@
 class Wall : public GameObject
 {
 public:
-	explicit Wall(SDL_Renderer* r, Camera* cam, int x, int y);
+	explicit Wall(Camera* cam, int x, int y);
 	~Wall();
 	
 	void loadTexture() override;

@@ -39,11 +39,14 @@ public:
     /* Set size of single Chunk of map*/
     void setChunkSize(int size);
 
-    /* Return the vector of position chunk for coordinates X & Y*/
-    Vector2Int getChunkForXY(Vector2Int pos);
+    /* Converts the GLB position into Chunk number*/
+    Vector2Int convertGLB_Chunk(Vector2Int pos);
 
-    /* Return the vector of position tile for coordinates X & Y*/
-    Vector2Int getTileForXY(Vector2Int pos);
+    /* Converts the GLB position into LCL position */
+    Vector2Int convertGLB_LCL(Vector2Int pos);
+
+    /* Converts the LCL position into GLB position */
+    Vector2Int convertLCL_GLB(Vector2Int pos);
 
     /* Updates animations of water, lava, grass etc... */
     void updateAnimation();

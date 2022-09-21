@@ -9,9 +9,8 @@
 class GameObject
 {
 public:
-	GameObject(SDL_Renderer* r, Camera* cam) 
+	GameObject(Camera* cam) 
 	{
-		render = r;
 		camera = cam;
 	}
 	~GameObject() { }
@@ -61,7 +60,6 @@ public:
 	}
 
 protected:
-	SDL_Renderer* render;
 	Camera* camera;
 	SDL_Texture* tex;
 	SDL_Rect srcR, destR;

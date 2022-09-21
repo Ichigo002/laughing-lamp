@@ -2,8 +2,8 @@
 #include "../utility/TextureManager.h"
 #include "../utility/KeyboardHandler.h"
 
-Wall::Wall(SDL_Renderer* r, Camera* cam, int x, int y)
-	:GameObject(r, cam)
+Wall::Wall(Camera* cam, int x, int y)
+	:GameObject(cam)
 {
 	tagname = "Wall";
 	renderingScale = 2;
@@ -18,7 +18,7 @@ Wall::~Wall()
 
 void Wall::loadTexture()
 {
-	tex = TextureManager::load(render, "assets/wall.png");
+	tex = TextureManager::load(camera->getRender(), "assets/wall.png");
 	srcR.w = 32;
 	srcR.h = 32;
 	srcR.x = 0;
@@ -30,8 +30,8 @@ void Wall::loadTexture()
 
 void Wall::update()
 {
-	destR.x = pos.x + camera->getMoveSet().x;
-	destR.y = pos.y + camera->getMoveSet().y;
+	destR.x = pos.x;
+	destR.y = pos.y;
 }
 
 void Wall::events(SDL_Event* eve)
@@ -40,5 +40,5 @@ void Wall::events(SDL_Event* eve)
 
 void Wall::draw()
 {
-	SDL_RenderCopy(render, tex, &srcR, &destR);
+	camera->drawDynamic(tex, &srcR, &destR);
 }

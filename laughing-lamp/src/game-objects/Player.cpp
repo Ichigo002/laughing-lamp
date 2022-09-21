@@ -2,19 +2,20 @@
 #include "../utility/TextureManager.h"
 #include "../utility/KeyboardHandler.h"
 
-Player::Player(SDL_Renderer* r, Camera* cam)
-	:GameObject(r, cam)
+Player::Player(Camera* cam)
+	:GameObject(cam)
 {
 	tagname = "Player";
 	renderingScale = 2;
-	speed = 5;
+
+	std_speed = 5;
+	ctrl_speed = 10;
+
+	setPos(1000, 500);
 
 	velocity.x = velocity.y = 0;
-	pos.x = 0;
-	pos.y = 0;
-
 	animation = new MotionAnimation(&srcR, 3, 200);
-	idleAnimation();
+	_spd = std_speed;
 }
 
 Player::~Player()
@@ -24,7 +25,7 @@ Player::~Player()
 
 void Player::loadTexture()
 {
-	tex = TextureManager::load(render, "assets/textures/player.png");
+	tex = TextureManager::load(camera->getRender(), "assets/textures/player.png");
 	srcR.w = 41;
 	srcR.h = 55;
 	srcR.x = 0;
@@ -45,64 +46,63 @@ void Player::update()
 void Player::events(SDL_Event* eve)
 {
 	// W
-	if (KeyboardHandler::pressedKey(SDLK_w, eve)) 
-	{ 
-		velocity.y = -1; 
-		animation->setDelays(200);
-		animation->start(1,0); 
-	}
-	if (KeyboardHandler::releasedKey(SDLK_w, eve)) 
-	{ 
-		velocity.y = 0;
-		idleAnimation();
-	}
+	if (KeyboardHandler::pressedKey(SDLK_w, eve)) velocity.y = -1;  
 	// S
-	if (KeyboardHandler::pressedKey(SDLK_s, eve)) 
-	{ 
-		velocity.y = 1;
-		animation->setDelays(150);
-		animation->start(0, 0); 
-	}
-	if (KeyboardHandler::releasedKey(SDLK_s, eve)) 
-	{
-		velocity.y = 0;
-		idleAnimation();
-	}
+	if (KeyboardHandler::pressedKey(SDLK_s, eve)) velocity.y = 1;
 	// A
-	if (KeyboardHandler::pressedKey(SDLK_a, eve)) 
-	{ 
-		velocity.x = -1;
-		animation->setDelays(150);
-		animation->start(2, 0);
-	}
-	if (KeyboardHandler::releasedKey(SDLK_a, eve)) 
-	{ 
-		velocity.x = 0;
-		idleAnimation();
-	}
+	if (KeyboardHandler::pressedKey(SDLK_a, eve)) velocity.x = -1;
 	// D
-	if (KeyboardHandler::pressedKey(SDLK_d, eve)) 
-	{ 
-		velocity.x = 1;
+	if (KeyboardHandler::pressedKey(SDLK_d, eve)) velocity.x = 1;
+	//Ctrl
+	if (KeyboardHandler::pressedKey(SDLK_LCTRL, eve)) _spd = ctrl_speed;
+
+	//releases
+	if (KeyboardHandler::releasedKey(SDLK_LCTRL, eve)) _spd = std_speed;
+	if (KeyboardHandler::releasedKey(SDLK_w, eve) || KeyboardHandler::releasedKey(SDLK_s, eve)) velocity.y = 0;
+	if (KeyboardHandler::releasedKey(SDLK_a, eve) || KeyboardHandler::releasedKey(SDLK_d, eve)) velocity.x = 0;
+
+	// ANIMATION PLAYING
+	if (velocity.y > 0)
+	{
+		animation->setDelays(150);
+		animation->start(0, 0);
+	}
+	if (velocity.y < 0)
+	{
+		animation->setDelays(200);
+		animation->start(1, 0);
+	}
+	if (velocity.x > 0)
+	{
 		animation->setDelays(150);
 		animation->start(3, 0);
 	}
-	if (KeyboardHandler::releasedKey(SDLK_d, eve)) 
+	if (velocity.x < 0)
 	{
-		velocity.x = 0;
-		idleAnimation();
+		animation->setDelays(150);
+		animation->start(2, 0);
 	}
-	pos.x = speed * velocity.x;
-	pos.y = speed * velocity.y;
-}
+	if (velocity.x == 0 && velocity.y == 0)
+	{
+		animation->setDelays(600);
+		animation->start(4, 0);
+	}
 
-void Player::idleAnimation()
-{
-	animation->setDelays(600);
-	animation->start(4, 0);
+	pos.x = _spd * velocity.x;
+	pos.y = _spd * velocity.y;
 }
 
 void Player::draw()
 {
-	SDL_RenderCopy(render, tex, &srcR, &destR);
+	camera->drawStatic(tex, &srcR, &destR);
+}
+
+void Player::setPos(Vector2Int pos)
+{
+	camera->set(pos.x, pos.y);
+}
+
+void Player::setPos(int x, int y)
+{
+	setPos(Vector2Int(x, y));
 }

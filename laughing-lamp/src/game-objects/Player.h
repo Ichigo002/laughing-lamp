@@ -10,7 +10,7 @@
 class Player : public GameObject
 {
 public:
-	explicit Player(SDL_Renderer* r, Camera* cam);
+	explicit Player(Camera* cam);
 	~Player();
 	
 	void loadTexture() override;
@@ -18,13 +18,18 @@ public:
 	void events(SDL_Event* eve) override;
 	void draw() override;
 
+	void setPos(Vector2Int pos);
+	void setPos(int x, int y);
+
 private:
-	void idleAnimation();
 
 	MotionAnimation* animation;
 	Vector2Int velocity;
 	Vector2Int pos;
-	float speed;
+
+	float _spd;
+	float std_speed;
+	float ctrl_speed;
 };
 
 #endif

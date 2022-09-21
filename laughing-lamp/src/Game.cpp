@@ -47,7 +47,7 @@ Game::Game()
         
         map = new HexMap(cam, "assets/textures/terrain-v2.png");
         map->setChunkSize(16);
-        map->setFactors(1, .5f);
+        map->setFactors(1, .2f);
         map->setSeed(seed);
         map->setupWorld();
 
@@ -72,9 +72,10 @@ Game::Game()
         debug_txt.push_back(new UIText(debug_font, "Seed: " + std::to_string(seed)));
         debug_txt.push_back(new UIText(debug_font, "FPS: "));
         debug_txt.push_back(new UIText(debug_font, "==================="));
-        debug_txt.push_back(new UIText(debug_font, "Game pos"));
-        debug_txt.push_back(new UIText(debug_font, "Global Pos 000/ 000"));
-        debug_txt.push_back(new UIText(debug_font, "Chunk pos"));
+        debug_txt.push_back(new UIText(debug_font, "GLB"));
+        debug_txt.push_back(new UIText(debug_font, "GLBR"));
+        debug_txt.push_back(new UIText(debug_font, "LCL"));
+        debug_txt.push_back(new UIText(debug_font, "Chunk"));
 
         for (size_t i = 0; i < debug_txt.size(); i++)
         {
@@ -141,15 +142,19 @@ void Game::update()
         Vector2Int p = cam->getPos();
         p.x += cam->getWHScreen().x / 2;
         p.y += cam->getWHScreen().y / 2;
-        debug_txt[4]->setText("GLB XY: " + std::to_string(p.x) + " / " + std::to_string(p.y));
+        debug_txt[4]->setText("GLB XY: " + std::to_string(p.x) + " / " + std::to_string(p.y) + " (R)");
         
-        Vector2Int p1 = map->getTileForXY(p);
+        Vector2Int p1 = map->convertGLB_LCL(p);
 
-        debug_txt[5]->setText("LCL XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
+        debug_txt[6]->setText("LCL XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
         
-        p1 = map->getChunkForXY(p);
+        p1 = map->convertLCL_GLB(p1);
+        debug_txt[5]->setText("GLB XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
 
-        debug_txt[6]->setText("Chunk: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
+        p1 = map->convertGLB_Chunk(p);
+        
+
+        debug_txt[7]->setText("Chunk: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
     }
 }
 

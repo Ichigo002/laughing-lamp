@@ -46,7 +46,7 @@ void HexMap::setChunkSize(int size)
     chunk_size = size;
 }
 
-Vector2Int HexMap::getChunkForXY(Vector2Int pos)
+Vector2Int HexMap::convertGLB_Chunk(Vector2Int pos)
 {
     if (pos.x < 0)
         pos.x -= w_chunk;
@@ -55,9 +55,14 @@ Vector2Int HexMap::getChunkForXY(Vector2Int pos)
     return Vector2Int(pos.x / (HEX_WIDTH * chunk_size * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * chunk_size * render_scale));
 }
 
-Vector2Int HexMap::getTileForXY(Vector2Int pos)
+Vector2Int HexMap::convertGLB_LCL(Vector2Int pos)
 {
     return Vector2Int(pos.x / (HEX_WIDTH * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * render_scale));
+}
+
+Vector2Int HexMap::convertLCL_GLB(Vector2Int pos)
+{
+    return Vector2Int(pos.x * (HEX_WIDTH * render_scale), pos.y * (HEX_HEIGHT * ratioAtoB * render_scale));
 }
 
 void HexMap::updateAnimation()
@@ -118,7 +123,7 @@ void HexMap::updateGenerator()
         {
             if (!existChunk(pp))
             {
-                Vector2Int crch = getChunkForXY(pp);
+                Vector2Int crch = convertGLB_Chunk(pp);
                 crch.x *= w_chunk;
                 crch.y *= h_chunk;
                 generateChunk(crch);
