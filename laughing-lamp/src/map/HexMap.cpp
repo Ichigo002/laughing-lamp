@@ -21,6 +21,7 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     anim_once = false;
 
     current_water_anim = 0;
+    generating_edge_offset = 400;
 }
 
 HexMap::~HexMap()
@@ -47,6 +48,10 @@ void HexMap::setChunkSize(int size)
 
 Vector2Int HexMap::getChunkForXY(Vector2Int pos)
 {
+    if (pos.x < 0)
+        pos.x -= w_chunk;
+    if (pos.y < 0)
+        pos.y -= h_chunk;
     return Vector2Int(pos.x / (HEX_WIDTH * chunk_size * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * chunk_size * render_scale));
 }
 
@@ -102,42 +107,27 @@ void HexMap::updateAnimation()
 
 void HexMap::updateGenerator()
 {
-    /* RIGHT SIDE */
+    Vector2Int pp(camera->getPos());
+    Vector2Int edge_sc(camera->getPos().x + camera->getWHScreen().x + generating_edge_offset, camera->getPos().y + camera->getWHScreen().y + generating_edge_offset);
+    pp.x -= generating_edge_offset;
+    pp.y -= generating_edge_offset;
 
-    // Finds the furthest x value
-    Vector2Int pos(0, 0);
-    for (int i = 0; i < map.size(); i++)
+    while (pp.x < edge_sc.x)
     {
-        if (pos.x < map[i]->pos.x + w_chunk)
-            pos.x = map[i]->pos.x + w_chunk;
-    }
-
-
-    // TEMPORARY
-    if (map.size() == 0)// TEMPORARY
-    {// TEMPORARY
-        pos.x = int(camera->getPos().x / w_chunk) * w_chunk;// TEMPORARY
-        pos.y = int(camera->getPos().y / h_chunk) * w_chunk;// TEMPORARY
-    }// TEMPORARY
-
-
-    // Check if camera is out of map
-    if (pos.x < camera->getPos().x + camera->getWHScreen().x)
-    {
-        // calculate new chunk's y on top of viewport's border
-        int ncy = int(camera->getPos().y / h_chunk) - 1;
-        pos.y = ncy * h_chunk;
-
-        int w = 0;
-        // generate new chunks until is not bottom of viewport
-        while (pos.y + (w-1) * h_chunk < camera->getPos().y + camera->getWHScreen().y)
+        while (pp.y < edge_sc.y)
         {
-            generateChunk(Vector2Int(pos.x, pos.y + w * h_chunk));
-            w++;
+            if (!existChunk(pp))
+            {
+                Vector2Int crch = getChunkForXY(pp);
+                crch.x *= w_chunk;
+                crch.y *= h_chunk;
+                generateChunk(crch);
+            }
+            pp.y += h_chunk;
         }
+        pp.x += w_chunk;
+        pp.y = camera->getPos().y;
     }
-
-    /* BOTTOM SIDE */
 }
 
 void HexMap::draw()
@@ -212,8 +202,33 @@ void HexMap::generateChunk(Vector2Int pos)
             c->map[y][x] = encodeTile(&_r, &_c);
         }
     }
-
     map.push_back(c);
+}
+
+bool HexMap::existChunk(Vector2Int pos)
+{
+    if (pos.x < 0)
+        pos.x -= w_chunk;
+    if (pos.y < 0)
+        pos.y -= h_chunk;
+
+    pos.x /= w_chunk;
+    pos.y /= h_chunk;
+
+    pos.x *= w_chunk;
+    pos.y *= h_chunk;
+
+    for (auto& ch : map)
+    {
+        if (ch->pos == pos)
+            return true;
+    }
+    return false;
+}
+
+bool HexMap::existChunk(int x, int y)
+{
+    return existChunk(Vector2Int(x, y));
 }
 
 int HexMap::encodeTile(const int* row, const int* col)

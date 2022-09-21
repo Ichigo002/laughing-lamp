@@ -61,9 +61,12 @@ public:
 private:
     /* Generate single chunk */
     void generateChunk(Vector2Int pos);
+
+    /* Check position for chunk if exists there returns true else false */
+    bool existChunk(Vector2Int pos);
+    bool existChunk(int x, int y);
     
     /* Encode Tile into int number */
-    /// <param name="nv">noise value for which tile will be encoded</param>
     int encodeTile(const int* row, const int* col);
 
     /* Decode value into source Rect x and y */
@@ -96,6 +99,8 @@ private:
 
     int anim_delay;
     bool anim_once;
+
+    int generating_edge_offset;
 
     int w_chunk;
     int h_chunk;

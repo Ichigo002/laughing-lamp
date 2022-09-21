@@ -15,6 +15,7 @@ public:
     friend Vector2Int& operator-(Vector2Int& vec1, const Vector2Int& vec2);
     friend Vector2Int& operator*(Vector2Int& vec1, const Vector2Int& vec2);
     friend Vector2Int& operator/(Vector2Int& vec1, const Vector2Int& vec2);
+    friend bool operator==(const Vector2Int& vec1, const Vector2Int& vec2);
     friend std::ostream& operator<<(std::ostream& stream, const Vector2Int& vec);
 
     int x;

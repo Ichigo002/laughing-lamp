@@ -42,6 +42,11 @@ Vector2Int& operator/(Vector2Int& vec1, const Vector2Int& vec2)
     return vec1;
 }
 
+bool operator==(const Vector2Int& vec1, const Vector2Int& vec2)
+{
+    return vec1.x == vec2.x && vec1.y == vec2.y;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Vector2Int& vec)
 {
     stream << "(" << vec.x << ", " << vec.y << ")";
