@@ -69,11 +69,11 @@ void MotionAnimation::update()
 		if (verticalAnimation)
 		{
 			src->x = st_col * src->w;
-			src->y = src->h * tmp_dlv;
+			src->y = src->h * tmp_dlv + st_row * src->h;
 		}
 		else 
 		{
-			src->x = src->w * tmp_dlv;
+			src->x = src->w * tmp_dlv + st_col * src->w;
 			src->y = st_row * src->h;
 		}
 	}

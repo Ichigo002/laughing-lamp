@@ -1,8 +1,11 @@
 #include "Camera.h"
 
-Camera::Camera(SDL_Renderer* r, int screen_w, int screen_h)
+Camera::Camera(SDL_Renderer* r, int sw, int sh)
 {
-	cam = { 0, 0, screen_w, screen_h };
+	cam.x = 0;
+	cam.y = 0;
+	cam.w = sw;
+	cam.h = sh;
 	render = r;
 	extra_offset = 100;
 }
@@ -72,6 +75,23 @@ void Camera::move(Vector2Int v)
 	move(v.x, v.y);
 }
 
+void Camera::update(SDL_Event* eve)
+{
+	if (eve->type == SDL_WINDOWEVENT)
+	{
+		if (eve->window.event == SDL_WINDOWEVENT_RESIZED)
+		{
+			cam.w = eve->window.data1;
+			cam.h = eve->window.data2;
+			resized = true;
+		}
+	}
+	else
+	{
+		resized = false;
+	}
+}
+
 bool Camera::isIntoViewport(const SDL_Rect* rect)
 {
 	if (
@@ -86,3 +106,4 @@ bool Camera::isIntoViewport(const SDL_Rect* rect)
 
 	return false;
 }
+

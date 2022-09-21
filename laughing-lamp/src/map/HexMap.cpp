@@ -173,7 +173,7 @@ void HexMap::generateChunk(Vector2Int pos)
     Chunk* c = new Chunk(pos, chunk_size);
     
     if(debug_mode)
-        std::cout << "Chunk at: " << pos << std::endl;
+        std::cout << "---\nNew Chunk at: " << pos << std::endl;
 
     double rel_x = 0;
     double rel_y = 0;
@@ -193,11 +193,6 @@ void HexMap::generateChunk(Vector2Int pos)
             rel_x = x + pxs;
             rel_y = y + pys;
 
-            if (debug_mode && x == 0 && y == 0)
-            {
-                std::cout << "| rel_x = " << rel_x << std::endl;
-                std::cout << "| rel_y = " << rel_y << std::endl << std::endl;
-            }
             double px = rel_x / ((double)chunk_size);
             double py = rel_y / ((double)chunk_size);
 

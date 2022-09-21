@@ -8,7 +8,7 @@
 class Camera
 {
 public:
-	Camera(SDL_Renderer* r, int screen_w, int screen_h);
+	Camera(SDL_Renderer* r, int sw, int sh);
 	~Camera();
 
 	/* Returns vector of move relative to the camera */
@@ -35,13 +35,17 @@ public:
 	void move(int x, int y);
 	void move(Vector2Int v);
 
-	Vector2Int getPos() { return Vector2Int(cam.x, cam.y); }
+	void update(SDL_Event* eve);
+
+	inline Vector2Int getPos() { return Vector2Int(cam.x, cam.y); }
 
 	bool isIntoViewport(const SDL_Rect* rect);
+	inline bool resizedViewport() { return resized; }
 private:
 	SDL_Rect cam;
 	SDL_Renderer* render;
 
+	bool resized = false;
 	int extra_offset; // additionl field where objects are rendered
 };
 

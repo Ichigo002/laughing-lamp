@@ -18,15 +18,15 @@ Game::Game()
     }
     else
     {
-        int Screen_W = 1920;
-        int Screen_H = 1080;
+        int Screen_W = 960;
+        int Screen_H = 720;
 
         Uint32 flags = SDL_WINDOW_SHOWN;
         flags += SDL_WINDOW_RESIZABLE;
-       //  flags += SDL_WINDOW_FULLSCREEN;
+        //flags += SDL_WINDOW_FULLSCREEN;
 
         window = SDL_CreateWindow("Laughing Lamp", 1950, SDL_WINDOWPOS_CENTERED, Screen_W, Screen_H, flags);
-        renderer = SDL_CreateRenderer(window, -1, 0);
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
@@ -163,6 +163,7 @@ void Game::handleEvents()
     SDL_PollEvent(&_event);
 
     gom->events(&_event);
+    cam->update(&_event);
 
     if (KeyboardHandler::pressedKey(SDLK_BACKQUOTE, &_event))
         cmd_execute();
@@ -185,8 +186,81 @@ void Game::handleEvents()
         debug_txt[1]->setText("Seed: " + std::to_string(seed));
     }
 
-    if(_event.type == SDL_QUIT)
+    switch (_event.type)
+    {
+    case SDL_QUIT:
         running = false;
+        break;
+    //case SDL_MINI
+    }
+
+    if (_event.type == SDL_WINDOWEVENT) {
+        switch (_event.window.event) {
+        case SDL_WINDOWEVENT_SHOWN:
+            SDL_Log("Window %d shown", _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_HIDDEN:
+            SDL_Log("Window %d hidden", _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_EXPOSED:
+            SDL_Log("Window %d exposed", _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_MOVED:
+            SDL_Log("Window %d moved to %d,%d",
+                _event.window.windowID, _event.window.data1,
+                _event.window.data2);
+            break;
+        case SDL_WINDOWEVENT_RESIZED:
+            SDL_Log("Window %d resized to %dx%d",
+                _event.window.windowID, _event.window.data1,
+                _event.window.data2);
+            break;
+        case SDL_WINDOWEVENT_SIZE_CHANGED:
+            SDL_Log("Window %d size changed to %dx%d",
+                _event.window.windowID, _event.window.data1,
+                _event.window.data2);
+            break;
+        case SDL_WINDOWEVENT_MINIMIZED:
+            SDL_Log("Window %d minimized", _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_MAXIMIZED:
+            SDL_Log("Window %d maximized", _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_RESTORED:
+            SDL_Log("Window %d restored", _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_ENTER:
+            SDL_Log("Mouse entered window %d",
+                _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_LEAVE:
+            SDL_Log("Mouse left window %d", _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_FOCUS_GAINED:
+            SDL_Log("Window %d gained keyboard focus",
+                _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_FOCUS_LOST:
+            SDL_Log("Window %d lost keyboard focus",
+                _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_CLOSE:
+            SDL_Log("Window %d closed", _event.window.windowID);
+            break;
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+        case SDL_WINDOWEVENT_TAKE_FOCUS:
+            SDL_Log("Window %d is offered a focus", _event.window.windowID);
+            break;
+        case SDL_WINDOWEVENT_HIT_TEST:
+            SDL_Log("Window %d has a special hit test", _event.window.windowID);
+            break;
+#endif
+        default:
+            SDL_Log("Window %d got unknown event %d",
+                _event.window.windowID, _event.window.event);
+            break;
+        }
+    }
 }
 
 void Game::render()
