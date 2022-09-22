@@ -15,7 +15,7 @@ struct BPPointer
 class BuildMap
 {
 public:
-	BuildMap(Camera* c, int whex, int hhex, float render_Scale, float ratio);
+	BuildMap(Camera* c);
 	~BuildMap();
 
 	/// <summary>
@@ -105,11 +105,6 @@ private:
 	Camera* c;
 	std::vector<BBlock*> vblocks; // All blocks on the map
 	std::vector<BPPointer> bmap; // Map of pointers into
-
-	int whex; // width of hexagon
-	int hhex; // height of hexagon
-	float render_scale;
-	float ratioAtoB;
 
 	bool placeByCursor;
 	int amountPlacing;

@@ -12,10 +12,8 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     srand(time(NULL));
     seed = rand() % 9000000000;
 
-    render_scale = 2;
     noise_scale = 2;
     chunk_size = 16;
-    ratioAtoB = .75f;
 
     anim_delay = 300;
     anim_once = false;
@@ -35,9 +33,8 @@ void HexMap::setSeed(int seed)
     this->seed = seed;
 }
 
-void HexMap::setFactors(float render_scale, float noise_scale)
+void HexMap::setFactor(float noise_scale)
 {
-    this->render_scale = render_scale;
     this->noise_scale = noise_scale;
 }
 
@@ -52,21 +49,7 @@ Vector2Int HexMap::convertGLB_Chunk(Vector2Int pos)
         pos.x -= w_chunk;
     if (pos.y < 0)
         pos.y -= h_chunk;
-    return Vector2Int(pos.x / (HEX_WIDTH * chunk_size * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * chunk_size * render_scale));
-}
-
-Vector2Int HexMap::convertGLB_LCL(Vector2Int pos)
-{
-    if (pos.y < 0)
-        pos.y -= (HEX_HEIGHT * ratioAtoB * render_scale);
-    if (pos.x < 0)
-        pos.x -= (HEX_WIDTH * render_scale);
-    return Vector2Int(pos.x / (HEX_WIDTH * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * render_scale));
-}
-
-Vector2Int HexMap::convertLCL_GLB(Vector2Int pos)
-{
-    return Vector2Int(pos.x * (HEX_WIDTH * render_scale), pos.y * (HEX_HEIGHT * ratioAtoB * render_scale));
+    return Vector2Int(pos.x / (HEX_WIDTH * chunk_size * MAP_RENDER_SCALE), pos.y / (HEX_HEIGHT * RATIOHEX_H * chunk_size * MAP_RENDER_SCALE));
 }
 
 void HexMap::updateAnimation()
@@ -91,7 +74,7 @@ void HexMap::updateAnimation()
 
     for (auto& chunk : map)
     {
-        SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * render_scale, chunk_size * HEX_HEIGHT * .75f * render_scale };
+        SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * MAP_RENDER_SCALE, chunk_size * HEX_HEIGHT * .75f * MAP_RENDER_SCALE };
         if (camera->isIntoViewport(&rc))
         {
             for (size_t y = 0; y < chunk->size; y++)
@@ -164,11 +147,11 @@ void HexMap::setupWorld()
     srcR.w = HEX_WIDTH;
     srcR.h = HEX_HEIGHT;
 
-    destR.w = HEX_WIDTH * render_scale;
-    destR.h = HEX_HEIGHT * render_scale;
+    destR.w = HEX_WIDTH * MAP_RENDER_SCALE;
+    destR.h = HEX_HEIGHT * MAP_RENDER_SCALE;
 
-    w_chunk = HEX_WIDTH * chunk_size * render_scale;
-    h_chunk = HEX_HEIGHT * ratioAtoB * chunk_size * render_scale;
+    w_chunk = HEX_WIDTH * chunk_size * MAP_RENDER_SCALE;
+    h_chunk = HEX_HEIGHT * RATIOHEX_H * chunk_size * MAP_RENDER_SCALE;
 }
 
 void HexMap::generateChunk(Vector2Int pos)
@@ -305,7 +288,7 @@ void HexMap::drawRules(const double* v, int* row, int* col)
 
 void HexMap::drawChunk(const Chunk* chunk)
 {
-    SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * render_scale, chunk_size * HEX_HEIGHT * ratioAtoB * render_scale};
+    SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * MAP_RENDER_SCALE, chunk_size * HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE};
     if (!camera->isIntoViewport(&rc))
         return;
 
@@ -317,12 +300,12 @@ void HexMap::drawChunk(const Chunk* chunk)
             srcR.x = t.srcX;
             srcR.y = t.srcY;
 
-            destR.x = x * HEX_WIDTH * render_scale + chunk->pos.x;
-            destR.y = y * (HEX_HEIGHT * ratioAtoB) * render_scale + chunk->pos.y;
+            destR.x = x * HEX_WIDTH * MAP_RENDER_SCALE + chunk->pos.x;
+            destR.y = y * (HEX_HEIGHT * RATIOHEX_H) * MAP_RENDER_SCALE + chunk->pos.y;
 
             if ((y + 1) % 2 == 0)
             {
-                destR.x += HEX_WIDTH / 2 * render_scale;
+                destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
             }
 
 

@@ -39,7 +39,6 @@ int Game::_init_objects()
 {
     // Camera
     cam = new Camera(renderer, iScreen_W, iScreen_H);
-    cam->set(0, 0);
     //Game Obejct Manager
     gom = new GameObjectManager(renderer, cam);
     gom->add<Player>();
@@ -55,13 +54,14 @@ int Game::_init_maps()
     // HexMap
     hexmap = new HexMap(cam, "assets/textures/terrain-v2.png");
     hexmap->setChunkSize(16);
-    hexmap->setFactors(2, .2f);
+    hexmap->setFactor(.2f);
     hexmap->setSeed(seed);
     hexmap->setupWorld();
 
     // BuildMap
-    buildmap = new BuildMap(cam, HEX_WIDTH, HEX_HEIGHT, 2, .75f);
+    buildmap = new BuildMap(cam);
     buildmap->put(Vector2Int(16, -15), "Walle");
+    buildmap->enableCursorPlacing("Walle", -1);
 
     return 0;
 }
@@ -78,7 +78,7 @@ int Game::_init_debug()
     debug_txt.push_back(new UIText(debug_font, "FPS: "));
     debug_txt.push_back(new UIText(debug_font, "==================="));
     debug_txt.push_back(new UIText(debug_font, "GLB"));
-    debug_txt.push_back(new UIText(debug_font, "GLBR"));
+    //debug_txt.push_back(new UIText(debug_font, "GLBR"));
     debug_txt.push_back(new UIText(debug_font, "LCL"));
     debug_txt.push_back(new UIText(debug_font, "Chunk"));
 
@@ -168,12 +168,6 @@ void Game::run()
 
 void Game::update()
 {
-    //surf = TTF_RenderText_Solid(font, "Hello", txtc);
-    //tex = SDL_CreateTextureFromSurface(renderer, surf);
-    //SDL_FreeSurface(surf);
-
-    //SDL_QueryTexture(tex, nullptr, nullptr, &txtR.w, &txtR.h);
-
     hexmap->updateAnimation();
     hexmap->updateGenerator();
     buildmap->update();
@@ -187,17 +181,17 @@ void Game::update()
         p.y += cam->getWHScreen().y / 2;
         debug_txt[4]->setText("GLB XY: " + std::to_string(p.x) + " / " + std::to_string(p.y) + " (R)");
         
-        Vector2Int p1 = hexmap->convertGLB_LCL(p);
+        Vector2Int p1 = cam->convertGLB_LCL(p);
 
-        debug_txt[6]->setText("LCL XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
+        debug_txt[5]->setText("LCL XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
         
-        p1 = hexmap->convertLCL_GLB(p1);
-        debug_txt[5]->setText("GLB XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
+       // p1 = cam->convertLCL_GLB(p1);
+        //debug_txt[5]->setText("GLB XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
 
         p1 = hexmap->convertGLB_Chunk(p);
         
 
-        debug_txt[7]->setText("Chunk: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
+        debug_txt[6]->setText("Chunk: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
     }
 }
 

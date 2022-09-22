@@ -9,9 +9,6 @@
 #include <vector>
 #include <cstdlib>
 
-#define HEX_WIDTH 28
-#define HEX_HEIGHT 32
-
 /* Direct position to source to take the hex picture */
 struct TileEncode
 {
@@ -36,19 +33,13 @@ public:
     /* Set parameters for map */
     /// <param name="render_scale">Rendering scale of hexagons</param>
     /// <param name="noise_scale">Perlin Noise value generating of map</param>
-    void setFactors(float render_scale, float noise_scale = 40);
+    void setFactor(float noise_scale = 2);
 
     /* Set size of single Chunk of map*/
     void setChunkSize(int size);
 
     /* Converts the GLB position into Chunk number*/
     Vector2Int convertGLB_Chunk(Vector2Int pos);
-
-    /* Converts the GLB position into LCL position */
-    Vector2Int convertGLB_LCL(Vector2Int pos);
-
-    /* Converts the LCL position into GLB position */
-    Vector2Int convertLCL_GLB(Vector2Int pos);
 
     /* Updates animations of water, lava, grass etc... */
     void updateAnimation();
@@ -90,10 +81,8 @@ private:
     void getRandSrcRow(int* src_row, int* src_col, int dest_col, int leng);
 
     int seed;
-    float render_scale;
     float noise_scale;
     int chunk_size;
-    float ratioAtoB; // Ratio aspect of width & Height of hexagon
 
     std::vector<Chunk*> map;
     std::vector<TileEncode> encoded_tiles;

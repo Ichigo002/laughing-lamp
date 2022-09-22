@@ -30,6 +30,16 @@ SDL_Renderer* Camera::getRender()
 	return render;
 }
 
+Vector2Int Camera::translateMouseToGLB()
+{
+	return Vector2Int(cmpos.x - getMoveSet().x, cmpos.y - getMoveSet().y);
+}
+
+Vector2Int Camera::getMouse()
+{
+	return cmpos;
+}
+
 int Camera::drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR, bool only_in_viewport)
 {
 	SDL_Rect r = *destR;
@@ -75,8 +85,27 @@ void Camera::move(Vector2Int v)
 	move(v.x, v.y);
 }
 
+Vector2Int Camera::convertGLB_LCL(Vector2Int pos)
+{
+	if (pos.y < 0)
+		pos.y -= (HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE);
+	if (pos.x < 0)
+		pos.x -= (HEX_WIDTH * MAP_RENDER_SCALE);
+	return Vector2Int(pos.x / (HEX_WIDTH * MAP_RENDER_SCALE), pos.y / (HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE));
+}
+
+Vector2Int Camera::convertLCL_GLB(Vector2Int pos)
+{
+	return Vector2Int(pos.x * (HEX_WIDTH * MAP_RENDER_SCALE), pos.y * (HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE));
+}
+
 void Camera::update(SDL_Event* eve)
 {
+	if (eve->type == SDL_MOUSEMOTION)
+	{
+		cmpos.x = eve->button.x;
+		cmpos.y = eve->button.y;
+	}
 	if (eve->type == SDL_WINDOWEVENT)
 	{
 		if (eve->window.event == SDL_WINDOWEVENT_RESIZED)

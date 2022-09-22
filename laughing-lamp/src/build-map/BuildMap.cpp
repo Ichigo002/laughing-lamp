@@ -1,13 +1,9 @@
 #include "BuildMap.h"
 #include <iostream>
 
-BuildMap::BuildMap(Camera* c, int whex, int hhex, float render_Scale, float ratio)
+BuildMap::BuildMap(Camera* c)
 {
 	this->c = c;
-	this->whex = whex;
-	this->hhex = hhex;
-	this->render_scale = render_Scale;
-	this->ratioAtoB = ratio;
 	initBlocks();
 
 	for (auto& b : vblocks)
@@ -105,11 +101,19 @@ void BuildMap::update()
 
 void BuildMap::events(SDL_Event* eve)
 {
-	if (eve->type == SDL_MOUSEMOTION)
+	if (placeByCursor)
 	{
-		std::cout << "---\nMOUSE X: " << c->translateMouse().x;
-		std::cout << "\nMOUSE Y: " << c->translateMouse().y << std::endl;
-
+		if (eve->type == SDL_MOUSEBUTTONDOWN && eve->button.button == 1)
+		{
+			if (amountPlacing != -1)
+			{
+				amountPlacing -= 1;
+				if (amountPlacing == 0)
+					placeByCursor = false;
+			}
+			put(Vector2Int(c->convertGLB_LCL(c->translateMouseToGLB())), indexCursorP);
+			
+		}
 	}
 }
 
@@ -119,12 +123,12 @@ void BuildMap::draw()
 	{
 		destR.w = ptr.bb->destR.w;
 		destR.h = ptr.bb->destR.h;
-		destR.x = ptr.lcl.x * (whex * render_scale) + ptr.bb->destR.x;
-		destR.y = ptr.lcl.y * (hhex * render_scale * ratioAtoB) + ptr.bb->destR.y;
+		destR.x = ptr.lcl.x * (HEX_WIDTH * MAP_RENDER_SCALE) + ptr.bb->destR.x;
+		destR.y = ptr.lcl.y * (HEX_HEIGHT * MAP_RENDER_SCALE * RATIOHEX_H) + ptr.bb->destR.y;
 
 		if ((ptr.lcl.y + 1) % 2 == 0)
 		{
-			destR.x += whex / 2 * render_scale;
+			destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
 		}
 
 		c->drawDynamic(ptr.bb->tex, &ptr.bb->srcR, &destR);
