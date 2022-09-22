@@ -10,13 +10,13 @@
 class Player : public GameObject
 {
 public:
-	explicit Player(Camera* cam);
+	Player(Camera* cam);
 	~Player();
 	
-	void loadTexture() override;
-	void update() override;
-	void events(SDL_Event* eve) override;
-	void draw() override;
+	virtual void loadTexture();
+	virtual void update();
+	virtual void events(SDL_Event* eve);
+	virtual void draw();
 
 	void setPos(Vector2Int pos);
 	void setPos(int x, int y);

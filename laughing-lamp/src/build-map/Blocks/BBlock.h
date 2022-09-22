@@ -14,13 +14,13 @@ public:
 	~BBlock() {}
 
 	/* Load textures */
-	virtual void loadTex(SDL_Renderer* r) { }
+	virtual void loadTex(SDL_Renderer* r) = 0;
 
 	/* Method called every time. You can put there different move algorithms etc.*/
-	virtual void update() { }
+	virtual void update() = 0;
 
 	/*Handle all events for this object*/
-	virtual void events(SDL_Event* eve) { }
+	virtual void events(SDL_Event* eve) = 0;
 
 	SDL_Rect srcR; // Rect of source
 	SDL_Rect destR; // Rect on the screen relative to size of Hex
@@ -29,6 +29,7 @@ public:
 	std::string getName() { return name; }
 	std::string getCat() { return category; }
 protected:
+	float render_scale; // scale of rendering
 	std::string name; // Name of object
 	std::string category; // Category of object
 

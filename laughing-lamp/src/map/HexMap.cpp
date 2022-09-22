@@ -57,6 +57,10 @@ Vector2Int HexMap::convertGLB_Chunk(Vector2Int pos)
 
 Vector2Int HexMap::convertGLB_LCL(Vector2Int pos)
 {
+    if (pos.y < 0)
+        pos.y -= (HEX_HEIGHT * ratioAtoB * render_scale);
+    if (pos.x < 0)
+        pos.x -= (HEX_WIDTH * render_scale);
     return Vector2Int(pos.x / (HEX_WIDTH * render_scale), pos.y / (HEX_HEIGHT * ratioAtoB * render_scale));
 }
 

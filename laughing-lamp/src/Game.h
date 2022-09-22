@@ -15,6 +15,12 @@
 
 class Game
 {
+private:
+    int _init_SDL();
+    int _init_objects();
+    int _init_maps();
+    int _init_debug();
+    int _init_FPS();
 public:
     Game();
     ~Game();
@@ -28,21 +34,18 @@ public:
     void setRunning(bool i) { running = i; }
     void setFPS(int fps) { FPS = fps; }
 
-    HexMap* getHexMap() { return map; }
-    Camera* getCamera() { return cam; }
-    GameObjectManager* getGameObjectManager() { return gom; }
 private:
-    HexMap* map;
+    HexMap* hexmap;
+    BuildMap* buildmap;
     GameObjectManager* gom;
     Camera* cam;
-    BuildMap* buildmap;
 
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Event _event;
     bool running;
-    bool debug_mode;
 
+    bool debug_mode;
     std::vector<UIText*> debug_txt;
     FontAsset* debug_font;
 
@@ -50,12 +53,11 @@ private:
     int frame_delay;
     Uint32 frame_start;
     int frame_time;
-
     float ticks;
     int frames;
 
+    int iScreen_W;
+    int iScreen_H;
 };
-
-static Game* static_game;
 
 #endif

@@ -11,7 +11,7 @@ Player::Player(Camera* cam)
 	std_speed = 5;
 	ctrl_speed = 10;
 
-	setPos(1000, 500);
+	setPos(100, 100);
 
 	velocity.x = velocity.y = 0;
 	animation = new MotionAnimation(&srcR, 3, 200);

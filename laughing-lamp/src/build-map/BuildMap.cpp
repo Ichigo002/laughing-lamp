@@ -1,4 +1,5 @@
 #include "BuildMap.h"
+#include <iostream>
 
 BuildMap::BuildMap(Camera* c, int whex, int hhex, float render_Scale, float ratio)
 {
@@ -112,5 +113,7 @@ void BuildMap::draw()
 
 void BuildMap::initBlocks()
 {
-	inb<BWall>();
+	//inb<BWall>();
+	BWall* w = new BWall();
+	vblocks.push_back(w);
 }

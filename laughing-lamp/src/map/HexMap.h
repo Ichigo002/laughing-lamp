@@ -31,6 +31,8 @@ public:
     /* If seed is not set then it generates randomly */
     void setSeed(int seed);
 
+    int getSeed() { return seed; }
+
     /* Set parameters for map */
     /// <param name="render_scale">Rendering scale of hexagons</param>
     /// <param name="noise_scale">Perlin Noise value generating of map</param>

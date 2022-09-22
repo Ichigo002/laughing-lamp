@@ -11,80 +11,119 @@
 
 #include "build-map/BuildMap.h"
 
+int Game::_init_SDL()
+{
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+        return -1;
+
+    iScreen_W = 1920;
+    iScreen_H = 1080;
+
+    Uint32 flags = SDL_WINDOW_SHOWN;
+    flags += SDL_WINDOW_RESIZABLE;
+    flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+    window = SDL_CreateWindow("Laughing Lamp", 1950, SDL_WINDOWPOS_CENTERED, iScreen_W, iScreen_H, flags);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+
+    if (window == NULL)
+        return -2;
+    if (window == NULL)
+        return -3;
+
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    return 0;
+}
+
+int Game::_init_objects()
+{
+    // Camera
+    cam = new Camera(renderer, iScreen_W, iScreen_H);
+    cam->set(0, 0);
+    //Game Obejct Manager
+    gom = new GameObjectManager(renderer, cam);
+    gom->add<Player>();
+    return 0;
+}
+
+int Game::_init_maps()
+{
+                //Here you can put seed to game
+    srand(time(NULL));
+    int seed = rand() % 1000000000;
+
+    // HexMap
+    hexmap = new HexMap(cam, "assets/textures/terrain-v2.png");
+    hexmap->setChunkSize(16);
+    hexmap->setFactors(2, .2f);
+    hexmap->setSeed(seed);
+    hexmap->setupWorld();
+
+    // BuildMap
+    buildmap = new BuildMap(cam, HEX_WIDTH, HEX_HEIGHT, 2, .75f);
+    buildmap->put(Vector2Int(16, -15), "Walle");
+
+    return 0;
+}
+
+int Game::_init_debug()
+{
+    debug_mode = false;
+
+    SDL_Color clr = { 0, 0, 0 };
+    debug_font = new FontAsset(renderer, "assets/fonts/Lato-Regular.ttf", 36, clr);
+
+    debug_txt.push_back(new UIText(debug_font, "Laughing Lamp / v1.0.0"));
+    debug_txt.push_back(new UIText(debug_font, "Seed: " + std::to_string(hexmap->getSeed())));
+    debug_txt.push_back(new UIText(debug_font, "FPS: "));
+    debug_txt.push_back(new UIText(debug_font, "==================="));
+    debug_txt.push_back(new UIText(debug_font, "GLB"));
+    debug_txt.push_back(new UIText(debug_font, "GLBR"));
+    debug_txt.push_back(new UIText(debug_font, "LCL"));
+    debug_txt.push_back(new UIText(debug_font, "Chunk"));
+
+    for (size_t i = 0; i < debug_txt.size(); i++)
+    {
+        debug_txt[i]->setStartingPos(5, i * 40);
+    }
+
+    return 0;
+}
+
+int Game::_init_FPS()
+{
+    FPS = 60;
+    frame_delay = 1000 / FPS;
+    frames = 0;
+    ticks = 0;
+    return 0;
+}
+
 Game::Game()
 {
-    if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
-    {
-        std::cout << "INIT failed" << std::endl;
-        running = false;
-    }
-    else
-    {
-        int Screen_W = 1920;
-        int Screen_H = 1080;
+    int err = 0;
 
-        Uint32 flags = SDL_WINDOW_SHOWN;
-        flags += SDL_WINDOW_RESIZABLE;
-        flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
+    err = _init_SDL();
+    if (err != 0)
+        std::cout << "Error " << err << " occurred!" << std::endl;
 
-        window = SDL_CreateWindow("Laughing Lamp", 1950, SDL_WINDOWPOS_CENTERED, Screen_W, Screen_H, flags);
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+    err = _init_objects();
+    if (err != 0)
+        std::cout << "Error " << err << " occurred!" << std::endl;
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    err = _init_maps();
+    if (err != 0)
+        std::cout << "Error " << err << " occurred!" << std::endl;
 
-        //FPS
-        FPS = 60;
-        frame_delay = 1000 / FPS;
+    err = _init_FPS();
+    if (err != 0)
+        std::cout << "Error " << err << " occurred!" << std::endl;
 
-                   //Here you can put seed to game
-         srand(time(NULL));
-        int seed = rand() % 1000000000;
+    err = _init_debug();
+    if (err != 0)
+        std::cout << "Error " << err << " occurred!" << std::endl;
 
-        cam = new Camera(renderer, Screen_W, Screen_H);
-
-        static_game = this;
-        
-        map = new HexMap(cam, "assets/textures/terrain-v2.png");
-        map->setChunkSize(16);
-        map->setFactors(2, .2f);
-        map->setSeed(seed);
-        map->setupWorld();
-
-        buildmap = new BuildMap(cam, HEX_WIDTH, HEX_HEIGHT, 2, .75f);
-
-        gom = new GameObjectManager(renderer, cam);
-
-        cam->set(0, 0);
-
-        gom->add<Player>();
-
-        std::cout << buildmap->put(Vector2Int(0, 0), "Walle");
-
-        frames = 0;
-        ticks = 0;
-        running = true;
-       
-        // DEBUG TEXT INFO
-        // DEBUG TEXT INFO
-        debug_mode = false;
-
-        SDL_Color clr = { 0, 0, 0 };
-        debug_font = new FontAsset(renderer, "assets/fonts/Lato-Regular.ttf", 36, clr);
-
-        debug_txt.push_back(new UIText(debug_font, "Laughing Lamp / v1.0.0"));
-        debug_txt.push_back(new UIText(debug_font, "Seed: " + std::to_string(seed)));
-        debug_txt.push_back(new UIText(debug_font, "FPS: "));
-        debug_txt.push_back(new UIText(debug_font, "==================="));
-        debug_txt.push_back(new UIText(debug_font, "GLB"));
-        debug_txt.push_back(new UIText(debug_font, "GLBR"));
-        debug_txt.push_back(new UIText(debug_font, "LCL"));
-        debug_txt.push_back(new UIText(debug_font, "Chunk"));
-
-        for (size_t i = 0; i < debug_txt.size(); i++)
-        {
-            debug_txt[i]->setStartingPos(5, i * 40);
-        }
-    }
+    running = true;
 }
 
 Game::~Game()
@@ -135,8 +174,8 @@ void Game::update()
 
     //SDL_QueryTexture(tex, nullptr, nullptr, &txtR.w, &txtR.h);
 
-    map->updateAnimation();
-    map->updateGenerator();
+    hexmap->updateAnimation();
+    hexmap->updateGenerator();
     buildmap->update();
     gom->update();
 
@@ -148,14 +187,14 @@ void Game::update()
         p.y += cam->getWHScreen().y / 2;
         debug_txt[4]->setText("GLB XY: " + std::to_string(p.x) + " / " + std::to_string(p.y) + " (R)");
         
-        Vector2Int p1 = map->convertGLB_LCL(p);
+        Vector2Int p1 = hexmap->convertGLB_LCL(p);
 
         debug_txt[6]->setText("LCL XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
         
-        p1 = map->convertLCL_GLB(p1);
+        p1 = hexmap->convertLCL_GLB(p1);
         debug_txt[5]->setText("GLB XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
 
-        p1 = map->convertGLB_Chunk(p);
+        p1 = hexmap->convertGLB_Chunk(p);
         
 
         debug_txt[7]->setText("Chunk: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
@@ -186,14 +225,14 @@ void Game::handleEvents()
         else
             debug_mode = true;
 
-        map->debug_mode = debug_mode;
+        hexmap->debug_mode = debug_mode;
     }
 
     if (KeyboardHandler::pressedKey(SDLK_F7, &_event))
     {
         int seed = rand() % 1000000000;
-        map->setSeed(seed);
-        map->setupWorld();
+        hexmap->setSeed(seed);
+        hexmap->setupWorld();
         debug_txt[1]->setText("Seed: " + std::to_string(seed));
     }
 
@@ -273,7 +312,7 @@ void Game::render()
     SDL_RenderClear(renderer);
     //Draw
 
-    map->draw();
+    hexmap->draw();
     buildmap->draw();
     gom->draw();
 
