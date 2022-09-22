@@ -35,6 +35,20 @@ public:
 	int put(Vector2Int pos, size_t id);
 
 	/// <summary>
+	/// Give access for cursor to place blocks
+	/// </summary>
+	/// <param name="block_name">what block can place</param>
+	/// <param name="amount">amount of blocks which user can place. if you want place blocks with no limits set -1</param>
+	/// <returns>Returns -1 on fail and 0 on success</returns>
+	void enableCursorPlacing(std::string block_name, int amount = 1);
+	
+	/// <summary>
+	/// Disables posibility placing with cursor
+	/// </summary>
+	/// <returns></returns>
+	void disableCursorPlacing();
+
+	/// <summary>
 	/// Removes the object from pos
 	/// </summary>
 	/// <param name="pos">position of block. [LCL units]</param>
@@ -96,6 +110,10 @@ private:
 	int hhex; // height of hexagon
 	float render_scale;
 	float ratioAtoB;
+
+	bool placeByCursor;
+	int amountPlacing;
+	size_t indexCursorP;
 
 	SDL_Rect destR;
 };

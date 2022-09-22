@@ -40,8 +40,23 @@ int BuildMap::put(Vector2Int pos, size_t id)
 	return 0;
 }
 
+void BuildMap::enableCursorPlacing(std::string block_name, int amount)
+{
+	placeByCursor = true;
+	amountPlacing = amount;
+	indexCursorP = findIndexBy(block_name);
+	if (indexCursorP == size_t())
+		indexCursorP = 0;
+}
+
+void BuildMap::disableCursorPlacing()
+{
+	placeByCursor = false;
+}
+
 void BuildMap::remove(Vector2Int pos)
 {
+	// TO DO
 }
 
 BBlock* BuildMap::getBlockAt(Vector2Int pos)
@@ -90,7 +105,12 @@ void BuildMap::update()
 
 void BuildMap::events(SDL_Event* eve)
 {
+	if (eve->type == SDL_MOUSEMOTION)
+	{
+		std::cout << "---\nMOUSE X: " << c->translateMouse().x;
+		std::cout << "\nMOUSE Y: " << c->translateMouse().y << std::endl;
 
+	}
 }
 
 void BuildMap::draw()
