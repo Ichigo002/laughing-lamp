@@ -9,9 +9,9 @@
 #include "map/HexMap.h"
 #include "game-objects/GameObjectManager.h"
 #include "utility/Camera.h"
-#include "cmd/CmdManager.h"
 #include "GUI/UIText.h"
 #include "GUI/FontAsset.h"
+#include "build-map/BuildMap.h"
 
 class Game
 {
@@ -35,6 +35,7 @@ private:
     HexMap* map;
     GameObjectManager* gom;
     Camera* cam;
+    BuildMap* buildmap;
 
     SDL_Window* window;
     SDL_Renderer* renderer;

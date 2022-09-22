@@ -30,4 +30,8 @@ namespace Utilities
         arr.push_back(line.substr(prevPos,line.length()));
         return arr;
     }
+
+    float lerp(float t, float a, float b) {
+        return a + t * (b - a);
+    }
 }

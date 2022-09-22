@@ -9,7 +9,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <utility>
 
-constexpr size_t MAX_NUMBER_OBJECTS = 64;
+constexpr size_t MAX_NUMBER_OBJECTS = 32;
 
 /* You can add only the objects which inherit from GameObject class */
 /* Main Manager of Objects. */
@@ -79,8 +79,8 @@ inline T* GameObjectManager::add(TArgs && ...mArgs)
 	}
 	else
 	{
-		dbit[ix] = true;
 		pool[ix] = obj;
+		dbit[ix] = true;
 	}
 
 	obj->__initUniq__(lastID);

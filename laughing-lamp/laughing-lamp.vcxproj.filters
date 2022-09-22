@@ -24,9 +24,6 @@
     <ClCompile Include="src\animations\MotionAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\cmd\CmdManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\map\HexMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,21 +51,18 @@
     <ClCompile Include="src\GUI\FontAsset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\build-map\BuildMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\build-map\Blocks\BWall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\animations\MotionAnimation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\cmd\CmdManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\cmd\LoopModeCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\cmd\SimpleCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\map\Chunk.h">
@@ -107,9 +101,6 @@
     <ClInclude Include="src\perlin-noise\PerlinNoise.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\cmd\DebugCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\GUI\GUI_Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -117,6 +108,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GUI\FontAsset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\build-map\BuildMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\build-map\Blocks\BBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\build-map\Blocks\Blocks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\build-map\Blocks\BWall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

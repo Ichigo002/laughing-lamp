@@ -9,6 +9,8 @@
 #include <string>
 #include <SDL_ttf.h>
 
+#include "build-map/BuildMap.h"
+
 Game::Game()
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -18,12 +20,12 @@ Game::Game()
     }
     else
     {
-        int Screen_W = 960;
-        int Screen_H = 720;
+        int Screen_W = 1920;
+        int Screen_H = 1080;
 
         Uint32 flags = SDL_WINDOW_SHOWN;
         flags += SDL_WINDOW_RESIZABLE;
-        //flags += SDL_WINDOW_FULLSCREEN;
+        flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
 
         window = SDL_CreateWindow("Laughing Lamp", 1950, SDL_WINDOWPOS_CENTERED, Screen_W, Screen_H, flags);
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
@@ -37,25 +39,26 @@ Game::Game()
                    //Here you can put seed to game
          srand(time(NULL));
         int seed = rand() % 1000000000;
-         std::cout << "New Seed: " << seed << std::endl;
-         //std::cin >> seed;
 
         cam = new Camera(renderer, Screen_W, Screen_H);
 
         static_game = this;
-        cmd_init();
         
         map = new HexMap(cam, "assets/textures/terrain-v2.png");
         map->setChunkSize(16);
-        map->setFactors(1, .2f);
+        map->setFactors(2, .2f);
         map->setSeed(seed);
         map->setupWorld();
+
+        buildmap = new BuildMap(cam, HEX_WIDTH, HEX_HEIGHT, 2, .75f);
 
         gom = new GameObjectManager(renderer, cam);
 
         cam->set(0, 0);
 
         gom->add<Player>();
+
+        std::cout << buildmap->put(Vector2Int(0, 0), "Walle");
 
         frames = 0;
         ticks = 0;
@@ -134,6 +137,7 @@ void Game::update()
 
     map->updateAnimation();
     map->updateGenerator();
+    buildmap->update();
     gom->update();
 
     if (debug_mode)
@@ -161,12 +165,19 @@ void Game::update()
 void Game::handleEvents()
 {
     SDL_PollEvent(&_event);
+    switch (_event.type)
+    {
+    case SDL_QUIT:
+        running = false;
+        break;
+    }
 
     gom->events(&_event);
+    buildmap->events(&_event);
     cam->update(&_event);
 
-    if (KeyboardHandler::pressedKey(SDLK_BACKQUOTE, &_event))
-        cmd_execute();
+   // if (KeyboardHandler::pressedKey(SDLK_BACKQUOTE, &_event))
+    //    cmd_execute();
 
     if (KeyboardHandler::pressedKey(SDLK_F8, &_event))
     {
@@ -186,15 +197,9 @@ void Game::handleEvents()
         debug_txt[1]->setText("Seed: " + std::to_string(seed));
     }
 
-    switch (_event.type)
-    {
-    case SDL_QUIT:
-        running = false;
-        break;
-    //case SDL_MINI
-    }
+    
 
-    if (_event.type == SDL_WINDOWEVENT) {
+    if (debug_mode && _event.type == SDL_WINDOWEVENT) {
         switch (_event.window.event) {
         case SDL_WINDOWEVENT_SHOWN:
             SDL_Log("Window %d shown", _event.window.windowID);
@@ -269,6 +274,7 @@ void Game::render()
     //Draw
 
     map->draw();
+    buildmap->draw();
     gom->draw();
 
     //UI

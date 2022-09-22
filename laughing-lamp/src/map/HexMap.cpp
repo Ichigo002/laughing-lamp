@@ -21,7 +21,7 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     anim_once = false;
 
     current_water_anim = 0;
-    generating_edge_offset = 400;
+    generating_edge_offset = 600;
 }
 
 HexMap::~HexMap()
@@ -301,7 +301,7 @@ void HexMap::drawRules(const double* v, int* row, int* col)
 
 void HexMap::drawChunk(const Chunk* chunk)
 {
-    SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * render_scale, chunk_size * HEX_HEIGHT * .75f * render_scale};
+    SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * render_scale, chunk_size * HEX_HEIGHT * ratioAtoB * render_scale};
     if (!camera->isIntoViewport(&rc))
         return;
 
@@ -314,7 +314,7 @@ void HexMap::drawChunk(const Chunk* chunk)
             srcR.y = t.srcY;
 
             destR.x = x * HEX_WIDTH * render_scale + chunk->pos.x;
-            destR.y = y * (HEX_HEIGHT * .75f) * render_scale + chunk->pos.y;
+            destR.y = y * (HEX_HEIGHT * ratioAtoB) * render_scale + chunk->pos.y;
 
             if ((y + 1) % 2 == 0)
             {
