@@ -85,6 +85,9 @@ public:
 	/// Draw map
 	/// </summary>
 	void draw();
+
+	// if hexmode true then everything is rendered in square net
+	bool hexmode;
 private:
 	//Init default blocks into vblocks vector
 	void initBlocks();

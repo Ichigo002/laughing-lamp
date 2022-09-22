@@ -4,6 +4,7 @@
 BuildMap::BuildMap(Camera* c)
 {
 	this->c = c;
+	hexmode = true;
 	initBlocks();
 
 	for (auto& b : vblocks)
@@ -126,7 +127,7 @@ void BuildMap::draw()
 		destR.x = ptr.lcl.x * (HEX_WIDTH * MAP_RENDER_SCALE) + ptr.bb->destR.x;
 		destR.y = ptr.lcl.y * (HEX_HEIGHT * MAP_RENDER_SCALE * RATIOHEX_H) + ptr.bb->destR.y;
 
-		if ((ptr.lcl.y + 1) % 2 == 0)
+		if (hexmode && (ptr.lcl.y + 1) % 2 == 0)
 		{
 			destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
 		}

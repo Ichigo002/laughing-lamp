@@ -60,8 +60,8 @@ int Game::_init_maps()
 
     // BuildMap
     buildmap = new BuildMap(cam);
-    buildmap->put(Vector2Int(16, -15), "Walle");
-    buildmap->enableCursorPlacing("Walle", -1);
+    buildmap->hexmode = false;
+    buildmap->enableCursorPlacing("Walle", 8);
 
     return 0;
 }
