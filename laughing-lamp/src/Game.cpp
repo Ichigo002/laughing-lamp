@@ -169,27 +169,19 @@ void Game::update()
 {
     hexmap->updateAnimation();
     hexmap->updateGenerator();
-    buildmap->update();
     gom->update();
+    buildmap->update();
 
     if (debug_mode)
     {
         // Player pos dispalying
-        Vector2Int p = cam->getPos();
-        p.x += cam->getWHScreen().x / 2;
-        p.y += cam->getWHScreen().y / 2;
+        Vector2Int p = dynamic_cast<Player*>(gom->getObject("Player"))->getPos();
         debug_txt[4]->setText("GLB XY: " + std::to_string(p.x) + " / " + std::to_string(p.y) + " (R)");
         
         Vector2Int p1 = cam->convertGLB_LCL(p);
-
         debug_txt[5]->setText("LCL XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
         
-       // p1 = cam->convertLCL_GLB(p1);
-        //debug_txt[5]->setText("GLB XY: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
-
         p1 = hexmap->convertGLB_Chunk(p);
-        
-
         debug_txt[6]->setText("Chunk: " + std::to_string(p1.x) + " / " + std::to_string(p1.y));
     }
 }
@@ -204,9 +196,9 @@ void Game::handleEvents()
         break;
     }
 
-    gom->events(&_event);
-    buildmap->events(&_event);
     cam->update(&_event);
+    buildmap->events(&_event);
+    gom->events(&_event);
 
    // if (KeyboardHandler::pressedKey(SDLK_BACKQUOTE, &_event))
     //    cmd_execute();

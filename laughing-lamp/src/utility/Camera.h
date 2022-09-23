@@ -27,24 +27,32 @@ public:
 	/* Translates the current mouse position to GLB units */
 	Vector2Int translateMouseToGLB();
 
+	/* Translate GLB units into Screen units*/
+	Vector2Int translateGLBToScreen(Vector2Int v);
+
+	/* Translate Screen units into GLb units*/
+	Vector2Int translateScreenToGLB(Vector2Int v);
+
 	/* Returns the raw position of mouse on the screen*/
 	Vector2Int getMouse();
 
 	/* Draw the object which is active in the game world  */
+	/* Draw in the GLB units*/
 	/// <param name="only_in_viewport">If true then texture is rendered only when object is in viewport</param>
 	int drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR, bool only_in_viewport = true);
 
 	/* Draw the object who do not get involved into moving by camera */
+	/* Draw in the Screen units*/
 	int drawStatic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR);
 
 	/* Draw GUI */
 	int drawGUI(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR);
 
-	/*set position of camera*/
+	/*set position of camera from CENTER in GLB units*/
 	void set(int x, int y);
 	void set(Vector2Int v);
 
-	/*move the camera*/
+	/*move the camera in GLB units*/
 	void move(int x, int y);
 	void move(Vector2Int v);
 

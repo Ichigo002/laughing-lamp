@@ -97,6 +97,7 @@ void HexMap::updateAnimation()
     if (current_water_anim > 2) current_water_anim = 0;
 }
 
+// TODO 1 During refreshng F7 the map, There sometimes are sightable not generated space
 void HexMap::updateGenerator()
 {
     Vector2Int pp(camera->getPos());

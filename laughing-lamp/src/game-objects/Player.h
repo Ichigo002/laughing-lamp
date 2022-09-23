@@ -18,14 +18,15 @@ public:
 	virtual void events(SDL_Event* eve);
 	virtual void draw();
 
+	//All in GLB units
 	void setPos(Vector2Int pos);
 	void setPos(int x, int y);
+	Vector2Int getPos();
 
 private:
 
 	MotionAnimation* animation;
 	Vector2Int velocity;
-	Vector2Int pos;
 
 	float _spd;
 	float std_speed;

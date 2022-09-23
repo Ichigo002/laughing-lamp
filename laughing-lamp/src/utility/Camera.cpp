@@ -35,6 +35,17 @@ Vector2Int Camera::translateMouseToGLB()
 	return Vector2Int(cmpos.x - getMoveSet().x, cmpos.y - getMoveSet().y);
 }
 
+Vector2Int Camera::translateGLBToScreen(Vector2Int v)
+{
+	return Vector2Int(v.x + getMoveSet().x, v.y + getMoveSet().y);
+}
+
+Vector2Int Camera::translateScreenToGLB(Vector2Int v)
+{
+	return Vector2Int(v.x - getMoveSet().x, v.y - getMoveSet().y);
+}
+
+
 Vector2Int Camera::getMouse()
 {
 	return cmpos;

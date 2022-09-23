@@ -1,4 +1,5 @@
 #include "BuildMap.h"
+#include "../utility/Utilities.h"
 #include <iostream>
 
 BuildMap::BuildMap(Camera* c, GameObjectManager* gom)
@@ -123,8 +124,21 @@ inline bool BuildMap::verifyIndex(size_t index)
 
 void BuildMap::update()
 {
-	// TODO 2 Collisions AABB as separated class
-	// TODO 2 Detecting AABB between buildmap & game objects manager
+	SDL_Rect block_col; // collider
+	for (auto& obj : gom->getPool())
+	{
+		for (auto& ptr : bmap)
+		{
+			block_col = ptr.bb->colliderRect;
+			block_col.x = c->convertLCL_GLB(ptr.lcl).x + ptr.bb->destR.x;
+			block_col.y = c->convertLCL_GLB(ptr.lcl).y + ptr.bb->destR.y;
+
+			Vector2Int s = Util::AABB(obj->getCollider(), &block_col);
+			//std::cout << s << std::endl;
+			obj->addShift(s);
+			
+		}
+	}
 }
 
 void BuildMap::events(SDL_Event* eve)
@@ -151,8 +165,8 @@ void BuildMap::draw()
 	{
 		destR.w = ptr.bb->destR.w;
 		destR.h = ptr.bb->destR.h;
-		destR.x = ptr.lcl.x * (HEX_WIDTH * MAP_RENDER_SCALE) + ptr.bb->destR.x;
-		destR.y = ptr.lcl.y * (HEX_HEIGHT * MAP_RENDER_SCALE * RATIOHEX_H) + ptr.bb->destR.y;
+		destR.x = c->convertLCL_GLB(ptr.lcl).x  + ptr.bb->destR.x;
+		destR.y = c->convertLCL_GLB(ptr.lcl).y + ptr.bb->destR.y;
 
 		if (hexmode && (ptr.lcl.y + 1) % 2 == 0)
 		{

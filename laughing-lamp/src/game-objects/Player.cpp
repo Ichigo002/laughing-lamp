@@ -11,7 +11,8 @@ Player::Player(Camera* cam)
 	std_speed = 5;
 	ctrl_speed = 10;
 
-	setPos(100, 100);
+	setPos(0, 0);
+	cam->set(0, 0);
 
 	velocity.x = velocity.y = 0;
 	animation = new MotionAnimation(&srcR, 3, 200);
@@ -37,20 +38,16 @@ void Player::loadTexture()
 
 	destR.w = srcR.w * renderingScale;
 	destR.h = srcR.h * renderingScale;
-	destR.x = (camera->getWHScreen().x - srcR.w)/2;
-	destR.y = (camera->getWHScreen().y - srcR.h)/2;
 }
 
 void Player::update()
 {
 	animation->update();
-	camera->move(pos);
+	destR.x = pos.x;
+	destR.y = pos.y;
+	colliderRect = destR;
 
-	if (camera->resizedViewport())
-	{
-		destR.x = (camera->getWHScreen().x - srcR.w) / 2;
-		destR.y = (camera->getWHScreen().y - srcR.h) / 2;
-	}
+	camera->set(destR.x + destR.w / 2, destR.y + destR.h / 2);
 }
 
 void Player::events(SDL_Event* eve)
@@ -123,21 +120,26 @@ void Player::events(SDL_Event* eve)
 		animation->start(1, 2);
 	}
 
-	pos.x = _spd * velocity.x;
-	pos.y = _spd * velocity.y;
+	pos.x += _spd * velocity.x;
+	pos.y += _spd * velocity.y;
 }
 
 void Player::draw()
 {
-	camera->drawStatic(tex, &srcR, &destR);
+	camera->drawDynamic(tex, &srcR, &destR);
 }
 
 void Player::setPos(Vector2Int pos)
 {
-	camera->set(pos.x, pos.y);
+	this->pos = pos;
 }
 
 void Player::setPos(int x, int y)
 {
 	setPos(Vector2Int(x, y));
+}
+
+Vector2Int Player::getPos()
+{
+	return pos;
 }

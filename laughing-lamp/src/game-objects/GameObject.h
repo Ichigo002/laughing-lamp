@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <iostream>
 #include "../utility/Camera.h"
+#include "../utility/Vector2Int.h"
 
 /*Abstract class*/
 class GameObject
@@ -59,12 +60,19 @@ public:
 
 	}
 
+	SDL_Rect* getCollider() { return &colliderRect; }
+
+	void addShift(Vector2Int sh) { pos.x += sh.x; pos.y += sh.y; }
+
 protected:
 	Camera* camera;
 	SDL_Texture* tex;
 	SDL_Rect srcR, destR;
+	SDL_Rect colliderRect;
+
 	std::string tagname;
 	float renderingScale;
+	Vector2Int pos;
 
 private:
 	size_t uniq_id;

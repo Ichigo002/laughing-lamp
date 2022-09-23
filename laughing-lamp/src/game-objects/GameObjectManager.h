@@ -70,7 +70,7 @@ public:
 	GameObject* getObject(size_t uniq); // return the obejct or nullptr if not found
 
 	/* Returns the vector of all gameboejcts */
-	//std::vector<GameObject*> getPool();
+	std::vector<GameObject*> getPool() { return pool; }
 private:
 	/* Returns the number of all objects */
 	size_t getSizePool();
