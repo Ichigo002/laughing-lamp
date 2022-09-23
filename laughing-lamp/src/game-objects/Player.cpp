@@ -11,7 +11,7 @@ Player::Player(Camera* cam)
 	std_speed = 5;
 	ctrl_speed = 10;
 
-	setPos(0, 0);
+	setPos(Vector2Int(0,0));
 	cam->set(0, 0);
 
 	velocity.x = velocity.y = 0;
@@ -127,19 +127,4 @@ void Player::events(SDL_Event* eve)
 void Player::draw()
 {
 	camera->drawDynamic(tex, &srcR, &destR);
-}
-
-void Player::setPos(Vector2Int pos)
-{
-	this->pos = pos;
-}
-
-void Player::setPos(int x, int y)
-{
-	setPos(Vector2Int(x, y));
-}
-
-Vector2Int Player::getPos()
-{
-	return pos;
 }

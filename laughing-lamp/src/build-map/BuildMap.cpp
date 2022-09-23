@@ -129,14 +129,21 @@ void BuildMap::update()
 	{
 		for (auto& ptr : bmap)
 		{
+			if (!ptr.bb->get_canCollide())
+				continue;
 			block_col = ptr.bb->colliderRect;
 			block_col.x = c->convertLCL_GLB(ptr.lcl).x + ptr.bb->destR.x;
 			block_col.y = c->convertLCL_GLB(ptr.lcl).y + ptr.bb->destR.y;
 
 			Vector2Int s = Util::AABB(obj->getCollider(), &block_col);
-			//std::cout << s << std::endl;
+			if (obj->__lastpsh__.y != 0 || obj->__lastpsh__.x != 0)
+			{
+				obj->__lastpsh__.set(0, 0);
+				continue;
+			}
+			// TODO 3 fix collision bug
 			obj->addShift(s);
-			
+			obj->__lastpsh__ = s;
 		}
 	}
 }

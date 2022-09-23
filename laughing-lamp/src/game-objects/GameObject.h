@@ -31,6 +31,10 @@ public:
 	/* Returns the tagname of object. */
 	std::string getTag() { return tagname;  }
 
+	Vector2Int getPos() { return pos; }
+
+	void setPos(Vector2Int p) { pos = p; }
+
 	/* Set the uniq id in the pool */
 	void __initUniq__(size_t q) 
 	{ 
@@ -64,6 +68,7 @@ public:
 
 	void addShift(Vector2Int sh) { pos.x += sh.x; pos.y += sh.y; }
 
+	Vector2Int __lastpsh__; // last position after mtv
 protected:
 	Camera* camera;
 	SDL_Texture* tex;

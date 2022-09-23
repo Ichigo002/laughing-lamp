@@ -9,7 +9,7 @@ BCircle::BCircle()
 	render_scale = 1;
 
 	canPlaceover = false;
-	canCollide = true;
+	canCollide = false;
 }
 
 BCircle::~BCircle()
