@@ -30,14 +30,16 @@ int BuildMap::put(Vector2Int pos, std::string block_name)
 
 int BuildMap::put(Vector2Int pos, size_t id)
 {
+	std::vector<BPPointer*> exsptr = getBlockAt(pos);
 	BBlock* tob = getBlockAt(id);
-	BBlock* exsb = getBlockAt(pos);
 
 	// does player argument exist?
 	if (tob == nullptr) return -1;
-	// is there room?
-	if (exsb != nullptr)
+	// did it find any blocks?
+	if (exsptr.size() != 0)
 	{
+		BBlock* exsb = exsptr.at(exsptr.size() - 1)->bb;
+
 		// does player try place on block with no placeover?
 		if (!exsb->get_canPlaceover())
 		{

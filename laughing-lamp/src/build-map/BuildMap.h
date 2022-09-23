@@ -54,7 +54,6 @@ public:
 	/// <param name="pos">position of block. [LCL units]</param>
 	void remove(Vector2Int pos);
 
-
 	/// <returns>Vector of BPPointers which are on this position</returns>
 	std::vector<BPPointer*> getBlockAt(Vector2Int pos);
 
