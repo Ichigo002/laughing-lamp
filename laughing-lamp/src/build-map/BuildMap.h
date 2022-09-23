@@ -54,9 +54,14 @@ public:
 	/// <param name="pos">position of block. [LCL units]</param>
 	void remove(Vector2Int pos);
 
-	//If not found returns nullptr
-	BBlock* getBlockAt(Vector2Int pos);
+
+	/// <returns>Vector of BPPointers which are on this position</returns>
+	std::vector<BPPointer*> getBlockAt(Vector2Int pos);
+
+	/// <returns>Block with index within all blocks in vblocks</returns>
 	BBlock* getBlockAt(size_t index);
+
+	/// <returns>Block with name within all blocks in vblocks</returns>
 	BBlock* getBlockAt(std::string name);
 
 	/// <summary>

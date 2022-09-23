@@ -42,15 +42,17 @@ int BuildMap::put(Vector2Int pos, size_t id)
 		if (!exsb->get_canPlaceover())
 		{
 			if (debug_mode)
-				std::cout << "BuildMap: Block " << tob->getName() << " at " << pos << " cannot be placed because There has already exist block.\n";
+				std::cout << "BuildMap: Block '" << tob->getName() << "' at " << pos << " cannot be placed because There has already exist block.\n";
 			return -2;
 		}
-		// can new block place over?
-		if (!tob->get_canPlaceover())
+		if (exsb == tob)
 		{
-			return -2;
+			if (debug_mode)
+				std::cout << "BuildMap: 2 identic blocks with name '" << tob->getName() << "' cannot be placed in the same position " << pos << std::endl;
+			return -3;
 		}
 	}
+
 	BPPointer p = { tob , pos };
 	bmap.push_back(p);
 	return 0;
@@ -76,14 +78,15 @@ void BuildMap::remove(Vector2Int pos)
 	// TODO 1 remove method 
 }
 
-BBlock* BuildMap::getBlockAt(Vector2Int pos)
+std::vector<BPPointer*> BuildMap::getBlockAt(Vector2Int pos)
 {
+	std::vector<BPPointer*> v;
 	for (auto& bm : bmap)
 	{
 		if (bm.lcl == pos)
-			return bm.bb;
+			v.push_back(&bm);
 	}
-	return nullptr;
+	return v;
 }
 
 BBlock* BuildMap::getBlockAt(size_t index)
