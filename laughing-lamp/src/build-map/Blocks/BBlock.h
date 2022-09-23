@@ -24,6 +24,8 @@ public:
 
 	SDL_Rect srcR; // Rect of source
 	SDL_Rect destR; // Rect on the screen relative to size of Hex
+	SDL_Rect colliderRect; // Rect of collision if canCollide is true
+
 	SDL_Texture* tex; // Texture of object
 
 	std::string getName() { return name; }

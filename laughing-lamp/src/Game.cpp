@@ -59,9 +59,8 @@ int Game::_init_maps()
     hexmap->setupWorld();
 
     // BuildMap
-    buildmap = new BuildMap(cam);
+    buildmap = new BuildMap(cam, gom);
     buildmap->hexmode = false;
-    buildmap->enableCursorPlacing("wall", 8);
 
     return 0;
 }

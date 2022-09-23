@@ -22,7 +22,28 @@ public:
 	/* Add the new GameObject to the pool */
 	/* mArgs: Additional arguments for initialized object if it has anything*/
 	template<class T, typename... TArgs>
-	T* add(TArgs&&... mArgs);
+	T* add(TArgs&&... mArgs)
+	{
+		T* obj = new T(camera, std::forward<TArgs>(mArgs)...);
+		size_t ix = getEmptyIndex();
+
+		if (ix > dbit.size())
+		{
+			pool.emplace_back(obj);
+			dbit.push_back(true);
+		}
+		else
+		{
+			pool[ix] = obj;
+			dbit[ix] = true;
+		}
+
+		obj->__initUniq__(lastID);
+		obj->loadTexture();
+
+		lastID++;
+		return obj;
+	}
 
 	/* Update all objects */
 	void update();
@@ -48,7 +69,8 @@ public:
 	std::vector<GameObject*> GetObjects(std::string tagname); // return the vector of objects
 	GameObject* getObject(size_t uniq); // return the obejct or nullptr if not found
 
-	// TODO 1: make method to get all array pointer
+	/* Returns the vector of all gameboejcts */
+	//std::vector<GameObject*> getPool();
 private:
 	/* Returns the number of all objects */
 	size_t getSizePool();
@@ -66,27 +88,3 @@ private:
 };
 
 #endif
-
-template<class T, typename ...TArgs>
-inline T* GameObjectManager::add(TArgs && ...mArgs)
-{
-	T* obj = new T(camera, std::forward<TArgs>(mArgs)...);
-	size_t ix = getEmptyIndex();
-
-	if (ix > dbit.size())
-	{
-		pool.emplace_back(obj);
-		dbit.push_back(true);
-	}
-	else
-	{
-		pool[ix] = obj;
-		dbit[ix] = true;
-	}
-
-	obj->__initUniq__(lastID);
-	obj->loadTexture();
-
-	lastID++;
-	return obj;
-}

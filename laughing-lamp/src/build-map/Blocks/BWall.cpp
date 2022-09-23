@@ -29,6 +29,7 @@ void BWall::loadTex(SDL_Renderer* r)
 
 	destR.x = 10;
 	destR.y = 15;
+	colliderRect = destR;
 }
 
 void BWall::update()

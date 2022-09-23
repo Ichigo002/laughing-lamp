@@ -29,6 +29,7 @@ void BCircle::loadTex(SDL_Renderer* r)
 
 	destR.x = 14;
 	destR.y = 16;
+	colliderRect = destR;
 }
 
 void BCircle::update()

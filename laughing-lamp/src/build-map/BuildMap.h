@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <vector>
 #include "../utility/Camera.h"
+#include "../game-objects/GameObjectManager.h"
 #include "Blocks/Blocks.h"
 
 struct BPPointer
@@ -15,7 +16,7 @@ struct BPPointer
 class BuildMap
 {
 public:
-	BuildMap(Camera* c);
+	BuildMap(Camera* c, GameObjectManager* gom);
 	~BuildMap();
 
 	/// <summary>
@@ -111,6 +112,7 @@ private:
 	}
 
 	Camera* c;
+	GameObjectManager* gom;
 	std::vector<BBlock*> vblocks; // All blocks on the map
 	std::vector<BPPointer> bmap; // Map of pointers into
 

@@ -1,8 +1,9 @@
 #include "BuildMap.h"
 #include <iostream>
 
-BuildMap::BuildMap(Camera* c)
+BuildMap::BuildMap(Camera* c, GameObjectManager* gom)
 {
+	this->gom = gom;
 	this->c = c;
 	hexmode = true;
 	initBlocks();
