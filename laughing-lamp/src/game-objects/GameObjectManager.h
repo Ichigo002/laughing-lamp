@@ -48,6 +48,7 @@ public:
 	std::vector<GameObject*> GetObjects(std::string tagname); // return the vector of objects
 	GameObject* getObject(size_t uniq); // return the obejct or nullptr if not found
 
+	// TODO 1: make method to get all array pointer
 private:
 	/* Returns the number of all objects */
 	size_t getSizePool();

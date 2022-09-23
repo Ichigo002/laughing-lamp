@@ -28,11 +28,16 @@ public:
 
 	std::string getName() { return name; }
 	std::string getCat() { return category; }
+
+	bool get_canPlaceover() { return canPlaceover; }
+	bool get_canCollide() { return canCollide; }
 protected:
 	float render_scale; // scale of rendering
 	std::string name; // Name of object
 	std::string category; // Category of object
 
+	bool canPlaceover; // can other object be placed on this
+	bool canCollide; // can this object have collision each other
 };
 
 #endif

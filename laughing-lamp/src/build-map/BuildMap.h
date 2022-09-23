@@ -88,6 +88,7 @@ public:
 
 	// if hexmode true then everything is rendered in square net
 	bool hexmode;
+	bool debug_mode;
 private:
 	//Init default blocks into vblocks vector
 	void initBlocks();

@@ -7,6 +7,9 @@ BWall::BWall()
 	name = "wall";
 	category = "WALL";
 	render_scale = 1.5f;
+
+	canPlaceover = true;
+	canCollide = true;
 }
 
 BWall::~BWall()

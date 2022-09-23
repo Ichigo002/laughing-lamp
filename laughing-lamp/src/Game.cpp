@@ -61,7 +61,7 @@ int Game::_init_maps()
     // BuildMap
     buildmap = new BuildMap(cam);
     buildmap->hexmode = false;
-    buildmap->enableCursorPlacing("Walle", 8);
+    buildmap->enableCursorPlacing("wall", 8);
 
     return 0;
 }
@@ -220,6 +220,15 @@ void Game::handleEvents()
             debug_mode = true;
 
         hexmap->debug_mode = debug_mode;
+        buildmap->debug_mode = debug_mode;
+    }
+    if (KeyboardHandler::pressedKey(SDLK_F9, &_event))
+    {
+        buildmap->enableCursorPlacing("circle", -1);
+    }
+    if (KeyboardHandler::pressedKey(SDLK_F10, &_event))
+    {
+        buildmap->enableCursorPlacing("wall", -1);
     }
 
     if (KeyboardHandler::pressedKey(SDLK_F7, &_event))

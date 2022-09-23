@@ -30,11 +30,31 @@ int BuildMap::put(Vector2Int pos, std::string block_name)
 
 int BuildMap::put(Vector2Int pos, size_t id)
 {
-	BBlock* bb = getBlockAt(id);
-	if (bb == nullptr) return -1;
-	BPPointer p = { bb , pos };
+	BBlock* tob = getBlockAt(id);
+	BBlock* exsb = getBlockAt(pos);
+
+	// does player argument exist?
+	if (tob == nullptr) return -1;
+	// is there room?
+	if (exsb != nullptr)
+	{
+		// does player try place on block with no placeover?
+		if (!exsb->get_canPlaceover())
+		{
+			if (debug_mode)
+				std::cout << "BuildMap: Block " << tob->getName() << " at " << pos << " cannot be placed because There has already exist block.\n";
+			return -2;
+		}
+		// can new block place over?
+		if (!tob->get_canPlaceover())
+		{
+			return -2;
+		}
+	}
+	BPPointer p = { tob , pos };
 	bmap.push_back(p);
 	return 0;
+	// TODO 1 check does place where you want put block is empty
 }
 
 void BuildMap::enableCursorPlacing(std::string block_name, int amount)
@@ -53,7 +73,7 @@ void BuildMap::disableCursorPlacing()
 
 void BuildMap::remove(Vector2Int pos)
 {
-	// TO DO
+	// TODO 1 remove method 
 }
 
 BBlock* BuildMap::getBlockAt(Vector2Int pos)
@@ -97,7 +117,8 @@ inline bool BuildMap::verifyIndex(size_t index)
 
 void BuildMap::update()
 {
-
+	// TODO 2 Collisions AABB as separated class
+	// TODO 2 Detecting AABB between buildmap & game objects manager
 }
 
 void BuildMap::events(SDL_Event* eve)
@@ -138,7 +159,6 @@ void BuildMap::draw()
 
 void BuildMap::initBlocks()
 {
-	//inb<BWall>();
-	BWall* w = new BWall();
-	vblocks.push_back(w);
+	inb<BWall>();
+	inb<BCircle>();
 }
