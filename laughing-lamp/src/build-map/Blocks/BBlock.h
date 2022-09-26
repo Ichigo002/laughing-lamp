@@ -27,6 +27,7 @@ public:
 	SDL_Rect colliderRect; // Rect of collision if canCollide is true
 
 	SDL_Texture* tex; // Texture of object
+	int layer; // layer of rendering if more than one block per position
 
 	std::string getName() { return name; }
 	std::string getCat() { return category; }

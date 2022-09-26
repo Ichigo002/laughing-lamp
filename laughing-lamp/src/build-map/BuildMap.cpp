@@ -35,7 +35,7 @@ int BuildMap::put(Vector2Int pos, size_t id)
 	std::vector<BPPointer*> exsptr = getBlockAt(pos);
 	BBlock* tob = getBlockAt(id);
 
-	// does player argument exist?
+	// does player's argument exist?
 	if (tob == nullptr) return -1;
 	// did it find any blocks?
 	if (exsptr.size() != 0)
@@ -57,10 +57,20 @@ int BuildMap::put(Vector2Int pos, size_t id)
 		}
 	}
 
-	BPPointer p = { tob , pos };
+	BPPointer* p = new BPPointer();
+	p->bb = tob;
+	p->lcl = pos;
+
+	for (auto& b : bmap)
+	{
+		if (!b)
+		{
+			b = p;
+			return 0;
+		}
+	}
 	bmap.push_back(p);
 	return 0;
-	// TODO 1 check does place where you want put block is empty
 }
 
 void BuildMap::enableCursorPlacing(std::string block_name, int amount)
@@ -79,7 +89,15 @@ void BuildMap::disableCursorPlacing()
 
 void BuildMap::remove(Vector2Int pos)
 {
-	// TODO 1 remove method 
+	for (auto& b : bmap)
+	{
+		if (!b)
+			continue;
+		if (b->lcl == pos)
+		{
+			b = nullptr;
+		}
+	}
 }
 
 std::vector<BPPointer*> BuildMap::getBlockAt(Vector2Int pos)
@@ -87,8 +105,10 @@ std::vector<BPPointer*> BuildMap::getBlockAt(Vector2Int pos)
 	std::vector<BPPointer*> v;
 	for (auto& bm : bmap)
 	{
-		if (bm.lcl == pos)
-			v.push_back(&bm);
+		if (!bm)
+			continue;
+		if (bm->lcl == pos)
+			v.push_back(bm);
 	}
 	return v;
 }
@@ -111,6 +131,8 @@ size_t BuildMap::findIndexBy(std::string block_name)
 {
 	for (size_t i = 0; i < vblocks.size(); i++)
 	{
+		if (!vblocks[i])
+			continue;
 		if (vblocks.at(i)->getName() == block_name)
 			return i;
 	}
@@ -129,11 +151,11 @@ void BuildMap::update()
 	{
 		for (auto& ptr : bmap)
 		{
-			if (!ptr.bb->get_canCollide())
+			if (!ptr || !ptr->bb->get_canCollide())
 				continue;
-			block_col = ptr.bb->colliderRect;
-			block_col.x = c->convertLCL_GLB(ptr.lcl).x + ptr.bb->destR.x;
-			block_col.y = c->convertLCL_GLB(ptr.lcl).y + ptr.bb->destR.y;
+			block_col = ptr->bb->colliderRect;
+			block_col.x = c->convertLCL_GLB(ptr->lcl).x + ptr->bb->destR.x;
+			block_col.y = c->convertLCL_GLB(ptr->lcl).y + ptr->bb->destR.y;
 
 			Vector2Int s = Util::AABB(obj->getCollider(), &block_col);
 			if (obj->__lastpsh__.y != 0 || obj->__lastpsh__.x != 0)
@@ -152,16 +174,22 @@ void BuildMap::events(SDL_Event* eve)
 {
 	if (placeByCursor)
 	{
-		if (eve->type == SDL_MOUSEBUTTONDOWN && eve->button.button == 1)
+		if (eve->type == SDL_MOUSEBUTTONDOWN)
 		{
-			if (amountPlacing != -1)
+			if (eve->button.button == 1)
 			{
-				amountPlacing -= 1;
-				if (amountPlacing == 0)
-					placeByCursor = false;
+				if (amountPlacing != -1)
+				{
+					amountPlacing -= 1;
+					if (amountPlacing == 0)
+						placeByCursor = false;
+				}
+				put(Vector2Int(c->convertGLB_LCL(c->translateMouseToGLB())), indexCursorP);
 			}
-			put(Vector2Int(c->convertGLB_LCL(c->translateMouseToGLB())), indexCursorP);
-			
+			if (eve->button.button == 3)
+			{
+				remove(c->convertGLB_LCL(c->translateMouseToGLB()));
+			}
 		}
 	}
 }
@@ -170,17 +198,19 @@ void BuildMap::draw()
 {
 	for (auto& ptr : bmap)
 	{
-		destR.w = ptr.bb->destR.w;
-		destR.h = ptr.bb->destR.h;
-		destR.x = c->convertLCL_GLB(ptr.lcl).x  + ptr.bb->destR.x;
-		destR.y = c->convertLCL_GLB(ptr.lcl).y + ptr.bb->destR.y;
+		if (!ptr)
+			continue;
+		destR.w = ptr->bb->destR.w;
+		destR.h = ptr->bb->destR.h;
+		destR.x = c->convertLCL_GLB(ptr->lcl).x  + ptr->bb->destR.x;
+		destR.y = c->convertLCL_GLB(ptr->lcl).y + ptr->bb->destR.y;
 
-		if (hexmode && (ptr.lcl.y + 1) % 2 == 0)
+		if (hexmode && (ptr->lcl.y + 1) % 2 == 0)
 		{
 			destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
 		}
 
-		c->drawDynamic(ptr.bb->tex, &ptr.bb->srcR, &destR);
+		c->drawDynamic(ptr->bb->tex, &ptr->bb->srcR, &destR);
 	}
 }
 

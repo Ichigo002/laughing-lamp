@@ -9,6 +9,7 @@
 
 struct BPPointer
 {
+public:
 	BBlock* bb; // pointer to block
 	Vector2Int lcl; // position of block
 };
@@ -114,7 +115,7 @@ private:
 	Camera* c;
 	GameObjectManager* gom;
 	std::vector<BBlock*> vblocks; // All blocks on the map
-	std::vector<BPPointer> bmap; // Map of pointers into
+	std::vector<BPPointer*> bmap; // Map of pointers into
 
 	bool placeByCursor;
 	int amountPlacing;
