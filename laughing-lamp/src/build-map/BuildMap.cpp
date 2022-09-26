@@ -40,7 +40,16 @@ int BuildMap::put(Vector2Int pos, size_t id)
 	// did it find any blocks?
 	if (exsptr.size() != 0)
 	{
-		BBlock* exsb = exsptr.at(exsptr.size() - 1)->bb;
+		BBlock* exsb = exsptr[0]->bb;
+		int l = exsb->layer;
+		for (auto& e : exsptr)
+		{
+			if (e->bb->layer > l)
+			{
+				l = e->bb->layer;
+				exsb = e->bb;
+			}
+		}
 
 		// does player try place on block with no placeover?
 		if (!exsb->get_canPlaceover())
@@ -55,12 +64,18 @@ int BuildMap::put(Vector2Int pos, size_t id)
 				std::cout << "BuildMap: 2 identic blocks with name '" << tob->getName() << "' cannot be placed in the same position " << pos << std::endl;
 			return -3;
 		}
+
+		tob->layer = l + 1;
+	}
+	else
+	{
+		tob->layer = 0;
 	}
 
 	BPPointer* p = new BPPointer();
 	p->bb = tob;
 	p->lcl = pos;
-
+	std::cout << "NEW \n";
 	for (auto& b : bmap)
 	{
 		if (!b)
@@ -196,21 +211,24 @@ void BuildMap::events(SDL_Event* eve)
 
 void BuildMap::draw()
 {
-	for (auto& ptr : bmap)
+	for (int i = 0; i < getHighestLayer(); i++) // layers from zero to highest
 	{
-		if (!ptr)
-			continue;
-		destR.w = ptr->bb->destR.w;
-		destR.h = ptr->bb->destR.h;
-		destR.x = c->convertLCL_GLB(ptr->lcl).x  + ptr->bb->destR.x;
-		destR.y = c->convertLCL_GLB(ptr->lcl).y + ptr->bb->destR.y;
-
-		if (hexmode && (ptr->lcl.y + 1) % 2 == 0)
+		for (auto& ptr : bmap)
 		{
-			destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
-		}
+			if (!ptr || ptr->bb->layer != i)
+				continue;
+			destR.w = ptr->bb->destR.w;
+			destR.h = ptr->bb->destR.h;
+			destR.x = c->convertLCL_GLB(ptr->lcl).x + ptr->bb->destR.x;
+			destR.y = c->convertLCL_GLB(ptr->lcl).y + ptr->bb->destR.y;
 
-		c->drawDynamic(ptr->bb->tex, &ptr->bb->srcR, &destR);
+			if (hexmode && (ptr->lcl.y + 1) % 2 == 0)
+			{
+				destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
+			}
+
+			c->drawDynamic(ptr->bb->tex, &ptr->bb->srcR, &destR);
+		}
 	}
 }
 
@@ -218,4 +236,17 @@ void BuildMap::initBlocks()
 {
 	inb<BWall>();
 	inb<BCircle>();
+}
+
+int BuildMap::getHighestLayer()
+{
+	int l = 0;
+	for (auto& b : bmap)
+	{
+		if (!b)
+			continue;
+		if (b->bb->layer > l)
+			l = b->bb->layer;
+	}
+	return l;
 }

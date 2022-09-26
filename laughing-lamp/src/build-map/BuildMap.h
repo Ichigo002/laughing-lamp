@@ -99,6 +99,9 @@ private:
 	//Init default blocks into vblocks vector
 	void initBlocks();
 
+	// returns the highest available layer
+	int getHighestLayer();
+
 	//Init new block of class T
 	template<class T>
 	T* inb()
