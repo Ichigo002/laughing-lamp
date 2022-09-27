@@ -57,7 +57,7 @@ public:
 	void remove(Vector2Int pos);
 
 	/// <returns>Vector of BPPointers which are on this position</returns>
-	std::vector<BPPointer*> getBlockAt(Vector2Int pos);
+	std::vector<BPPointer*> getBlocksAt(Vector2Int pos);
 
 	/// <returns>Block with index within all blocks in vblocks</returns>
 	BBlock* getBlockAt(size_t index);
@@ -99,8 +99,8 @@ private:
 	//Init default blocks into vblocks vector
 	void initBlocks();
 
-	// returns the highest available layer
-	int getHighestLayer();
+	// returns the highest available layer for vector
+	int getHighestLayer(std::vector<BPPointer*> vec);
 
 	//Init new block of class T
 	template<class T>
@@ -118,7 +118,7 @@ private:
 	Camera* c;
 	GameObjectManager* gom;
 	std::vector<BBlock*> vblocks; // All blocks on the map
-	std::vector<BPPointer*> bmap; // Map of pointers into
+	std::vector<BPPointer*> bmap; // Map of pointers into vblocks
 
 	bool placeByCursor;
 	int amountPlacing;

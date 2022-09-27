@@ -32,7 +32,7 @@ int BuildMap::put(Vector2Int pos, std::string block_name)
 
 int BuildMap::put(Vector2Int pos, size_t id)
 {
-	std::vector<BPPointer*> exsptr = getBlockAt(pos);
+	std::vector<BPPointer*> exsptr = getBlocksAt(pos);
 	BBlock* tob = getBlockAt(id);
 
 	// does player's argument exist?
@@ -75,7 +75,6 @@ int BuildMap::put(Vector2Int pos, size_t id)
 	BPPointer* p = new BPPointer();
 	p->bb = tob;
 	p->lcl = pos;
-	std::cout << "NEW \n";
 	for (auto& b : bmap)
 	{
 		if (!b)
@@ -104,18 +103,19 @@ void BuildMap::disableCursorPlacing()
 
 void BuildMap::remove(Vector2Int pos)
 {
-	for (auto& b : bmap)
+	int l = getHighestLayer(getBlocksAt(pos));
+	for (auto& bp : bmap)
 	{
-		if (!b)
+		if (!bp)
 			continue;
-		if (b->lcl == pos)
+		if (bp->lcl == pos && bp->bb->layer == l)
 		{
-			b = nullptr;
+			bp = nullptr;
 		}
 	}
 }
 
-std::vector<BPPointer*> BuildMap::getBlockAt(Vector2Int pos)
+std::vector<BPPointer*> BuildMap::getBlocksAt(Vector2Int pos)
 {
 	std::vector<BPPointer*> v;
 	for (auto& bm : bmap)
@@ -211,7 +211,7 @@ void BuildMap::events(SDL_Event* eve)
 
 void BuildMap::draw()
 {
-	for (int i = 0; i < getHighestLayer(); i++) // layers from zero to highest
+	for (int i = 0; i < getHighestLayer(bmap)+1; i++) // layers from zero to highest
 	{
 		for (auto& ptr : bmap)
 		{
@@ -238,10 +238,10 @@ void BuildMap::initBlocks()
 	inb<BCircle>();
 }
 
-int BuildMap::getHighestLayer()
+int BuildMap::getHighestLayer(std::vector<BPPointer*> vec)
 {
 	int l = 0;
-	for (auto& b : bmap)
+	for (auto& b : vec)
 	{
 		if (!b)
 			continue;
