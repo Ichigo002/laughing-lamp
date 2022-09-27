@@ -114,7 +114,7 @@ private:
 		}
 		return nullptr;
 	}
-
+	
 	Camera* c;
 	GameObjectManager* gom;
 	std::vector<BBlock*> vblocks; // All blocks on the map
