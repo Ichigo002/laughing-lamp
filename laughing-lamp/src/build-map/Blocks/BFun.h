@@ -1,15 +1,15 @@
-#ifndef BWALL_H
-#define BWALL_H
+#ifndef BFUN_H
+#define BFUN_H
 
 #include "../../utility/Vector2Int.h"
 #include <SDL.h>
 #include "BBlock.h"
 
-class BWall : public BBlock
+class BFun : public BBlock
 {
 public:
-	BWall();
-	~BWall();
+	BFun();
+	~BFun();
 
 	/* Load textures */
 	virtual void loadTex(SDL_Renderer* r);

@@ -3,7 +3,7 @@
 
 #include "BBlock.h"
 
-#include "BWall.h"
+#include "BFun.h"
 #include "BCircle.h"
 
 #endif

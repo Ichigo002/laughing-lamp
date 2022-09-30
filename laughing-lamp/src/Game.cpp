@@ -221,7 +221,7 @@ void Game::handleEvents()
     }
     if (KeyboardHandler::pressedKey(SDLK_F10, &_event))
     {
-        buildmap->enableCursorPlacing("wall", -1);
+        buildmap->enableCursorPlacing("funny", -1);
     }
 
     if (KeyboardHandler::pressedKey(SDLK_F7, &_event))

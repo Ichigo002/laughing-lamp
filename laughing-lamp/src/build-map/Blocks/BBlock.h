@@ -28,6 +28,7 @@ public:
 
 	SDL_Texture* tex; // Texture of object
 	int layer; // layer of rendering if more than one block per position
+	float render_scale; // scale of rendering
 
 	std::string getName() { return name; }
 	std::string getCat() { return category; }
@@ -35,7 +36,6 @@ public:
 	bool get_canPlaceover() { return canPlaceover; }
 	bool get_canCollide() { return canCollide; }
 protected:
-	float render_scale; // scale of rendering
 	std::string name; // Name of object
 	std::string category; // Category of object
 

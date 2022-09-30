@@ -54,7 +54,7 @@
     <ClCompile Include="src\build-map\BuildMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\build-map\Blocks\BWall.cpp">
+    <ClCompile Include="src\build-map\Blocks\BFun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\build-map\Blocks\BCircle.cpp">
@@ -125,7 +125,7 @@
     <ClInclude Include="src\build-map\Blocks\Blocks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\build-map\Blocks\BWall.h">
+    <ClInclude Include="src\build-map\Blocks\BFun.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\build-map\Blocks\BCircle.h">

@@ -217,10 +217,10 @@ void BuildMap::draw()
 		{
 			if (!ptr || ptr->bb->layer != i)
 				continue;
-			destR.w = ptr->bb->destR.w;
-			destR.h = ptr->bb->destR.h;
-			destR.x = c->convertLCL_GLB(ptr->lcl).x + ptr->bb->destR.x;
-			destR.y = c->convertLCL_GLB(ptr->lcl).y + ptr->bb->destR.y;
+			destR.w = HEX_WIDTH * ptr->bb->render_scale;
+			destR.h = HEX_HEIGHT * ptr->bb->render_scale;
+			destR.x = ptr->lcl.x * (HEX_WIDTH * MAP_RENDER_SCALE) + ptr->bb->destR.x;
+			destR.y = ptr->lcl.y * (HEX_HEIGHT * MAP_RENDER_SCALE) + ptr->bb->destR.y;
 
 			if (hexmode && (ptr->lcl.y + 1) % 2 == 0)
 			{
@@ -234,7 +234,7 @@ void BuildMap::draw()
 
 void BuildMap::initBlocks()
 {
-	inb<BWall>();
+	inb<BFun>();
 	inb<BCircle>();
 }
 

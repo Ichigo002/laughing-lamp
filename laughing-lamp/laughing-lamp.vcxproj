@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\build-map\Blocks\BCircle.cpp" />
     <ClCompile Include="src\animations\MotionAnimation.cpp" />
-    <ClCompile Include="src\build-map\Blocks\BWall.cpp" />
+    <ClCompile Include="src\build-map\Blocks\BFun.cpp" />
     <ClCompile Include="src\build-map\BuildMap.cpp" />
     <ClCompile Include="src\game-objects\GameObjectManager.cpp" />
     <ClCompile Include="src\game-objects\Player.cpp" />
@@ -40,7 +40,7 @@
     <ClInclude Include="src\animations\MotionAnimation.h" />
     <ClInclude Include="src\build-map\Blocks\BBlock.h" />
     <ClInclude Include="src\build-map\Blocks\Blocks.h" />
-    <ClInclude Include="src\build-map\Blocks\BWall.h" />
+    <ClInclude Include="src\build-map\Blocks\BFun.h" />
     <ClInclude Include="src\build-map\BuildMap.h" />
     <ClInclude Include="src\game-objects\GameObject.h" />
     <ClInclude Include="src\game-objects\GameObjectManager.h" />
