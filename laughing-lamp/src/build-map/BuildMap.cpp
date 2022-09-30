@@ -169,8 +169,8 @@ void BuildMap::update()
 			if (!ptr || !ptr->bb->get_canCollide())
 				continue;
 			block_col = ptr->bb->colliderRect;
-			block_col.x = c->convertLCL_GLB(ptr->lcl).x + ptr->bb->destR.x;
-			block_col.y = c->convertLCL_GLB(ptr->lcl).y + ptr->bb->destR.y;
+			block_col.x = c->convertBBL_GLB(ptr->lcl).x + ptr->bb->destR.x;
+			block_col.y = c->convertBBL_GLB(ptr->lcl).y + ptr->bb->destR.y;
 
 			Vector2Int s = Util::AABB(obj->getCollider(), &block_col);
 			if (obj->__lastpsh__.y != 0 || obj->__lastpsh__.x != 0)
@@ -199,11 +199,11 @@ void BuildMap::events(SDL_Event* eve)
 					if (amountPlacing == 0)
 						placeByCursor = false;
 				}
-				put(Vector2Int(c->convertGLB_LCL(c->translateMouseToGLB())), indexCursorP);
+				put(Vector2Int(c->convertGLB_BBL(c->translateMouseToGLB())), indexCursorP);
 			}
 			if (eve->button.button == 3)
 			{
-				remove(c->convertGLB_LCL(c->translateMouseToGLB()));
+				remove(c->convertGLB_BBL(c->translateMouseToGLB()));
 			}
 		}
 	}

@@ -31,7 +31,7 @@ public:
 	/// <summary>
 	/// Put new block on the map
 	/// </summary>
-	/// <param name="pos">position of block. [LCL units]</param>
+	/// <param name="pos">position of block. [BBL units]</param>
 	/// <param name="id">id of block</param>
 	/// <returns>Returns -1 on fail and 0 on success</returns>
 	int put(Vector2Int pos, size_t id);
@@ -53,7 +53,7 @@ public:
 	/// <summary>
 	/// Removes the object from pos
 	/// </summary>
-	/// <param name="pos">position of block. [LCL units]</param>
+	/// <param name="pos">position of block. [BBL units]</param>
 	void remove(Vector2Int pos);
 
 	/// <returns>Vector of BPPointers which are on this position</returns>

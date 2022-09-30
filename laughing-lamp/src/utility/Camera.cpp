@@ -105,9 +105,23 @@ Vector2Int Camera::convertGLB_LCL(Vector2Int pos)
 	return Vector2Int(pos.x / (HEX_WIDTH * MAP_RENDER_SCALE), pos.y / (HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE));
 }
 
+Vector2Int Camera::convertGLB_BBL(Vector2Int pos)
+{
+	if (pos.y < 0)
+		pos.y -= (HEX_HEIGHT * MAP_RENDER_SCALE);
+	if (pos.x < 0)
+		pos.x -= (HEX_WIDTH * MAP_RENDER_SCALE);
+	return Vector2Int(pos.x / (HEX_WIDTH * MAP_RENDER_SCALE), pos.y / (HEX_HEIGHT * MAP_RENDER_SCALE));
+}
+
 Vector2Int Camera::convertLCL_GLB(Vector2Int pos)
 {
 	return Vector2Int(pos.x * (HEX_WIDTH * MAP_RENDER_SCALE), pos.y * (HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE));
+}
+
+Vector2Int Camera::convertBBL_GLB(Vector2Int pos)
+{
+	return Vector2Int(pos.x * (HEX_WIDTH * MAP_RENDER_SCALE), pos.y * (HEX_HEIGHT * MAP_RENDER_SCALE));
 }
 
 void Camera::update(SDL_Event* eve)

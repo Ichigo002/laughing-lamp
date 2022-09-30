@@ -24,6 +24,8 @@ void BFun::loadTex(SDL_Renderer* r)
 	srcR.w = 32;
 	srcR.h = 32;
 
+	destR.w = srcR.w * render_scale;
+	destR.h = srcR.h * render_scale;
 	destR.x = 0;
 	destR.y = 0;
 	colliderRect = destR;

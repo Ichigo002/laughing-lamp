@@ -60,6 +60,9 @@
     <ClCompile Include="src\build-map\Blocks\BCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\build-map\Blocks\BBrick.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -129,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\build-map\Blocks\BCircle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\build-map\Blocks\BBrick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
