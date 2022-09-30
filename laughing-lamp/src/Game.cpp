@@ -217,11 +217,11 @@ void Game::handleEvents()
     }
     if (KeyboardHandler::pressedKey(SDLK_F9, &_event))
     {
-        buildmap->enableCursorPlacing("circle", -1);
+        buildmap->enableCursorPlacing("brick", -1);
     }
     if (KeyboardHandler::pressedKey(SDLK_F10, &_event))
     {
-        buildmap->enableCursorPlacing("funny", -1);
+        buildmap->enableCursorPlacing("wood", -1);
     }
 
     if (KeyboardHandler::pressedKey(SDLK_F7, &_event))

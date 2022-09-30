@@ -1,15 +1,15 @@
-#ifndef BBRICK_H
-#define BBRICK_H
+#ifndef BWOOD_H
+#define BWOOD_H
 
 #include "../../utility/Vector2Int.h"
 #include <SDL.h>
 #include "BBlock.h"
 
-class BBrick : public BBlock
+class BWood : public BBlock
 {
 public:
-	BBrick();
-	~BBrick();
+	BWood();
+	~BWood();
 
 	/* Load textures */
 	virtual void loadTex(SDL_Renderer* r);

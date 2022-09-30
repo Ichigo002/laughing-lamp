@@ -236,6 +236,8 @@ void BuildMap::initBlocks()
 {
 	inb<BFun>();
 	inb<BCircle>();
+	inb<BBrick>();
+	inb<BWood>();
 }
 
 int BuildMap::getHighestLayer(std::vector<BPPointer*> vec)

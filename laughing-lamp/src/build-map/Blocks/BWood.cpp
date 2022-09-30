@@ -1,10 +1,10 @@
-#include "BBrick.h"
+#include "BWood.h"
 #include "../../utility/TextureManager.h"
 
-BBrick::BBrick()
+BWood::BWood()
 	:BBlock()
 {
-	name = "brick";
+	name = "wood";
 	category = "WALL";
 	render_scale = 2;
 
@@ -12,14 +12,14 @@ BBrick::BBrick()
 	canCollide = true;
 }
 
-BBrick::~BBrick()
+BWood::~BWood()
 {
 }
 
-void BBrick::loadTex(SDL_Renderer* r)
+void BWood::loadTex(SDL_Renderer* r)
 {
 	tex = TextureManager::load(r, "assets/textures/build-blocks.png");
-	srcR.x = 0;
+	srcR.x = 32;
 	srcR.y = 0;
 	srcR.w = 32;
 	srcR.h = 32;
@@ -31,10 +31,10 @@ void BBrick::loadTex(SDL_Renderer* r)
 	colliderRect = destR;
 }
 
-void BBrick::update()
+void BWood::update()
 {
 }
 
-void BBrick::events(SDL_Event* eve)
+void BWood::events(SDL_Event* eve)
 {
 }
