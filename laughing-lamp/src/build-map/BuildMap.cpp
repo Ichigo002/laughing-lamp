@@ -38,6 +38,7 @@ int BuildMap::put(Vector2Int pos, size_t id)
 	// does player's argument exist?
 	if (tob == nullptr) return -1;
 	// did it find any blocks?
+	// TODO 3 Add to the BBlock canBeOver, and check it can be placed one on second
 	if (exsptr.size() != 0)
 	{
 		BBlock* exsb = exsptr[0]->bb;
