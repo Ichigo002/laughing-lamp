@@ -30,21 +30,7 @@ InventorySystem::~InventorySystem()
 	delete[] set;
 }
 
-// TODO 2 Improve method for stacking the items in the future
-bool InventorySystem::add(InventoryItemData* _new)
-{
-	PSlot freeslot = getFreeSlot();
-	if (freeslot.isNeg())
-	{
-		return false;
-	}
-	else
-	{
-		set[freeslot.y][freeslot.x] = _new;
-		return true;
-	}
-}
-
+// TODO 5 make del method for stacking
 bool InventorySystem::del(std::string item_name, unsigned int amount)
 {
 	for (int y = NO_FIELDS_Y-1; y >= 0; y--)
@@ -53,8 +39,19 @@ bool InventorySystem::del(std::string item_name, unsigned int amount)
 		{
 			if (set[y][x] != nullptr && set[y][x]->getName() == item_name)
 			{
-				set[y][x] = nullptr;
-				amount--;
+				int todel = set[y][x]->getMaxSizeStack() - set[y][x]->getExtantSpace();
+				set[y][x]->removeFromStack(todel);
+				amount -= todel;
+
+				if (amount <= 0)
+					return true;
+
+				if (set[y][x]->getExtantSpace() == set[y][x]->getMaxSizeStack())
+				{
+					set[y][x] = nullptr;
+					amount--;
+				}
+				
 			}
 			if (amount <= 0)
 				return true;
@@ -112,11 +109,11 @@ void InventorySystem::printCMD()
 		{
 			if (set[y][x] == nullptr)
 			{
-				std::cout << "  [NULL]";
+				std::cout << "  [0x NULL]";
 			}
 			else
 			{
-				std::cout << "  ["<<set[y][x]->getName()<<"]";
+				std::cout << "  ["<<set[y][x]->getSizeStack()<<"x "<<set[y][x]->getName()<<"]";
 			}
 		}
 		std::cout << std::endl;
@@ -136,6 +133,33 @@ PSlot InventorySystem::getFreeSlot()
 		}
 	}
 	return PSlot().setNeg();
+}
+
+PSlot InventorySystem::getFreeStackSlot(std::string item_name)
+{
+	PSlot nullspace;
+	nullspace.setNeg();
+
+	for (size_t y = 0; y < NO_FIELDS_Y; y++)
+	{
+		for (size_t x = 0; x < NO_FIELDS_X; x++)
+		{
+			if (set[y][x] == nullptr)
+			{
+				if (nullspace.isNeg())
+				{
+					nullspace.x = x;
+					nullspace.y = y;
+					nullspace.unsetNeg();
+				}
+			}
+			else if (set[y][x]->getName() == item_name && set[y][x]->isStackable() && !set[y][x]->isStackFull())
+			{
+				return PSlot(x, y);
+			}
+		}
+	}
+	return nullspace;
 }
 
 bool InventorySystem::validateSlot(PSlot s)

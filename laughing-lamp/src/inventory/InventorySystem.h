@@ -66,8 +66,10 @@ public:
 	/// <summary>
 	/// Adds new item to the inventory
 	/// </summary>
+	/// <typeparam name="T">Inherited object from InventoryItemData</typeparam>
 	/// <returns>if inventory is full then return false.</returns>
-	bool add(InventoryItemData* _new);
+	template<class T>
+	bool add(int amount = 1);
 
 	/// <summary>
 	/// Deletes the x items
@@ -140,6 +142,13 @@ private:
 	PSlot getFreeSlot();
 
 	/// <summary>
+	/// Returns free slot or slot with space to stack
+	/// </summary>
+	/// <param name="item_name">what item needs space</param>
+	/// <returns>If there's no space then return negative slot.</returns>
+	PSlot getFreeStackSlot(std::string item_name);
+
+	/// <summary>
 	/// Checks is slot's position in range of set.
 	/// </summary>
 	/// <param name="s">slot to check</param>
@@ -153,6 +162,36 @@ private:
 	InventoryItemData* current_item; // current item ready to use
 	InventoryItemData*** set; // set of all items
 };
+
+// TODO 2 Improve method for stacking the items in the future
+template <class T>
+bool InventorySystem::add(int amount)
+{
+	InventoryItemData* _n = new T();
+	PSlot fs = getFreeStackSlot(_n->getName()); // free space
+	if (fs.isNeg())
+		return false;
+
+	if (set[fs.y][fs.x] == nullptr)
+	{
+		set[fs.y][fs.x] = _n;
+		return add<T>(amount - 1);
+	}
+
+	int extant = set[fs.y][fs.x]->getExtantSpace();
+	amount -= extant;
+
+	if (amount > 0)
+	{
+		set[fs.y][fs.x]->addToStack(extant);
+		return add<T>(amount);
+	}
+	else
+	{
+		set[fs.y][fs.x]->addToStack(amount + extant);
+	}
+	return true;
+}
 
 #endif
 // TODO 3 Make new class for pool object and use it for dropped items and GameObjectManager

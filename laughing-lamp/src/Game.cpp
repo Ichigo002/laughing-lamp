@@ -47,11 +47,9 @@ int Game::_init_objects()
     //Inventory System
     invsys = new InventorySystem();
 
-    for (size_t i = 0; i < 7; i++)
-    {
-       invsys->add(new InventoryItemData());
-    }
+    invsys->add<InventoryItemData>(100);
     invsys->move(PSlot(0, 0), PSlot(4, 4));
+    invsys->del("ITEM", 5);
 
     invsys->printCMD();
 
