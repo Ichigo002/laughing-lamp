@@ -44,6 +44,17 @@ int Game::_init_objects()
     //Game Obejct Manager
     gom = new GameObjectManager(renderer, cam);
     gom->add<Player>();
+    //Inventory System
+    invsys = new InventorySystem();
+
+    for (size_t i = 0; i < 7; i++)
+    {
+       invsys->add(new InventoryItemData());
+    }
+    invsys->move(PSlot(0, 0), PSlot(4, 4));
+
+    invsys->printCMD();
+
     return 0;
 }
 

@@ -12,6 +12,7 @@
 #include "GUI/UIText.h"
 #include "GUI/FontAsset.h"
 #include "build-map/BuildMap.h"
+#include "inventory/InventorySystem.h"
 
 class Game
 {
@@ -39,6 +40,7 @@ private:
     BuildMap* buildmap;
     GameObjectManager* gom;
     Camera* cam;
+    InventorySystem* invsys;
 
     SDL_Window* window;
     SDL_Renderer* renderer;

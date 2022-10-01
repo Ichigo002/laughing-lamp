@@ -1,7 +1,6 @@
 #ifndef INVENTORY_SYSTEM_H
 #define INVENTORY_SYSTEM_H
 
-#include <SDL.h>
 #include <string>
 #include "InventoryItemData.h"
 
@@ -19,12 +18,31 @@ public:
 		this->x = x;
 		this->y = y;
 	}
+	PSlot() { ; }
 
 	size_t x;
 	size_t y;
+
+	inline bool operator==(const PSlot& s)
+	{
+		return s.x == x && s.y == y;
+	}
+	inline bool isNeg()
+	{
+		return neg;
+	}
+	PSlot setNeg()
+	{
+		neg = true;
+		return *this;
+	}
+	void unsetNeg() { neg = false; }
+private:
+	bool neg = false;
 };
 
 //  Coordinates system in the Inventory
+//  Accessing the set: set[Y][X]
 //    
 //  Y|X 0   1   2   3   4
 //  0  [=] [=] [=] [=] [=]
@@ -41,6 +59,7 @@ class InventorySystem
 {
 public:
 	InventorySystem();
+	~InventorySystem();
 
 	// SET OF ITEMS METHODS
 
@@ -106,6 +125,8 @@ public:
 	/// </summary>
 	InventoryItemData* getCurrentItem() { return current_item; }
 
+	// CMD METHODS
+
 	/// <summary>
 	/// Prints the inventory in cmd
 	/// </summary>
@@ -115,7 +136,7 @@ private:
 	/// <summary>
 	/// Returns first found free slot at set
 	/// </summary>
-	/// <returns>If there's no empty slot then return PSlot()</returns>
+	/// <returns>If there's no empty slot then return negative slot</returns>
 	PSlot getFreeSlot();
 
 	/// <summary>
@@ -129,13 +150,8 @@ private:
 	/// </summary>
 	//bool checkBusySlot(PSlot s);
 
-	/// <summary>
-	/// Creates the new table
-	/// </summary>
-	void createTable();
-
 	InventoryItemData* current_item; // current item ready to use
-	InventoryItemData* set; // set of all items
+	InventoryItemData*** set; // set of all items
 };
 
 #endif
