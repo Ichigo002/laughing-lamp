@@ -1,8 +1,9 @@
 #include "InventorySystem.h"
 #include <iostream>
 
-InventorySystem::InventorySystem()
+InventorySystem::InventorySystem(int max_size_stacking)
 {
+	this->max_size_stacking = max_size_stacking;
 	// New table
 	set = new InventoryItemData ** [NO_FIELDS_Y];
 	for (size_t i = 0; i < NO_FIELDS_Y; i++)

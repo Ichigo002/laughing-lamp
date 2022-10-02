@@ -59,7 +59,9 @@ private:
 class InventorySystem
 {
 public:
-	InventorySystem();
+
+	/// <param name="max_size_stacking">Recommended sizes are next results of multiplying 2; e.g.: 2,4,8,16,32,64...</param>
+	InventorySystem(int max_size_stacking = 32);
 	~InventorySystem();
 
 	// SET OF ITEMS METHODS
@@ -172,13 +174,15 @@ private:
 
 	PSlot current_item_slot; // current item ready to use
 	InventoryItemData*** set; // set of all items
+
+	int max_size_stacking; // max stacking size of items in a single slot
 };
 
 // TODO 2 Improve method for stacking the items in the future
 template <class T>
 bool InventorySystem::add(int amount)
 {
-	InventoryItemData* _n = new T(16);
+	InventoryItemData* _n = new T(max_size_stacking);
 	PSlot fs = getFreeStackSlot(_n->getName()); // free space
 	if (fs.isNeg())
 		return false;
