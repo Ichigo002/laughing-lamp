@@ -6,7 +6,7 @@
 class InventoryItemData 
 {
 public:
-	InventoryItemData();
+	InventoryItemData(std::string _item_name, int _item_rect_x, int _item_rect_y);
 	~InventoryItemData();
 	/// <summary>
 	/// Returns the name of item
@@ -30,34 +30,46 @@ public:
 	/// <summary>
 	/// Returns size of stack
 	/// </summary>
-	int getSizeStack() { return stack+1; }
+	int getSizeStack();
 
 	/// <summary>
 	/// Returns max size of stack
 	/// </summary>
-	/// <returns></returns>
-	int getMaxSizeStack() { return max_stack-1; }
+	int getMaxSizeStack();
 
 	/// <summary>
 	/// Returns extant space in stack
 	/// </summary>
-	/// <returns></returns>
-	inline int getExtantSpace() { return max_stack-1 - stack > 0 ? max_stack - stack-1 : 0; }
+	int getExtantSpace();
+
+	/// <summary>
+	/// Get item's source rect in X to multiply by WIDTH
+	/// </summary>
+	int getSrcRectItemX();
+
+	/// <summary>
+	/// Get item's source rect in Y to multiply by HEIGHT
+	/// </summary>
+	int getSrcRectItemY();
 
 	/// <summary>
 	/// Returns can item be stacked
 	/// </summary>
-	bool isStackable() { return stackable; }
+	bool isStackable();
 
 	/// <summary>
 	/// Returns if stack is full
 	/// </summary>
-	bool isStackFull() { return stack == max_stack-1; }
-private:
-	std::string item_name = "ITEM";
+	bool isStackFull();
 
-	bool stackable = true;
-	int max_stack = 16;
+protected: // to init parameters of item
+	std::string item_name; // for instance: black_wool
+
+	bool stackable; // if true that item can be stacked in groups at inventory
+	int max_stack; // used when stackable value true. Sets maximum stack in one slot
+	
+	int item_rect_x; // Item's number column in the source Texture. for instance: x = 3; Result: 3*WIDTH
+	int item_rect_y; // Item's number rows in the source Texture. for instance: y = 4; Result: 4*HEGIHT
 private:
 	int stack;
 };

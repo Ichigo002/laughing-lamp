@@ -18,7 +18,7 @@ public:
 		this->x = x;
 		this->y = y;
 	}
-	PSlot() { ; }
+	PSlot() { x = y = 0; }
 
 	size_t x;
 	size_t y;
@@ -177,7 +177,7 @@ private:
 template <class T>
 bool InventorySystem::add(int amount)
 {
-	InventoryItemData* _n = new T();
+	InventoryItemData* _n = new T(16);
 	PSlot fs = getFreeStackSlot(_n->getName()); // free space
 	if (fs.isNeg())
 		return false;
