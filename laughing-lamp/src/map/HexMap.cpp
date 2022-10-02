@@ -19,7 +19,7 @@ HexMap::HexMap(Camera* camera, const char* tileset_path)
     anim_once = false;
 
     current_water_anim = 0;
-    generating_edge_offset = 600;
+    generating_edge_offset = 400;
 }
 
 HexMap::~HexMap()
@@ -97,13 +97,10 @@ void HexMap::updateAnimation()
     if (current_water_anim > 2) current_water_anim = 0;
 }
 
-// TODO 1 During refreshng F7 the map, There sometimes are sightable not generated space
 void HexMap::updateGenerator()
 {
-    Vector2Int pp(camera->getPos());
+    Vector2Int pp(camera->getPos() - generating_edge_offset);
     Vector2Int edge_sc(camera->getPos().x + camera->getWHScreen().x + generating_edge_offset, camera->getPos().y + camera->getWHScreen().y + generating_edge_offset);
-    pp.x -= generating_edge_offset;
-    pp.y -= generating_edge_offset;
 
     while (pp.x < edge_sc.x)
     {
@@ -119,7 +116,7 @@ void HexMap::updateGenerator()
             pp.y += h_chunk;
         }
         pp.x += w_chunk;
-        pp.y = camera->getPos().y;
+        pp.y = camera->getPos().y - generating_edge_offset;
     }
 }
 
