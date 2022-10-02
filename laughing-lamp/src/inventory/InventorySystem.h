@@ -77,7 +77,7 @@ public:
 	/// <param name="item_name">name of item to delete</param>
 	/// <param name="amount">number of items to delete</param>
 	/// <returns>if it can't delete the items, it'll return false</returns>
-	bool del(std::string item_name, unsigned int amount = 1);
+	bool del(std::string item_name, int amount = 1);
 
 	/// <summary>
 	/// Move the item from old position to new
@@ -94,15 +94,7 @@ public:
 	/// <param name="s">slot of item to drop</param>
 	/// <param name="amount">Number of items to drop</param>
 	/// <returns>if everything runs successful then returns true</returns>
-	bool drop(PSlot s, unsigned int amount = 1);
-
-	/// <summary>
-	/// Drops the item from the inventory on the ground.
-	/// </summary>
-	/// <param name="item_name">name of item to drop</param>
-	/// <param name="amount">number of items to delete</param>
-	/// <returns>if it can't drop the items, it'll return false</returns>
-	bool drop(std::string item_name, unsigned int amount = 1);
+	bool drop(PSlot s, int amount = 1);
 
 	/// <summary>
 	/// Returns true if the inventory is full
@@ -115,6 +107,24 @@ public:
 	/// </summary>
 	InventoryItemData* getItem(PSlot s);
 
+	/// <summary>
+	/// Returns the set of items. Size of table is defined in NO_FIELD_X & Y
+	/// </summary>
+	InventoryItemData*** getSet();
+
+	/// <summary>
+	/// Returns true If inventory containts enough items.
+	/// </summary>
+	/// <param name="item_name">name of item to check</param>
+	/// <param name="amount">Number of items to check</param>
+	bool contains(std::string item_name, int amount = 1);
+
+	/// <summary>
+	/// Returns the number of all items with this name
+	/// </summary>
+	/// <param name="item_name">name of item to drop</param>
+	int count(std::string item_name);
+
 	// CURRENT SLOT METHODS
 
 	/// <summary>
@@ -125,7 +135,7 @@ public:
 	/// <summary>
 	/// Returns current item
 	/// </summary>
-	InventoryItemData* getCurrentItem() { return current_item; }
+	InventoryItemData* getCurrentItem();
 
 	// CMD METHODS
 
@@ -159,7 +169,7 @@ private:
 	/// </summary>
 	//bool checkBusySlot(PSlot s);
 
-	InventoryItemData* current_item; // current item ready to use
+	PSlot current_item_slot; // current item ready to use
 	InventoryItemData*** set; // set of all items
 };
 

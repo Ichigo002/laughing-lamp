@@ -17,8 +17,6 @@ InventorySystem::InventorySystem()
 			set[y][x] = nullptr;
 		}
 	}
-
-	current_item = nullptr;
 }
 
 InventorySystem::~InventorySystem()
@@ -31,7 +29,7 @@ InventorySystem::~InventorySystem()
 }
 
 // TODO 5 make del method for stacking
-bool InventorySystem::del(std::string item_name, unsigned int amount)
+bool InventorySystem::del(std::string item_name, int amount)
 {
 	for (int y = NO_FIELDS_Y-1; y >= 0; y--)
 	{
@@ -39,22 +37,27 @@ bool InventorySystem::del(std::string item_name, unsigned int amount)
 		{
 			if (set[y][x] != nullptr && set[y][x]->getName() == item_name)
 			{
-				int todel = set[y][x]->getMaxSizeStack() - set[y][x]->getExtantSpace();
-				set[y][x]->removeFromStack(todel);
-				amount -= todel;
-
-				if (amount <= 0)
-					return true;
-
-				if (set[y][x]->getExtantSpace() == set[y][x]->getMaxSizeStack())
+				int dell = set[y][x]->getSizeStack();
+				amount -= dell;
+				if (amount > 0)
 				{
-					set[y][x] = nullptr;
 					amount--;
+					set[y][x] = nullptr;
+					if (amount > 0)
+						amount++;
+					else
+						return true;
+				}
+				else
+				{
+					if (amount == 0)
+						set[y][x] = nullptr;
+					else
+						set[y][x]->removeFromStack(amount + dell);
+					return true;
 				}
 				
 			}
-			if (amount <= 0)
-				return true;
 		}
 	}
 	return false;
@@ -70,12 +73,7 @@ bool InventorySystem::move(PSlot _old, PSlot _new)
 	set[_old.y][_old.x] = nullptr;
 }
 
-bool InventorySystem::drop(PSlot s, unsigned int amount)
-{
-	return false;
-}
-
-bool InventorySystem::drop(std::string item_name, unsigned int amount)
+bool InventorySystem::drop(PSlot s, int amount)
 {
 	return false;
 }
@@ -92,11 +90,40 @@ InventoryItemData* InventorySystem::getItem(PSlot s)
 	return set[s.y][s.x];
 }
 
+InventoryItemData*** InventorySystem::getSet()
+{
+	return set;
+}
+
+bool InventorySystem::contains(std::string item_name, int amount)
+{
+	return count(item_name) >= amount;
+}
+
+int InventorySystem::count(std::string item_name)
+{
+	int c = 0;
+	for (size_t y = 0; y < NO_FIELDS_Y; y++)
+	{
+		for (size_t x = 0; x < NO_FIELDS_X; x++)
+		{
+			if (set[y][x] != nullptr && set[y][x]->getName() == item_name)
+				c++;
+		}
+	}
+	return c;
+}
+
 void InventorySystem::setCurrentSlot(PSlot slot)
 {
 	if (!validateSlot(slot))
 		return;
-	current_item = set[slot.y][slot.x];
+	current_item_slot = slot;
+}
+
+InventoryItemData* InventorySystem::getCurrentItem()
+{
+	return set[current_item_slot.y][current_item_slot.x];
 }
 
 void InventorySystem::printCMD()
