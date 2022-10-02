@@ -178,7 +178,6 @@ private:
 	int max_size_stacking; // max stacking size of items in a single slot
 };
 
-// TODO 2 Improve method for stacking the items in the future
 template <class T>
 bool InventorySystem::add(int amount)
 {

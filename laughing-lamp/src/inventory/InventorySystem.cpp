@@ -29,7 +29,6 @@ InventorySystem::~InventorySystem()
 	delete[] set;
 }
 
-// TODO 5 make del method for stacking
 bool InventorySystem::del(std::string item_name, int amount)
 {
 	for (int y = NO_FIELDS_Y-1; y >= 0; y--)
