@@ -1,5 +1,5 @@
-#ifndef ITEM_WOOD_H
-#define ITEM_WOOd_H
+#ifndef Z_ITEM_WOOD_H
+#define Z_ITEM_WOOd_H
 
 #include "../InventoryItemData.h"
 

@@ -1,5 +1,5 @@
-#ifndef ITEMS_H
-#define ITEMS_H
+#ifndef Z_ITEMS_H
+#define Z_ITEMS_H
 
 #include "Item_BrickBlock.h"
 #include "Item_Wood.h"

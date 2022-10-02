@@ -3,6 +3,7 @@
 
 #include <string>
 #include "InventoryItemData.h"
+#include "items/Items.h"
 
 #define NO_FIELDS_X 5
 #define NO_FIELDS_Y 5

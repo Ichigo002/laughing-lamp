@@ -1,7 +1,7 @@
 #include "InventoryItemData.h"
 
 InventoryItemData::InventoryItemData(std::string _item_name, int _item_rect_x, int _item_rect_y) :
-	item_name(_item_name), stackable(false), max_stack(16),
+	item_name(_item_name), stackable(false), max_stack(2),
 	item_rect_x(_item_rect_x), item_rect_y(_item_rect_y)
 {
 	stack = 0;
@@ -74,9 +74,4 @@ bool InventoryItemData::isStackable()
 bool InventoryItemData::isStackFull()
 {
 	return stack == max_stack - 1;
-}
-
-void InventoryItemData::__setMaxSizeStacking(int mxst)
-{
-	max_stack = mxst;
 }

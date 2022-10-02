@@ -48,12 +48,12 @@ int Game::_init_objects()
     invsys = new InventorySystem();
 
     invsys->setCurrentSlot(PSlot(4, 4));
-    invsys->add<InventoryItemData>(100);
+    invsys->add<Item_BrickBlock>(40);
+    invsys->add<Item_Wood>(10);
     invsys->move(PSlot(0, 0), PSlot(4, 4));
-    invsys->del("ITEM", 5);
+    invsys->del("wood", 5);
 
     invsys->printCMD();
-    std::cout <<std::endl<< invsys->getCurrentItem()->getSizeStack();
 
     return 0;
 }

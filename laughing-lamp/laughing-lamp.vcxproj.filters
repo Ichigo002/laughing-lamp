@@ -161,6 +161,18 @@
     <ClInclude Include="src\GUI\UIInventory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\inventory\items\Item_BrickBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inventory\items\Item_Wood.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inventory\items\AAA_PATTERN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inventory\items\Items.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />

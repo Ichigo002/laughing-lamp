@@ -1,5 +1,5 @@
-#ifndef ITEM_BRICK_H
-#define ITEM_BRICK_H
+#ifndef Z_ITEM_BRICK_H
+#define Z_ITEM_BRICK_H
 
 #include "../InventoryItemData.h"
 

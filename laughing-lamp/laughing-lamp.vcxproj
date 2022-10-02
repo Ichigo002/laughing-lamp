@@ -60,6 +60,10 @@
     <ClInclude Include="src\GUI\UIText.h" />
     <ClInclude Include="src\inventory\InventoryItemData.h" />
     <ClInclude Include="src\inventory\InventorySystem.h" />
+    <ClInclude Include="src\inventory\items\Items.h" />
+    <ClInclude Include="src\inventory\items\Item_BrickBlock.h" />
+    <ClInclude Include="src\inventory\items\AAA_PATTERN.h" />
+    <ClInclude Include="src\inventory\items\Item_Wood.h" />
     <ClInclude Include="src\map\Chunk.h" />
     <ClInclude Include="src\map\HexMap.h" />
     <ClInclude Include="src\perlin-noise\PerlinNoise.h" />

@@ -5,8 +5,8 @@
 /// Below pattern shows out how every item shall be done
 /// ====================================================
 
-#ifndef ITEM_PATTERN_H
-#define ITEM_PATTERN_H
+#ifndef Z_ITEM_PATTERN_H
+#define Z_ITEM_PATTERN_H
 
 #include "../InventoryItemData.h"
 
