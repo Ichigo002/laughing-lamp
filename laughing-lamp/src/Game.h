@@ -11,6 +11,7 @@
 #include "utility/Camera.h"
 #include "GUI/UIText.h"
 #include "GUI/FontAsset.h"
+#include "GUI/UIInventory.h"
 #include "build-map/BuildMap.h"
 #include "inventory/InventorySystem.h"
 
@@ -40,6 +41,7 @@ private:
     BuildMap* buildmap;
     GameObjectManager* gom;
     Camera* cam;
+    UIInventory* uinv;
     InventorySystem* invsys;
 
     SDL_Window* window;

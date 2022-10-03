@@ -208,4 +208,3 @@ bool InventorySystem::add(int amount)
 }
 
 #endif
-// TODO 3 Make new class for pool object and use it for dropped items and GameObjectManager

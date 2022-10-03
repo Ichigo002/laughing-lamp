@@ -54,6 +54,8 @@ int Game::_init_objects()
 
     invsys->printCMD();
 
+    uinv = new UIInventory(cam, invsys);
+
     return 0;
 }
 
@@ -183,6 +185,7 @@ void Game::update()
     hexmap->updateGenerator();
     gom->update();
     buildmap->update();
+    uinv->update();
 
     if (debug_mode)
     {
@@ -211,6 +214,7 @@ void Game::handleEvents()
     cam->update(&_event);
     buildmap->events(&_event);
     gom->events(&_event);
+    uinv->events(&_event);
 
    // if (KeyboardHandler::pressedKey(SDLK_BACKQUOTE, &_event))
     //    cmd_execute();
@@ -323,6 +327,8 @@ void Game::render()
     gom->draw();
 
     //UI
+    uinv->draw();
+
     if (debug_mode)
         for (auto& txt : debug_txt)
         {
