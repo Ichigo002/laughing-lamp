@@ -38,6 +38,7 @@
     <ClCompile Include="src\map\HexMap.cpp" />
     <ClCompile Include="src\perlin-noise\PerlinNoise.cpp" />
     <ClCompile Include="src\utility\Camera.cpp" />
+    <ClCompile Include="src\utility\PoolObject.cpp" />
     <ClCompile Include="src\utility\Vector2Int.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +70,7 @@
     <ClInclude Include="src\perlin-noise\PerlinNoise.h" />
     <ClInclude Include="src\utility\Camera.h" />
     <ClInclude Include="src\utility\KeyboardHandler.h" />
+    <ClInclude Include="src\utility\PoolObject.h" />
     <ClInclude Include="src\utility\TextureManager.h" />
     <ClInclude Include="src\utility\Utilities.h" />
     <ClInclude Include="src\utility\Utility.h" />
