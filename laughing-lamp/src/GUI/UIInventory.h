@@ -44,6 +44,21 @@ private:
 	/// </summary>
 	void close();
 
+	/// <summary>
+	/// Draws the hotbar with items
+	/// </summary>
+	void drawHotbar();
+
+	/// <summary>
+	/// Draws the open inventory with items
+	/// </summary>
+	void drawOpenInventory();
+
+	/// <summary>
+	/// Draws all items in inventory
+	/// </summary>
+	void drawItems();
+
 private:
 	/* PRIVATE VARIABLES */
 	Camera* c; // Main camera
@@ -57,7 +72,7 @@ private:
 	SDL_Color click_mod_color;   // active if mouse click a slot to grab item
 	SDL_Color focus_mod_color;   // active if slot is used as current slot in InventorySystem (chosen by 1-9 keys or by scroll)
 
-	SDL_Rect size_slot; // Used only w,h. Specify width and height of slot
+	SDL_Rect size_slot; // Used only w,h. Specify width and height of slot [Value scaled with rsc]
 
 	SDL_Texture* default_slot_tex;  // texture in every slot 
 	SDL_Texture* focus_slot_tex;    // if slot is current slot in InventorySystem (chosen by 1-9 keys or by scroll)
@@ -67,8 +82,10 @@ private:
 	SDL_Texture* bg_bar_tex; // Texture of bar if inventory is closed
 
 	SDL_Point begin_point; // Point where begins inventory
-	int marginX_slot; // size of margin for slot in X
-	int marginY_slot; // size of margin for slot in Y
+	int marginX_slot; // size of margin for slot in X [Value scaled with rsc]
+	int marginY_slot; // size of margin for slot in Y [Value scaled with rsc]
+
+	int gap_between_BarInv; // Size of gap between foucs bar & content inventory [Value scaled with rsc]
 
 	int rsc; // Render scale of UI
 };
