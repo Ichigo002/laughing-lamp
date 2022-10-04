@@ -27,11 +27,11 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 // TODO 5 Resourcepacks manager & textures. And get textures by category and name
 void UIInventory::loadTex()
 {
-	default_slot_tex = TextureManager::load(c->getRender(), "assets/textures/ui/inventory_slot.png");
-	focus_slot_tex = TextureManager::load(c->getRender(), "assets/textures/ui/inventory_focus_slot.png");
+	default_slot_tex = TextureManager::load(c, "ui", "inventory_slot.png");
+	focus_slot_tex = TextureManager::load(c, "ui", "inventory_focus_slot.png");
 	
-	bg_main_tex = TextureManager::load(c->getRender(), "assets/textures/ui/inventory_main_bg.png");
-	bg_bar_tex = TextureManager::load(c->getRender(), "assets/textures/ui/inventory_bar_bg.png"); 
+	bg_main_tex = TextureManager::load(c, "ui", "inventory_main_bg.png");
+	bg_bar_tex = TextureManager::load(c, "ui", "inventory_bar_bg.png");
 
 	SDL_SetTextureColorMod(default_slot_tex, default_mod_color.r, default_mod_color.g, default_mod_color.b);
 	SDL_SetTextureColorMod(focus_slot_tex, focus_mod_color.r, focus_mod_color.g, focus_mod_color.b);

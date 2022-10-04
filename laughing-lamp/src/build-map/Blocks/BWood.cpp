@@ -18,7 +18,7 @@ BWood::~BWood()
 
 void BWood::loadTex(SDL_Renderer* r)
 {
-	tex = TextureManager::load(r, "assets/textures/build-blocks.png");
+	tex = TextureManager::load(r, "blocks", "build-blocks.png");
 	srcR.x = 32;
 	srcR.y = 0;
 	srcR.w = 32;

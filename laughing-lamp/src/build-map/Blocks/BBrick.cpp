@@ -18,7 +18,7 @@ BBrick::~BBrick()
 
 void BBrick::loadTex(SDL_Renderer* r)
 {
-	tex = TextureManager::load(r, "assets/textures/build-blocks.png");
+	tex = TextureManager::load(r, "blocks", "build-blocks.png");
 	srcR.x = 0;
 	srcR.y = 0;
 	srcR.w = 32;

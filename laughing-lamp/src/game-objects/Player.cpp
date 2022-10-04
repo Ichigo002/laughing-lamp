@@ -30,7 +30,7 @@ Player::~Player()
 
 void Player::loadTexture()
 {
-	tex = TextureManager::load(camera->getRender(), "assets/textures/geralt.png");
+	tex = TextureManager::load(camera, "entity/player", "geralt.png");
 	srcR.w = 24;
 	srcR.h = 48;
 	srcR.x = 0;

@@ -21,7 +21,7 @@ class HexMap
 public:
     /// <param name="camera">Camera for rendering</param>
     /// <param name="tileset_path">Path or filename to tileset picture (*.png)</param>
-    HexMap(Camera* camera, const char* tileset_path);
+    HexMap(Camera* camera);
     ~HexMap();
 
     /* Set seed for map */

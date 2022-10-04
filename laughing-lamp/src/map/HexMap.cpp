@@ -4,10 +4,10 @@
 #include <math.h>
 #include <iostream>
 
-HexMap::HexMap(Camera* camera, const char* tileset_path)
+HexMap::HexMap(Camera* camera)
 {
     this->camera = camera;
-    tileset = TextureManager::load(camera->getRender(), tileset_path);
+    tileset = TextureManager::load(camera, "tilemap", "tileset.png");
 
     srand(time(NULL));
     seed = rand() % 9000000000;

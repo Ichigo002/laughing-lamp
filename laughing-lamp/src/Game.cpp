@@ -66,7 +66,7 @@ int Game::_init_maps()
     int seed = rand() % 1000000000;
 
     // HexMap
-    hexmap = new HexMap(cam, "assets/textures/terrain-v2.png");
+    hexmap = new HexMap(cam);
     hexmap->setChunkSize(16);
     hexmap->setFactor(.2f);
     hexmap->setSeed(seed);

@@ -18,7 +18,7 @@ Wall::~Wall()
 
 void Wall::loadTexture()
 {
-	tex = TextureManager::load(camera->getRender(), "assets/wall.png");
+	tex = TextureManager::load(camera, "blocks", "wall.png");
 	srcR.w = 32;
 	srcR.h = 32;
 	srcR.x = 0;

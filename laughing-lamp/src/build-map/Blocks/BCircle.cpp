@@ -18,7 +18,7 @@ BCircle::~BCircle()
 
 void BCircle::loadTex(SDL_Renderer* r)
 {
-	tex = TextureManager::load(r, "assets/textures/circle.png");
+	tex = TextureManager::load(r, "blocks", "circle.png");
 	srcR.x = 0;
 	srcR.y = 0;
 	srcR.w = 30;
