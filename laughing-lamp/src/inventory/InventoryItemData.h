@@ -2,11 +2,12 @@
 #define INVENTORY_ITEM_DATA_H
 
 #include <string>
+#include <SDL.h>
 
 class InventoryItemData 
 {
 public:
-	InventoryItemData(std::string _item_name, int _item_rect_x, int _item_rect_y);
+	InventoryItemData(std::string _item_name);
 	~InventoryItemData();
 	/// <summary>
 	/// Returns the name of item
@@ -43,16 +44,6 @@ public:
 	int getExtantSpace();
 
 	/// <summary>
-	/// Get item's source rect in X to multiply by WIDTH
-	/// </summary>
-	int getSrcRectItemX();
-
-	/// <summary>
-	/// Get item's source rect in Y to multiply by HEIGHT
-	/// </summary>
-	int getSrcRectItemY();
-
-	/// <summary>
 	/// Returns can item be stacked
 	/// </summary>
 	bool isStackable();
@@ -62,14 +53,23 @@ public:
 	/// </summary>
 	bool isStackFull();
 
+	/// <summary>
+	/// Returns item texture
+	/// </summary>
+	SDL_Texture* getItemTex();
+
+	/// <summary>
+	/// sets the texture of item on init in UIInventory
+	/// </summary>
+	void __setTex(SDL_Texture* t);
 protected: // to init parameters of item
 	std::string item_name; // for instance: black_wool
 
 	bool stackable; // if true that item can be stacked in groups at inventory
 	int max_stack; // used when stackable value true. Sets maximum stack in one slot
 	
-	int item_rect_x; // Item's number column in the source Texture. for instance: x = 3; Result: 3*WIDTH
-	int item_rect_y; // Item's number rows in the source Texture. for instance: y = 4; Result: 4*HEGIHT
+	SDL_Texture* item_tex; // Texture loaded while it is created. Texture is loaded from file with name i.e. 'wooden_block.png';
+	// item_tex is initialized if it needs to be rendered. First init is in UIINevntory.
 private:
 	int stack;
 };

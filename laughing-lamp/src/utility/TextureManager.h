@@ -13,8 +13,8 @@ class TextureManager
 public:
 
     /* Load Surface by filename & create the texture with renderer */
-    ///[OBSOLETE]
-    static SDL_Texture* loadf(SDL_Renderer* renderer, const char* filename)
+    /// [OBSOLETE]
+    static SDL_Texture* load(SDL_Renderer* renderer, const char* filename)
     {
         SDL_Surface* tmpSrf = IMG_Load(filename);
 

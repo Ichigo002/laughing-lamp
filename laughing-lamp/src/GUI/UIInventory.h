@@ -5,6 +5,7 @@
 #include "../inventory/InventorySystem.h"
 #include "../utility/Vector2Int.h"
 #include "../utility/Camera.h"
+#include "UIText.h"
 
 #define DISABLED_COLOR {255, 255, 255};
 
@@ -30,6 +31,12 @@ public:
 
 private:
 	/// <summary>
+	/// Draws the item in GLB units
+	/// </summary>
+	/// <param name="uislot_rect">rect of drew slot in inventory</param>
+	/// <param name="slot">form what slot get item</param>
+	void drawItem(const SDL_Rect* uislot_rect, PSlot slot);
+	/// <summary>
 	/// Load all necessary textures & sets the rects
 	/// </summary>
 	void loadTex();
@@ -54,17 +61,13 @@ private:
 	/// </summary>
 	void drawOpenInventory();
 
-	/// <summary>
-	/// Draws all items in inventory
-	/// </summary>
-	void drawItems();
-
 private:
 	/* PRIVATE VARIABLES */
 	Camera* c; // Main camera
 	InventorySystem* invsys; // Main inventory system
 
 	bool isOpened;
+	UIText* txt_item; // text to render amounts
 
 	/* SLOTS DESIGN */
 	SDL_Color default_mod_color; // active if mouse is not touching a slot
@@ -77,9 +80,15 @@ private:
 	SDL_Texture* default_slot_tex;  // texture in every slot 
 	SDL_Texture* focus_slot_tex;    // if slot is current slot in InventorySystem (chosen by 1-9 keys or by scroll)
 
+	/* ITEMS DESIGN */
+
+	int padding_item; // Space between border of slot and item
+	FontAsset* amount_font_item; // Font asset to display number of items in one slot (small white numbers)
+
 	/* NON INTERACT ELEMENTS */
 	SDL_Texture* bg_main_tex; // Texture of main bg if inventory is opened
 	SDL_Texture* bg_bar_tex; // Texture of bar if inventory is closed
+	int bg_alpha; // Transparent background 0-255
 
 	SDL_Point begin_point; // Point where begins inventory
 	int marginX_slot; // size of margin for slot in X [Value scaled with rsc]

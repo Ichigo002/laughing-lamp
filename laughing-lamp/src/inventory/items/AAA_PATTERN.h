@@ -14,7 +14,7 @@ class Item_Pattern : public InventoryItemData
 {
 public:
 	Item_Pattern(int max_stack)
-		: InventoryItemData("pattern", 1, 0)
+		: InventoryItemData("pattern")
 	{
 		//stackable = true;
 		//this->max_stack = max_stack;

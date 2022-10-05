@@ -7,7 +7,7 @@ class Item_Wood : public InventoryItemData
 {
 public:
 	Item_Wood(int max_stack)
-		: InventoryItemData("wood", 1, 0)
+		: InventoryItemData("wooden_block")
 	{
 		stackable = true;
 		this->max_stack = max_stack;

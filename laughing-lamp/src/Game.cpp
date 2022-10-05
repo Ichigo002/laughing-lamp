@@ -33,6 +33,7 @@ int Game::_init_SDL()
         return -3;
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     return 0;
 }
 
@@ -48,7 +49,7 @@ int Game::_init_objects()
 
     invsys->setCurrentSlot(PSlot(4, 4));
     invsys->add<Item_BrickBlock>(40);
-    invsys->add<Item_Wood>(10);
+    invsys->add<Item_Wood>(64);
     invsys->move(PSlot(0, 0), PSlot(4, 4));
     invsys->del("wood", 5);
 
@@ -64,7 +65,7 @@ int Game::_init_maps()
                 //Here you can put seed to game
     srand(time(NULL));
     int seed = rand() % 1000000000;
-
+    
     // HexMap
     hexmap = new HexMap(cam);
     hexmap->setChunkSize(16);

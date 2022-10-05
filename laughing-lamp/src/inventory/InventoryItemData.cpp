@@ -1,9 +1,9 @@
 #include "InventoryItemData.h"
 
-InventoryItemData::InventoryItemData(std::string _item_name, int _item_rect_x, int _item_rect_y) :
-	item_name(_item_name), stackable(false), max_stack(2),
-	item_rect_x(_item_rect_x), item_rect_y(_item_rect_y)
+InventoryItemData::InventoryItemData(std::string _item_name) :
+	item_name(_item_name), stackable(false), max_stack(2)
 {
+	item_tex = nullptr;
 	stack = 0;
 }
 
@@ -56,16 +56,6 @@ int InventoryItemData::getExtantSpace()
 	return max_stack - 1 - stack > 0 ? max_stack - stack - 1 : 0;
 }
 
-int InventoryItemData::getSrcRectItemX()
-{
-	return item_rect_x;
-}
-
-int InventoryItemData::getSrcRectItemY()
-{
-	return item_rect_y;
-}
-
 bool InventoryItemData::isStackable()
 {
 	return stackable;
@@ -74,4 +64,14 @@ bool InventoryItemData::isStackable()
 bool InventoryItemData::isStackFull()
 {
 	return stack == max_stack - 1;
+}
+
+SDL_Texture* InventoryItemData::getItemTex()
+{
+	return item_tex;
+}
+
+void InventoryItemData::__setTex(SDL_Texture* t)
+{
+	item_tex = t;
 }

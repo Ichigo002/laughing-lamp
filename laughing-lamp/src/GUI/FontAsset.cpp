@@ -26,6 +26,8 @@ void FontAsset::loadFont(std::string p, int pt)
 {
 	TTF_Init();
 	font = TTF_OpenFont(p.c_str(), pt);
+	if (font == NULL)
+		std::cout << "FontAsset::loadFont(std::string, int): Couldn't load font" << std::endl;
 }
 
 void FontAsset::createGlyphs(SDL_Color clr, SDL_Renderer* r)
