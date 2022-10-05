@@ -36,6 +36,15 @@ private:
 	/// <param name="uislot_rect">rect of drew slot in inventory</param>
 	/// <param name="slot">form what slot get item</param>
 	void drawItem(const SDL_Rect* uislot_rect, PSlot slot);
+
+	/// <summary>
+	/// Detect Collision AABB for mouse [raw screen units]
+	/// </summary>
+	/// <param name="t">Target who move to touch object</param>
+	/// <param name="mpos">mouse position</param>
+	/// <returns>On detect returns true</returns>
+	bool MOSUI_AABB(const SDL_Rect* t, Vector2Int mpos);
+
 	/// <summary>
 	/// Load all necessary textures & sets the rects
 	/// </summary>
@@ -66,6 +75,7 @@ private:
 	Camera* c; // Main camera
 	InventorySystem* invsys; // Main inventory system
 
+	Vector2Int cmos; // Current position of mouse on screen;
 	bool isOpened;
 	UIText* txt_item; // text to render amounts
 

@@ -134,9 +134,6 @@
     <ClInclude Include="src\build-map\BuildMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utility\Utility.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\build-map\Blocks\BBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>

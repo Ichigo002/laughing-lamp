@@ -7,7 +7,7 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 {
 	default_mod_color = { 255, 255, 255, 200};
 	focus_mod_color = { 255, 172, 172 };
-	hover_mod_color = { 190, 190, 190 };
+	hover_mod_color = { 0, 0, 0 };
 	click_mod_color = { 70, 70, 70 };
 
 	begin_point = { 10, 10 };
@@ -49,13 +49,20 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, PSlot slot)
 			return;
 		}
 	}
+	SDL_Texture* tmptex = item->getItemTex();
+	if (MOSUI_AABB(uislot_rect, c->getMouse()))
+	{
+		SDL_SetTextureColorMod(tmptex, hover_mod_color.r, hover_mod_color.g, hover_mod_color.b);
+		std::cout << "HOVER\n";
+	}
+
 	SDL_Rect r = *uislot_rect;
 	r.x += padding_item;
 	r.y += padding_item;
 	r.w -= padding_item*2;
 	r.h -= padding_item*2;
 
-	c->drawGUI(item->getItemTex(), NULL, &r);
+	c->drawGUI(tmptex, NULL, &r);
 
 	int stack = item->getSizeStack();
 
@@ -168,6 +175,18 @@ void UIInventory::events(SDL_Event* e)
 		else
 			open();
 	}
+	if (!isOpened)
+		return;
+
+	cmos = c->getMouse();
+
+	/*for (size_t y = 0; y < NO_FIELDS_Y; y++)
+	{
+		for (size_t x = 0; x < NO_FIELDS_X; x++)
+		{
+
+		}
+	}*/
 	
 }
 
@@ -180,5 +199,23 @@ void UIInventory::draw()
 	drawHotbar();
 
 	drawOpenInventory();
+}
+
+bool UIInventory::MOSUI_AABB(const SDL_Rect* t, Vector2Int mpos)
+{
+	Vector2Int proj;
+
+	// test overlap in x axis
+	proj.x = std::max(t->x + t->w, mpos.x) - std::min(t->x, mpos.x);
+	if (proj.x < t->w)
+	{
+		// test overlap in y axis
+		proj.y = std::max(t->y + t->h, mpos.y) - std::min(t->y, mpos.y);
+		if (proj.y < t->h)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 

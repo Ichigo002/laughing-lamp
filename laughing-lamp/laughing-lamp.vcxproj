@@ -73,7 +73,6 @@
     <ClInclude Include="src\utility\PoolObject.h" />
     <ClInclude Include="src\utility\TextureManager.h" />
     <ClInclude Include="src\utility\Utilities.h" />
-    <ClInclude Include="src\utility\Utility.h" />
     <ClInclude Include="src\utility\Vector2Int.h" />
   </ItemGroup>
   <ItemGroup>
