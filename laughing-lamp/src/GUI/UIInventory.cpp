@@ -2,12 +2,13 @@
 #include "../utility/TextureManager.h"
 #include "../utility/KeyboardHandler.h"
 
+// TODO 999 FIX THE FUCKING MAP!
 UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 	: c(c), invsys(invsys), rsc(2)
 {
 	default_mod_color = { 255, 255, 255, 200};
 	focus_mod_color = { 255, 172, 172 };
-	hover_mod_color = { 0, 0, 0 };
+	hover_mod_color = { 170, 170, 170, 200 };
 	click_mod_color = { 70, 70, 70 };
 
 	begin_point = { 10, 10 };
@@ -49,12 +50,6 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, PSlot slot)
 			return;
 		}
 	}
-	SDL_Texture* tmptex = item->getItemTex();
-	if (MOSUI_AABB(uislot_rect, c->getMouse()))
-	{
-		SDL_SetTextureColorMod(tmptex, hover_mod_color.r, hover_mod_color.g, hover_mod_color.b);
-		std::cout << "HOVER\n";
-	}
 
 	SDL_Rect r = *uislot_rect;
 	r.x += padding_item;
@@ -62,7 +57,7 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, PSlot slot)
 	r.w -= padding_item*2;
 	r.h -= padding_item*2;
 
-	c->drawGUI(tmptex, NULL, &r);
+	c->drawGUI(item->getItemTex(), NULL, &r);
 
 	int stack = item->getSizeStack();
 
@@ -74,6 +69,25 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, PSlot slot)
 	txt_item->setText(std::to_string(stack));
 	txt_item->setStartingPos(Vector2Int(r.x + r.w / 2, r.y + r.h / 2));
 	txt_item->draw();
+}
+
+void UIInventory::drawReadySlot(SDL_Rect* destR, const PSlot slot)
+{
+	if (!hover_slot.isNeg() && hover_slot == slot)
+	{
+		SDL_SetTextureAlphaMod(default_slot_tex, hover_mod_color.a);
+		SDL_SetTextureColorMod(default_slot_tex, hover_mod_color.r, hover_mod_color.g, hover_mod_color.b);
+	}
+	else
+	{
+		SDL_SetTextureAlphaMod(default_slot_tex, default_mod_color.a);
+		SDL_SetTextureColorMod(default_slot_tex, default_mod_color.r, default_mod_color.g, default_mod_color.b);
+
+	}
+
+	c->drawGUI(default_slot_tex, NULL, destR);
+
+	drawItem(destR, slot);
 }
 
 void UIInventory::loadTex()
@@ -128,9 +142,7 @@ void UIInventory::drawHotbar()
 		dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
 		dr.y = begin_point.y + marginY_slot * rsc;
 
-		c->drawGUI(default_slot_tex, NULL, &dr);
-
-		drawItem(&dr, PSlot(x, 0));
+		drawReadySlot(&dr, PSlot(x, 0));
 	}
 }
 
@@ -159,9 +171,7 @@ void UIInventory::drawOpenInventory()
 			dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
 			dr.y = begin_point.y + marginY_slot * rsc * 3 + (size_slot.w + gap_between_BarInv) * rsc + (y-1) * (size_slot.h + marginY_slot) * rsc;
 
-			c->drawGUI(default_slot_tex, NULL, &dr);
-
-			drawItem(&dr, PSlot(x, y));
+			drawReadySlot(&dr, PSlot(x, y));
 		}
 	}
 }
@@ -175,18 +185,39 @@ void UIInventory::events(SDL_Event* e)
 		else
 			open();
 	}
+	hover_slot.setNeg();
+
 	if (!isOpened)
 		return;
 
-	cmos = c->getMouse();
+	Vector2Int mp = c->getMouse();
+	SDL_Rect dr;
 
-	/*for (size_t y = 0; y < NO_FIELDS_Y; y++)
+	dr.w = size_slot.w * rsc;
+	dr.h = size_slot.h * rsc;
+
+	for (size_t y = 0; y < NO_FIELDS_Y; y++)
 	{
 		for (size_t x = 0; x < NO_FIELDS_X; x++)
 		{
+			if (y == 0)
+			{
+				dr.y = begin_point.y + marginY_slot * rsc;
+			}
+			else
+			{
+				dr.y = begin_point.y + marginY_slot * rsc * 3 + (size_slot.w + gap_between_BarInv) * rsc + (y - 1) * (size_slot.h + marginY_slot) * rsc;
+			}
+			dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
 
+
+			if (mp.x > dr.x && mp.x < dr.x + dr.w && mp.y < dr.y + dr.h && mp.y > dr.y)
+			{
+				hover_slot.unsetNeg();
+				hover_slot = PSlot(x, y);
+			}
 		}
-	}*/
+	}
 	
 }
 
@@ -200,22 +231,3 @@ void UIInventory::draw()
 
 	drawOpenInventory();
 }
-
-bool UIInventory::MOSUI_AABB(const SDL_Rect* t, Vector2Int mpos)
-{
-	Vector2Int proj;
-
-	// test overlap in x axis
-	proj.x = std::max(t->x + t->w, mpos.x) - std::min(t->x, mpos.x);
-	if (proj.x < t->w)
-	{
-		// test overlap in y axis
-		proj.y = std::max(t->y + t->h, mpos.y) - std::min(t->y, mpos.y);
-		if (proj.y < t->h)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-

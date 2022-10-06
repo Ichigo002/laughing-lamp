@@ -38,12 +38,11 @@ private:
 	void drawItem(const SDL_Rect* uislot_rect, PSlot slot);
 
 	/// <summary>
-	/// Detect Collision AABB for mouse [raw screen units]
+	/// Draw ready to use slot in inventory
 	/// </summary>
-	/// <param name="t">Target who move to touch object</param>
-	/// <param name="mpos">mouse position</param>
-	/// <returns>On detect returns true</returns>
-	bool MOSUI_AABB(const SDL_Rect* t, Vector2Int mpos);
+	/// <param name="destR">size & position on the screen</param>
+	/// <param name="slot">which slot should be drown</param>
+	void drawReadySlot(SDL_Rect* destR, PSlot slot);
 
 	/// <summary>
 	/// Load all necessary textures & sets the rects
@@ -75,9 +74,9 @@ private:
 	Camera* c; // Main camera
 	InventorySystem* invsys; // Main inventory system
 
-	Vector2Int cmos; // Current position of mouse on screen;
-	bool isOpened;
+	bool isOpened; // is inventory opened
 	UIText* txt_item; // text to render amounts
+	PSlot hover_slot; // currently hovered slot by mouse
 
 	/* SLOTS DESIGN */
 	SDL_Color default_mod_color; // active if mouse is not touching a slot
