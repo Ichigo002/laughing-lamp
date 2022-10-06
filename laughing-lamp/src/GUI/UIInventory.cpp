@@ -9,7 +9,6 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 	default_mod_color = { 255, 255, 255, 200};
 	focus_mod_color = { 255, 172, 172 };
 	hover_mod_color = { 170, 170, 170, 200 };
-	click_mod_color = { 70, 70, 70 };
 
 	begin_point = { 10, 10 };
 
@@ -82,7 +81,6 @@ void UIInventory::drawReadySlot(SDL_Rect* destR, const PSlot slot)
 	{
 		SDL_SetTextureAlphaMod(default_slot_tex, default_mod_color.a);
 		SDL_SetTextureColorMod(default_slot_tex, default_mod_color.r, default_mod_color.g, default_mod_color.b);
-
 	}
 
 	c->drawGUI(default_slot_tex, NULL, destR);
@@ -210,7 +208,15 @@ void UIInventory::events(SDL_Event* e)
 			}
 			dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
 
-
+			if (e->type == SDL_MOUSEBUTTONDOWN)
+			{
+				if (e->button.button == 1) // left
+				{
+				}
+				if (e->button.button == 3) // right
+				{
+				}
+			}
 			if (mp.x > dr.x && mp.x < dr.x + dr.w && mp.y < dr.y + dr.h && mp.y > dr.y)
 			{
 				hover_slot.unsetNeg();

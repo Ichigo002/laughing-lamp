@@ -6,6 +6,7 @@
 #include "../utility/Vector2Int.h"
 #include "../utility/Camera.h"
 #include "UIText.h"
+#include <iostream>
 
 #define DISABLED_COLOR {255, 255, 255};
 
@@ -81,7 +82,6 @@ private:
 	/* SLOTS DESIGN */
 	SDL_Color default_mod_color; // active if mouse is not touching a slot
 	SDL_Color hover_mod_color;   // active if mouse hovers a slot
-	SDL_Color click_mod_color;   // active if mouse click a slot to grab item
 	SDL_Color focus_mod_color;   // active if slot is used as current slot in InventorySystem (chosen by 1-9 keys or by scroll)
 
 	SDL_Rect size_slot; // Used only w,h. Specify width and height of slot [Value scaled with rsc]
