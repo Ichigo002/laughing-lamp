@@ -95,7 +95,10 @@ void InventorySystem::move_init(PSlot f, int amount)
 		mov_item->removeAllFromStack();
 		mov_item->addToStack(amount-1);
 
-		set[f.y][f.x]->removeFromStack(amount);
+		if (set[f.y][f.x]->getSizeStack() == amount)
+			set[f.y][f.x] = nullptr;
+		else
+			set[f.y][f.x]->removeFromStack(amount);
 	}
 }
 

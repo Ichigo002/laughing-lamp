@@ -328,12 +328,12 @@ void UIInventory::events(SDL_Event* e)
 					}
 					else
 					{
-						int aa = 0;
 						if (e->button.button == 1) // left
-							aa = -1; // whole items in slot
+							invsys->move_init(PSlot(x, y), -1);
 						if (e->button.button == 3) // right
-							aa = invsys->getItem(PSlot(x, y))->getSizeStack() / 2;//half of items in slot
-						invsys->move_init(PSlot(x, y), aa);
+							invsys->move_init(PSlot(x, y), invsys->getItem(PSlot(x, y))->getSizeStack() / 2);
+						if(e->button.button == 2)
+							invsys->move_init(PSlot(x, y), 1);
 					}
 				}
 			}
