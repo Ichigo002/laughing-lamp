@@ -5,7 +5,7 @@
 #include "InventoryItemData.h"
 #include "items/Items.h"
 
-#define NO_FIELDS_X 5 // MAX recommended size is max 10 because, above 10 there's no support for keys 1-9
+#define NO_FIELDS_X 6 // MAX recommended size is max 10 because, above 10 there's no support for keys 1-9
 #define NO_FIELDS_Y 5
 
 /// <summary>

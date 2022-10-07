@@ -111,6 +111,7 @@ private:
 	int padding_item; // Space between border of slot and item [Value scaled with rsc] 
 	FontAsset* amount_font_item; // Font asset to display number of items in one slot (small white numbers) [Value scaled with rsc [size]]
 	SDL_Color font_asset_color; // Color of font asset for number items
+	int pt_size_font; // Size of font for above
 
 	/* NON INTERACT ELEMENTS */
 	SDL_Texture* bg_main_tex; // Texture of main bg if inventory is opened

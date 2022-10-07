@@ -3,21 +3,21 @@
 #include "../utility/KeyboardHandler.h"
 
 UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
-	: c(c), invsys(invsys), rsc(2)
+	: c(c), invsys(invsys), rsc(2.5)
 {
-	default_mod_color = { 255, 255, 255, 200};
+	default_mod_color = { 255, 255, 245, 210};
 	focus_mod_color = { 255, 255, 255, 200 };
-	hover_mod_color = { 170, 170, 170, 200 };
+	hover_mod_color = { 150, 170, 230, 200 };
 
 	begin_point = { 10, 10 };
 
 	bg_alpha = 180;
 
-	size_slot.w = 32;
-	size_slot.h = 32;
+	size_slot.w = 28;
+	size_slot.h = 28;
 
-	marginX_slot = 4;
-	marginY_slot = 4;
+	marginX_slot = 2;
+	marginY_slot = 2;
 
 	gap_between_BarInv = 5;
 	focus_slot_x = 0;
@@ -27,6 +27,7 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 
 	font_path = "assets/fonts/Gemunu/GemunuLibre-Bold.ttf";
 	font_asset_color = { 255, 255, 255 };
+	pt_size_font = 10;
 
 	loadTex();
 
@@ -65,7 +66,7 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item)
 	if (stack == 1)
 		return;
 	if (stack < 10)
-		r.x += 13*rsc / 2;
+		r.x += pt_size_font *rsc / 2;
 
 	txt_item->setText(std::to_string(stack));
 	txt_item->setStartingPos(Vector2Int(r.x + r.w / 2, r.y + r.h / 2));
@@ -113,7 +114,7 @@ void UIInventory::loadTex()
 	focus_slot_tex = TextureManager::load(c, "ui", "inventory_focus_slot.png");
 	
 	bg_main_tex = TextureManager::load(c, "ui", "inventory_main_bg.png");
-	bg_bar_tex = TextureManager::load(c, "ui", "inventory_bar_bg.png");
+	bg_bar_tex = TextureManager::load(c, "ui", "inventory_hotbar_bg.png");
 
 	SDL_SetTextureBlendMode(default_slot_tex, SDL_BLENDMODE_BLEND);
 	SDL_SetTextureBlendMode(focus_slot_tex, SDL_BLENDMODE_BLEND);
@@ -355,7 +356,7 @@ void UIInventory::update()
 	if (old_rsc != rsc)
 	{
 		old_rsc = rsc;
-		amount_font_item = new FontAsset(c->getRender(), font_path, 13 * rsc, font_asset_color);
+		amount_font_item = new FontAsset(c->getRender(), font_path, pt_size_font * rsc, font_asset_color);
 		txt_item = new UIText(amount_font_item);
 	}
 }

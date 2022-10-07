@@ -102,7 +102,6 @@ void InventorySystem::move_init(PSlot f, int amount)
 	}
 }
 
-// TODO 3I getting to move single item by click scroll
 void InventorySystem::move_exec(PSlot dest)
 {
 	if (mov_item == nullptr || !validateSlot(dest))
