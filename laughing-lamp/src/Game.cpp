@@ -53,7 +53,6 @@ int Game::_init_objects()
     invsys->move_direct(PSlot(0, 0), PSlot(4, 4));
     invsys->del("wood", 5);
 
-    invsys->printCMD();
 
     uinv = new UIInventory(cam, invsys);
 

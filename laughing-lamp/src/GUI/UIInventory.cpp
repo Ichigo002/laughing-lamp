@@ -213,6 +213,12 @@ void UIInventory::drawMovingItem()
 
 void UIInventory::events(SDL_Event* e)
 {
+	// Closes different action for Escape
+	if (KeyboardHandler::pressedKey(SDLK_ESCAPE, e) && !invsys->move_ready())
+		close();
+	if (KeyboardHandler::pressedKey(SDLK_ESCAPE, e) && invsys->move_ready())
+		invsys->move_cancel();
+
 	if (KeyboardHandler::pressedKey(SDLK_TAB, e))
 	{
 		if (isOpened)
@@ -258,8 +264,8 @@ void UIInventory::events(SDL_Event* e)
 			break;
 		}
 
-	if (focus_slot_x > NO_FIELDS_X)
-		focus_slot_x = NO_FIELDS_X;
+	if (focus_slot_x > NO_FIELDS_X-1)
+		focus_slot_x = NO_FIELDS_X-1;
 
 	if (!isOpened)
 		return;

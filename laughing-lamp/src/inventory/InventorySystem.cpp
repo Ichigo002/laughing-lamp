@@ -98,8 +98,9 @@ void InventorySystem::move_init(PSlot f, int amount)
 		set[f.y][f.x]->removeFromStack(amount);
 	}
 }
-// TODO 3I Add cancelling moving by Escape
-// TODO 3I Add getting to move single item by click scroll
+
+// TODO 3I moving automaticaly the item from inventory into the hotbar when pressed shift
+// TODO 3I getting to move single item by click scroll
 void InventorySystem::move_exec(PSlot dest)
 {
 	if (mov_item == nullptr || !validateSlot(dest))
@@ -129,7 +130,14 @@ void InventorySystem::move_exec(PSlot dest)
 
 void InventorySystem::move_cancel()
 {
-	set[mov_old_slot.y][mov_old_slot.x] = mov_item;
+	if (set[mov_old_slot.y][mov_old_slot.x] == nullptr)
+	{
+		set[mov_old_slot.y][mov_old_slot.x] = mov_item;
+	}
+	else
+	{
+		set[mov_old_slot.y][mov_old_slot.x]->addToStack(mov_item->getSizeStack());
+	}
 	mov_item = nullptr;
 }
 
