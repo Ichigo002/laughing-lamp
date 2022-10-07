@@ -99,7 +99,6 @@ void InventorySystem::move_init(PSlot f, int amount)
 	}
 }
 
-// TODO 3I moving automaticaly the item from inventory into the hotbar when pressed shift
 // TODO 3I getting to move single item by click scroll
 void InventorySystem::move_exec(PSlot dest)
 {

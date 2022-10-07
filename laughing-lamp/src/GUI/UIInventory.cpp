@@ -264,9 +264,30 @@ void UIInventory::events(SDL_Event* e)
 			break;
 		}
 
+	// Limit of keys
 	if (focus_slot_x > NO_FIELDS_X-1)
 		focus_slot_x = NO_FIELDS_X-1;
 
+	if (e->type == SDL_MOUSEWHEEL)
+	{
+		if (e->wheel.y > 0) // Scroll up
+		{
+			focus_slot_x++;
+		}
+		else if (e->wheel.y < 0) // Scroll down
+		{
+			focus_slot_x--;
+		}
+	}
+
+	//Limit of scroll
+	if (focus_slot_x < 0)
+		focus_slot_x = NO_FIELDS_X - 1;
+
+	if (focus_slot_x > NO_FIELDS_X - 1)
+		focus_slot_x = 0;
+
+	//Open inventory
 	if (!isOpened)
 		return;
 
