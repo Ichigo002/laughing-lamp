@@ -63,7 +63,7 @@ bool InventorySystem::del(std::string item_name, int amount)
 	return false;
 }
 
-bool InventorySystem::move(PSlot _old, PSlot _new)
+bool InventorySystem::move_direct(PSlot _old, PSlot _new)
 {
 	if (!validateSlot(_old) || !validateSlot(_new))
 		return false;
@@ -71,6 +71,75 @@ bool InventorySystem::move(PSlot _old, PSlot _new)
 		return false;
 	set[_new.y][_new.x] = set[_old.y][_old.x];
 	set[_old.y][_old.x] = nullptr;
+}
+
+void InventorySystem::move_init(PSlot f, int amount)
+{
+	if (mov_item != nullptr)
+		return;
+
+	if (!(validateSlot(f)) || (set[f.y][f.x] == nullptr))
+		return;
+
+	mov_old_slot = f;
+	if (amount <= 0)
+	{
+		mov_item = set[f.y][f.x];
+		set[f.y][f.x] = nullptr;
+		return;
+	}
+	else
+	{
+		InventoryItemData* d = new InventoryItemData(*set[f.y][f.x]);
+		mov_item = d;
+		mov_item->removeAllFromStack();
+		mov_item->addToStack(amount-1);
+
+		set[f.y][f.x]->removeFromStack(amount);
+	}
+}
+
+void InventorySystem::move_exec(PSlot dest)
+{
+	if (mov_item == nullptr || !validateSlot(dest))
+		return;
+
+	if (set[dest.y][dest.x] == nullptr)
+	{
+		set[dest.y][dest.x] = mov_item;
+		mov_item = nullptr;
+	}
+	else if (set[dest.y][dest.x]->getName() == mov_item->getName())
+	{
+		int s = set[dest.y][dest.x]->getSizeStack();
+		int mxs = set[dest.y][dest.x]->getMaxSizeStack()+1;
+		if (s == mxs)
+			return;
+
+		int rt = set[dest.y][dest.x]->addToStack(mov_item->getSizeStack());
+		if(rt > 0)
+		{
+			mov_item->removeFromStack(mxs - s);
+			return;
+		}
+		mov_item = nullptr;
+	}
+}
+
+void InventorySystem::move_cancel()
+{
+	set[mov_old_slot.y][mov_old_slot.x] = mov_item;
+	mov_item = nullptr;
+}
+
+bool InventorySystem::move_ready()
+{
+	return mov_item != nullptr;
+}
+
+InventoryItemData* InventorySystem::move_getItem()
+{
+	return mov_item;
 }
 
 bool InventorySystem::drop(PSlot s, int amount)

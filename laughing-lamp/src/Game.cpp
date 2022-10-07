@@ -50,7 +50,7 @@ int Game::_init_objects()
     invsys->setCurrentSlot(PSlot(4, 4));
     invsys->add<Item_BrickBlock>(40);
     invsys->add<Item_Wood>(64);
-    invsys->move(PSlot(0, 0), PSlot(4, 4));
+    invsys->move_direct(PSlot(0, 0), PSlot(4, 4));
     invsys->del("wood", 5);
 
     invsys->printCMD();

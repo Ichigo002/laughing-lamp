@@ -88,7 +88,36 @@ public:
 	/// <param name="_old">old position</param>
 	/// <param name="_new">new position</param>
 	/// <returns>if you try move item from empty field or move into the busy field then it returns false</returns>
-	bool move(PSlot _old, PSlot _new);
+	bool move_direct(PSlot _old, PSlot _new);
+
+	/// <summary>
+	/// Init move operation. Removes item from his place and put it into buffor
+	/// </summary>
+	/// <param name="f">where is old place of item</param>
+	/// <param name="amount">number of items from this slot [if -1 then move all items]</param>
+	void move_init(PSlot f, int amount);
+
+	/// <summary>
+	/// Execute move and finish it
+	/// </summary>
+	/// <param name="dest">Detination slot</param>
+	void move_exec(PSlot dest);
+
+	/// <summary>
+	/// Cancel whole operation and returns items to its old place
+	/// </summary>
+	void move_cancel();
+
+	/// <summary>
+	/// Gets the status of moving. If it is ready to move_exec the true
+	/// </summary>
+	/// <returns></returns>
+	bool move_ready();
+
+	/// <summary>
+	/// Returns move item from buffor
+	/// </summary>
+	InventoryItemData* move_getItem();
 
 	// TODO 4 Drop method to do
 	/// <summary>
@@ -171,6 +200,9 @@ private:
 	/// Check is slot empty or busy
 	/// </summary>
 	//bool checkBusySlot(PSlot s);
+
+	PSlot mov_old_slot; // Old slot of moving
+	InventoryItemData* mov_item; // Current moving item
 
 	PSlot current_item_slot; // current item ready to use
 	InventoryItemData*** set; // set of all items

@@ -23,6 +23,7 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 	gap_between_BarInv = 5;
 
 	padding_item = 10;
+	offest_moving_item.set(-5, -5);
 
 	std::string font_path = "assets/fonts/Gemunu/GemunuLibre-Bold.ttf";
 
@@ -37,7 +38,11 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 
 void UIInventory::drawItem(const SDL_Rect* uislot_rect, PSlot slot)
 {
-	InventoryItemData* item = invsys->getItem(slot);
+	drawItem(uislot_rect, invsys->getItem(slot));
+}
+
+void UIInventory::drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item)
+{
 	if (item == nullptr)
 		return;
 	if (item->getItemTex() == nullptr)
@@ -53,8 +58,8 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, PSlot slot)
 	SDL_Rect r = *uislot_rect;
 	r.x += padding_item;
 	r.y += padding_item;
-	r.w -= padding_item*2;
-	r.h -= padding_item*2;
+	r.w -= padding_item * 2;
+	r.h -= padding_item * 2;
 
 	c->drawGUI(item->getItemTex(), NULL, &r);
 
@@ -63,8 +68,8 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, PSlot slot)
 	if (stack == 1)
 		return;
 	if (stack < 10)
-		r.x += 24/2;
-	
+		r.x += 24 / 2;
+
 	txt_item->setText(std::to_string(stack));
 	txt_item->setStartingPos(Vector2Int(r.x + r.w / 2, r.y + r.h / 2));
 	txt_item->draw();
@@ -174,6 +179,20 @@ void UIInventory::drawOpenInventory()
 	}
 }
 
+void UIInventory::drawMovingItem()
+{
+	if (invsys->move_getItem() == nullptr)
+		return;
+
+	SDL_Rect dr;
+	dr.w = size_slot.w * rsc;
+	dr.h = size_slot.h * rsc;
+	dr.x = c->getMouse().x + offest_moving_item.x;
+	dr.y = c->getMouse().y + offest_moving_item.y;
+
+	drawItem(&dr, invsys->move_getItem());
+}
+
 void UIInventory::events(SDL_Event* e)
 {
 	if (KeyboardHandler::pressedKey(SDLK_TAB, e))
@@ -208,23 +227,38 @@ void UIInventory::events(SDL_Event* e)
 			}
 			dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
 
-			if (e->type == SDL_MOUSEBUTTONDOWN)
-			{
-				if (e->button.button == 1) // left
-				{
-				}
-				if (e->button.button == 3) // right
-				{
-				}
-			}
+			
 			if (mp.x > dr.x && mp.x < dr.x + dr.w && mp.y < dr.y + dr.h && mp.y > dr.y)
 			{
 				hover_slot.unsetNeg();
 				hover_slot = PSlot(x, y);
+
+				if (e->type == SDL_MOUSEBUTTONDOWN)
+				{
+					if (invsys->move_ready())
+					{
+						invsys->move_exec(PSlot(x, y));
+					}
+					else
+					{
+						int aa = 0;
+						if (e->button.button == 1) // left
+							aa = -1; // whole items in slot
+						if (e->button.button == 3) // right
+							aa = invsys->getItem(PSlot(x, y))->getSizeStack() / 2;//half of items in slot
+						invsys->move_init(PSlot(x, y), aa);
+					}
+					
+				}
 			}
+			// TODO 3 cursor with item is out of inventory and drop
+			// 
+			//else if ()
+			//{
+			//
+			//}
 		}
 	}
-	
 }
 
 void UIInventory::update()
@@ -236,4 +270,6 @@ void UIInventory::draw()
 	drawHotbar();
 
 	drawOpenInventory();
+
+	drawMovingItem();
 }

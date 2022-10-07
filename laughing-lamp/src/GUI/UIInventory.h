@@ -39,6 +39,14 @@ private:
 	void drawItem(const SDL_Rect* uislot_rect, PSlot slot);
 
 	/// <summary>
+	/// Draws the item in GLB units
+	/// </summary>
+	/// <param name="uislot_rect">rect of drew slot in inventory</param>
+	/// <param name="item">item to display</param>
+	void drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item);
+
+
+	/// <summary>
 	/// Draw ready to use slot in inventory
 	/// </summary>
 	/// <param name="destR">size & position on the screen</param>
@@ -70,6 +78,11 @@ private:
 	/// </summary>
 	void drawOpenInventory();
 
+	/// <summary>
+	/// Draws the item next to teh cursor during moving item
+	/// </summary>
+	void drawMovingItem();
+
 private:
 	/* PRIVATE VARIABLES */
 	Camera* c; // Main camera
@@ -91,6 +104,7 @@ private:
 
 	/* ITEMS DESIGN */
 
+	Vector2Int offest_moving_item; // Offset of item which is moving. This display item next ot the cursor
 	int padding_item; // Space between border of slot and item
 	FontAsset* amount_font_item; // Font asset to display number of items in one slot (small white numbers)
 

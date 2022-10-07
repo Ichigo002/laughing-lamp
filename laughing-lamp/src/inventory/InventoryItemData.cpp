@@ -41,6 +41,11 @@ int InventoryItemData::removeFromStack(int amount)
 	return 0;
 }
 
+void InventoryItemData::removeAllFromStack()
+{
+	stack = 0;
+}
+
 int InventoryItemData::getSizeStack()
 {
 	return stack + 1;

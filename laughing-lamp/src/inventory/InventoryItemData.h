@@ -29,6 +29,11 @@ public:
 	int removeFromStack(int amount = 1);
 
 	/// <summary>
+	/// Removes all items and left only 1 item (THIS)
+	/// </summary>
+	void removeAllFromStack();
+
+	/// <summary>
 	/// Returns size of stack
 	/// </summary>
 	int getSizeStack();
