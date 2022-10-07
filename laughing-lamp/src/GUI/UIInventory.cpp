@@ -2,9 +2,8 @@
 #include "../utility/TextureManager.h"
 #include "../utility/KeyboardHandler.h"
 
-// TODO 999 FIX THE FUCKING MAP!
 UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
-	: c(c), invsys(invsys), rsc(1.5)
+	: c(c), invsys(invsys), rsc(2)
 {
 	default_mod_color = { 255, 255, 255, 200};
 	focus_mod_color = { 255, 255, 255, 200 };
@@ -216,11 +215,11 @@ void UIInventory::events(SDL_Event* e)
 	if (KeyboardHandler::pressedKey(SDLK_ESCAPE, e) && invsys->move_ready())
 		invsys->move_cancel();
 
-	if (KeyboardHandler::pressedKey(SDLK_q, e))
+	/*if (KeyboardHandler::pressedKey(SDLK_q, e))
 	{
 		std::cout << "Factor rsc: ";
 		std::cin >> rsc;
-	}
+	}*/
 
 
 	if (KeyboardHandler::pressedKey(SDLK_TAB, e))

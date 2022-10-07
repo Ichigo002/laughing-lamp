@@ -19,7 +19,7 @@ HexMap::HexMap(Camera* camera)
     anim_once = false;
 
     current_water_anim = 0;
-    generating_edge_offset = 400;
+    generating_edge_offset = 2000;
 }
 
 HexMap::~HexMap()
