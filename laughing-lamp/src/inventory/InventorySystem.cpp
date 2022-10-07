@@ -98,7 +98,9 @@ void InventorySystem::move_init(PSlot f, int amount)
 		set[f.y][f.x]->removeFromStack(amount);
 	}
 }
-
+// TODO 3I Add focus slot by scroll or keyboard
+// TODO 3I Add cancelling moving by Escape
+// TODO 3I Add getting to move single item by click scroll
 void InventorySystem::move_exec(PSlot dest)
 {
 	if (mov_item == nullptr || !validateSlot(dest))
