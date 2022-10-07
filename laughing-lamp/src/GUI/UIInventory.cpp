@@ -4,7 +4,7 @@
 
 // TODO 999 FIX THE FUCKING MAP!
 UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
-	: c(c), invsys(invsys), rsc(2)
+	: c(c), invsys(invsys), rsc(1.5)
 {
 	default_mod_color = { 255, 255, 255, 200};
 	focus_mod_color = { 255, 255, 255, 200 };
@@ -23,14 +23,11 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 	gap_between_BarInv = 5;
 	focus_slot_x = 0;
 
-	padding_item = 10;
+	padding_item = 5;
 	offest_moving_item.set(-5, -5);
 
-	std::string font_path = "assets/fonts/Gemunu/GemunuLibre-Bold.ttf";
-
-	SDL_Color font_asset_color = { 255, 255, 255 };
-	amount_font_item = new FontAsset(c->getRender(), font_path, 26, font_asset_color);
-	txt_item = new UIText(amount_font_item);
+	font_path = "assets/fonts/Gemunu/GemunuLibre-Bold.ttf";
+	font_asset_color = { 255, 255, 255 };
 
 	loadTex();
 
@@ -57,10 +54,10 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item)
 	}
 
 	SDL_Rect r = *uislot_rect;
-	r.x += padding_item;
-	r.y += padding_item;
-	r.w -= padding_item * 2;
-	r.h -= padding_item * 2;
+	r.x += padding_item * rsc;
+	r.y += padding_item * rsc;
+	r.w -= padding_item * 2 * rsc;
+	r.h -= padding_item * 2 * rsc;
 
 	c->drawGUI(item->getItemTex(), NULL, &r);
 
@@ -69,7 +66,7 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item)
 	if (stack == 1)
 		return;
 	if (stack < 10)
-		r.x += 24 / 2;
+		r.x += 13*rsc / 2;
 
 	txt_item->setText(std::to_string(stack));
 	txt_item->setStartingPos(Vector2Int(r.x + r.w / 2, r.y + r.h / 2));
@@ -219,6 +216,13 @@ void UIInventory::events(SDL_Event* e)
 	if (KeyboardHandler::pressedKey(SDLK_ESCAPE, e) && invsys->move_ready())
 		invsys->move_cancel();
 
+	if (KeyboardHandler::pressedKey(SDLK_q, e))
+	{
+		std::cout << "Factor rsc: ";
+		std::cin >> rsc;
+	}
+
+
 	if (KeyboardHandler::pressedKey(SDLK_TAB, e))
 	{
 		if (isOpened)
@@ -349,6 +353,12 @@ void UIInventory::events(SDL_Event* e)
 
 void UIInventory::update()
 {
+	if (old_rsc != rsc)
+	{
+		old_rsc = rsc;
+		amount_font_item = new FontAsset(c->getRender(), font_path, 13 * rsc, font_asset_color);
+		txt_item = new UIText(amount_font_item);
+	}
 }
 
 void UIInventory::draw()

@@ -92,6 +92,8 @@ private:
 	UIText* txt_item; // text to render amounts
 	PSlot hover_slot; // currently hovered slot by mouse
 	int focus_slot_x; // Currnelty focused slot by keys or scroll
+	float old_rsc; // old value of rsc to check is value changed for fonts
+	std::string font_path; // Font of nubmers items
 
 	/* SLOTS DESIGN */
 	SDL_Color default_mod_color; // active if mouse is not touching a slot
@@ -106,8 +108,9 @@ private:
 	/* ITEMS DESIGN */
 
 	Vector2Int offest_moving_item; // Offset of item which is moving. This display item next ot the cursor
-	int padding_item; // Space between border of slot and item
-	FontAsset* amount_font_item; // Font asset to display number of items in one slot (small white numbers)
+	int padding_item; // Space between border of slot and item [Value scaled with rsc] 
+	FontAsset* amount_font_item; // Font asset to display number of items in one slot (small white numbers) [Value scaled with rsc [size]]
+	SDL_Color font_asset_color; // Color of font asset for number items
 
 	/* NON INTERACT ELEMENTS */
 	SDL_Texture* bg_main_tex; // Texture of main bg if inventory is opened
@@ -120,7 +123,7 @@ private:
 
 	int gap_between_BarInv; // Size of gap between foucs bar & content inventory [Value scaled with rsc]
 
-	int rsc; // Render scale of UI
+	float rsc; // Render scale of UI
 };
 
 #endif
