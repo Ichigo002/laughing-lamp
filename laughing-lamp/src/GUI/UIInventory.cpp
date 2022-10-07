@@ -7,7 +7,7 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 	: c(c), invsys(invsys), rsc(2)
 {
 	default_mod_color = { 255, 255, 255, 200};
-	focus_mod_color = { 255, 172, 172 };
+	focus_mod_color = { 255, 255, 255, 200 };
 	hover_mod_color = { 170, 170, 170, 200 };
 
 	begin_point = { 10, 10 };
@@ -21,6 +21,7 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 	marginY_slot = 4;
 
 	gap_between_BarInv = 5;
+	focus_slot_x = 0;
 
 	padding_item = 10;
 	offest_moving_item.set(-5, -5);
@@ -77,6 +78,23 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item)
 
 void UIInventory::drawReadySlot(SDL_Rect* destR, const PSlot slot)
 {
+	if (slot.y == 0 && slot.x == focus_slot_x)
+	{
+		if (!hover_slot.isNeg() && hover_slot == slot)
+		{
+			SDL_SetTextureAlphaMod(focus_slot_tex, hover_mod_color.a);
+			SDL_SetTextureColorMod(focus_slot_tex, hover_mod_color.r, hover_mod_color.g, hover_mod_color.b);
+		}
+		else
+		{
+			SDL_SetTextureAlphaMod(focus_slot_tex, focus_mod_color.a);
+			SDL_SetTextureColorMod(focus_slot_tex, focus_mod_color.r, focus_mod_color.g, focus_mod_color.b);
+		}
+		c->drawGUI(focus_slot_tex, NULL, destR);
+		drawItem(destR, slot);
+		return;
+	}
+
 	if (!hover_slot.isNeg() && hover_slot == slot)
 	{
 		SDL_SetTextureAlphaMod(default_slot_tex, hover_mod_color.a);
@@ -203,6 +221,45 @@ void UIInventory::events(SDL_Event* e)
 			open();
 	}
 	hover_slot.setNeg();
+	
+	//Focus keys 1-9;
+	if(e->type == SDL_KEYDOWN)
+		switch (e->key.keysym.sym)
+		{
+		case SDLK_1:
+			focus_slot_x = 0;
+			break;
+		case SDLK_2:
+			focus_slot_x = 1;
+			break;
+		case SDLK_3:
+			focus_slot_x = 2;
+			break;
+		case SDLK_4:
+			focus_slot_x = 3;
+			break;
+		case SDLK_5:
+			focus_slot_x = 4;
+			break;
+		case SDLK_6:
+			focus_slot_x = 5;
+			break;
+		case SDLK_7:
+			focus_slot_x = 6;
+			break;
+		case SDLK_8:
+			focus_slot_x = 7;
+			break;
+		case SDLK_9:
+			focus_slot_x = 8;
+			break;
+		case SDLK_0:
+			focus_slot_x = 9;
+			break;
+		}
+
+	if (focus_slot_x > NO_FIELDS_X)
+		focus_slot_x = NO_FIELDS_X;
 
 	if (!isOpened)
 		return;
@@ -217,6 +274,7 @@ void UIInventory::events(SDL_Event* e)
 	{
 		for (size_t x = 0; x < NO_FIELDS_X; x++)
 		{
+			// Sets slots sizes
 			if (y == 0)
 			{
 				dr.y = begin_point.y + marginY_slot * rsc;
@@ -227,12 +285,14 @@ void UIInventory::events(SDL_Event* e)
 			}
 			dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
 
-			
+			// Check if cursor touch slot
 			if (mp.x > dr.x && mp.x < dr.x + dr.w && mp.y < dr.y + dr.h && mp.y > dr.y)
 			{
+				// Hover system
 				hover_slot.unsetNeg();
 				hover_slot = PSlot(x, y);
 
+				// Moving algorithm
 				if (e->type == SDL_MOUSEBUTTONDOWN)
 				{
 					if (invsys->move_ready())
@@ -248,7 +308,6 @@ void UIInventory::events(SDL_Event* e)
 							aa = invsys->getItem(PSlot(x, y))->getSizeStack() / 2;//half of items in slot
 						invsys->move_init(PSlot(x, y), aa);
 					}
-					
 				}
 			}
 			// TODO 3 cursor with item is out of inventory and drop

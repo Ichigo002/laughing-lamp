@@ -91,6 +91,7 @@ private:
 	bool isOpened; // is inventory opened
 	UIText* txt_item; // text to render amounts
 	PSlot hover_slot; // currently hovered slot by mouse
+	int focus_slot_x; // Currnelty focused slot by keys or scroll
 
 	/* SLOTS DESIGN */
 	SDL_Color default_mod_color; // active if mouse is not touching a slot
