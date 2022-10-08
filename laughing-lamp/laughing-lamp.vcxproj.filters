@@ -78,6 +78,9 @@
     <ClCompile Include="src\utility\PoolObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\inventory\dropping-system\DroppingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -174,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utility\PoolObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inventory\dropping-system\DroppingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

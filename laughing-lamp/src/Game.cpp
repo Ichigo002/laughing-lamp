@@ -7,7 +7,6 @@
 #include "game-objects/Wall.h"
 #include "game-objects/GameObject.h"
 #include <string>
-#include <SDL_ttf.h>
 
 #include "build-map/BuildMap.h"
 
@@ -44,6 +43,8 @@ int Game::_init_objects()
     //Game Obejct Manager
     gom = new GameObjectManager(renderer, cam);
     gom->add<Player>();
+    //Dropping System
+    dropsys = new DroppingSystem(cam, dynamic_cast<Player*>(gom->getObject(0)));
     //Inventory System
     invsys = new InventorySystem();
 
@@ -53,6 +54,7 @@ int Game::_init_objects()
     invsys->move_direct(PSlot(0, 0), PSlot(4, 4));
     invsys->del("wood", 5);
 
+    dropsys->drop(invsys->getItem(PSlot(4, 4)));
 
     uinv = new UIInventory(cam, invsys);
 
@@ -186,6 +188,7 @@ void Game::update()
     gom->update();
     buildmap->update();
     uinv->update();
+    dropsys->update();
 
     if (debug_mode)
     {
@@ -326,9 +329,12 @@ void Game::render()
     buildmap->draw();
     gom->draw();
 
+    //ALWAYS MUST BE TOP
+    dropsys->draw();
+
     //UI
     uinv->draw();
-
+    //Debug
     if (debug_mode)
         for (auto& txt : debug_txt)
         {

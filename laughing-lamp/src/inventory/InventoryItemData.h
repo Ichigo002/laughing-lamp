@@ -71,10 +71,12 @@ protected: // to init parameters of item
 	std::string item_name; // for instance: black_wool
 
 	bool stackable; // if true that item can be stacked in groups at inventory
-	int max_stack; // used when stackable value true. Sets maximum stack in one slot
+	bool dropable;  // if true that item can be dropped on the ground
+	bool buildable; // if true that item can be built in the world as static block
+	int max_stack;  // used when stackable value true. Sets maximum stack in one slot
 	
 	SDL_Texture* item_tex; // Texture loaded while it is created. Texture is loaded from file with name i.e. 'wooden_block.png';
-	// item_tex is initialized if it needs to be rendered. First init is in UIINevntory.
+	// item_tex is initialized if it needs to be rendered. First init is in UIInevntory.
 private:
 	int stack;
 };

@@ -14,6 +14,7 @@
 #include "GUI/UIInventory.h"
 #include "build-map/BuildMap.h"
 #include "inventory/InventorySystem.h"
+#include "inventory/dropping-system/DroppingSystem.h"
 
 class Game
 {
@@ -43,6 +44,7 @@ private:
     Camera* cam;
     UIInventory* uinv;
     InventorySystem* invsys;
+    DroppingSystem* dropsys;
 
     SDL_Window* window;
     SDL_Renderer* renderer;
