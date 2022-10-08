@@ -94,7 +94,7 @@ private:
 	bool isOpened; // is inventory opened
 	UIText* txt_item; // text to render amounts
 	PSlot hover_slot; // currently hovered slot by mouse
-	int focus_slot_x; // Currnelty focused slot by keys or scroll
+	int focus_slot_x; // currently focused slot by keys or scroll
 	float old_rsc; // old value of rsc to check is value changed for fonts
 
 	/* SLOTS DESIGN */
@@ -112,8 +112,6 @@ private:
 	Vector2Int offest_moving_item; // Offset of item which is moving. This display item next ot the cursor
 	int padding_item; // Space between border of slot and item [Value scaled with rsc] 
 	FontAsset* amount_font_item; // Font asset to display number of items in one slot (small white numbers) [Value scaled with rsc [size]]
-	SDL_Color font_asset_color; // Color of font asset for number items
-	int pt_size_font; // Size of font for above
 
 	/* NON INTERACT ELEMENTS */
 	SDL_Texture* bg_main_tex; // Texture of main bg if inventory is opened

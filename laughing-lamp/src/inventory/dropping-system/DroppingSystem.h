@@ -5,6 +5,9 @@
 #include "../../game-objects/Player.h";
 #include <vector>
 #include <iostream>
+#include "../../GEV.h"
+
+using namespace GEV;
 
 struct DropItem
 {
@@ -73,8 +76,6 @@ private:
 
 	SDL_Rect destR;
 
-	SDL_Rect size_item; // Size of items [can be edited only w, h value]
-	float rsc; // Scale of items
 };
 
 #endif

@@ -3,7 +3,7 @@
 #include "../utility/KeyboardHandler.h"
 
 UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
-	: c(c), invsys(invsys), rsc(2.5)
+	: c(c), invsys(invsys)
 {
 	default_mod_color = { 255, 255, 245, 210};
 	focus_mod_color = { 255, 255, 255, 200 };
@@ -24,10 +24,6 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 
 	padding_item = 5;
 	offest_moving_item.set(-5, -5);
-
-	font_path = "assets/fonts/Gemunu/GemunuLibre-Bold.ttf";
-	font_asset_color = { 255, 255, 255 };
-	pt_size_font = 10;
 
 	loadTex();
 
@@ -54,10 +50,10 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item)
 	}
 
 	SDL_Rect r = *uislot_rect;
-	r.x += padding_item * rsc;
-	r.y += padding_item * rsc;
-	r.w -= padding_item * 2 * rsc;
-	r.h -= padding_item * 2 * rsc;
+	r.x += padding_item * ui_rsc;
+	r.y += padding_item * ui_rsc;
+	r.w -= padding_item * 2 * ui_rsc;
+	r.h -= padding_item * 2 * ui_rsc;
 
 	c->drawGUI(item->getItemTex(), NULL, &r);
 
@@ -66,7 +62,7 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item)
 	if (stack == 1)
 		return;
 	if (stack < 10)
-		r.x += pt_size_font *rsc / 2;
+		r.x += item_pt_font_size *ui_rsc / 2;
 
 	txt_item->setText(std::to_string(stack));
 	txt_item->setStartingPos(Vector2Int(r.x + r.w / 2, r.y + r.h / 2));
@@ -147,18 +143,18 @@ void UIInventory::drawHotbar()
 	// draw background
 	dr.x = begin_point.x;
 	dr.y = begin_point.y;
-	dr.w = marginX_slot * rsc + NO_FIELDS_X * (size_slot.w + marginX_slot) * rsc;
-	dr.h = marginY_slot * rsc * 2 + size_slot.h * rsc;
+	dr.w = marginX_slot * ui_rsc + NO_FIELDS_X * (size_slot.w + marginX_slot) * ui_rsc;
+	dr.h = marginY_slot * ui_rsc * 2 + size_slot.h * ui_rsc;
 
 	c->drawGUI(bg_bar_tex, NULL, &dr);
 
 	// draw slots
-	dr.w = size_slot.w * rsc;
-	dr.h = size_slot.h * rsc;
+	dr.w = size_slot.w * ui_rsc;
+	dr.h = size_slot.h * ui_rsc;
 	for (size_t x = 0; x < NO_FIELDS_X; x++)
 	{
-		dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
-		dr.y = begin_point.y + marginY_slot * rsc;
+		dr.x = begin_point.x + marginX_slot * ui_rsc + x * (size_slot.w + marginX_slot) * ui_rsc;
+		dr.y = begin_point.y + marginY_slot * ui_rsc;
 
 		drawReadySlot(&dr, PSlot(x, 0));
 	}
@@ -171,23 +167,23 @@ void UIInventory::drawOpenInventory()
 	SDL_Rect dr;
 	// draw background
 	dr.x = begin_point.x;
-	dr.y = begin_point.x + marginY_slot * rsc * 2 + (size_slot.h + gap_between_BarInv) * rsc;
-	dr.w = marginX_slot * rsc + NO_FIELDS_X * (size_slot.w + marginX_slot) * rsc;
-	dr.h = marginY_slot * rsc + (NO_FIELDS_Y-1) * (size_slot.h + marginY_slot) * rsc;
+	dr.y = begin_point.x + marginY_slot * ui_rsc * 2 + (size_slot.h + gap_between_BarInv) * ui_rsc;
+	dr.w = marginX_slot * ui_rsc + NO_FIELDS_X * (size_slot.w + marginX_slot) * ui_rsc;
+	dr.h = marginY_slot * ui_rsc + (NO_FIELDS_Y-1) * (size_slot.h + marginY_slot) * ui_rsc;
 
 	c->drawGUI(bg_main_tex, NULL, &dr);
 
 	//draw inventory
 
-	dr.w = size_slot.w * rsc;
-	dr.h = size_slot.h * rsc;
+	dr.w = size_slot.w * ui_rsc;
+	dr.h = size_slot.h * ui_rsc;
 
 	for (size_t y = 1; y < NO_FIELDS_Y; y++)
 	{
 		for (size_t x = 0; x < NO_FIELDS_X; x++)
 		{
-			dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
-			dr.y = begin_point.y + marginY_slot * rsc * 3 + (size_slot.w + gap_between_BarInv) * rsc + (y-1) * (size_slot.h + marginY_slot) * rsc;
+			dr.x = begin_point.x + marginX_slot * ui_rsc + x * (size_slot.w + marginX_slot) * ui_rsc;
+			dr.y = begin_point.y + marginY_slot * ui_rsc * 3 + (size_slot.w + gap_between_BarInv) * ui_rsc + (y-1) * (size_slot.h + marginY_slot) * ui_rsc;
 
 			drawReadySlot(&dr, PSlot(x, y));
 		}
@@ -200,8 +196,8 @@ void UIInventory::drawMovingItem()
 		return;
 
 	SDL_Rect dr;
-	dr.w = size_slot.w * rsc;
-	dr.h = size_slot.h * rsc;
+	dr.w = size_slot.w * ui_rsc;
+	dr.h = size_slot.h * ui_rsc;
 	dr.x = c->getMouse().x + offest_moving_item.x;
 	dr.y = c->getMouse().y + offest_moving_item.y;
 
@@ -218,8 +214,8 @@ void UIInventory::events(SDL_Event* e)
 
 	/*if (KeyboardHandler::pressedKey(SDLK_q, e))
 	{
-		std::cout << "Factor rsc: ";
-		std::cin >> rsc;
+		std::cout << "Factor ui_rsc: ";
+		std::cin >> ui_rsc;
 	}*/
 
 
@@ -298,8 +294,8 @@ void UIInventory::events(SDL_Event* e)
 	Vector2Int mp = c->getMouse();
 	SDL_Rect dr;
 
-	dr.w = size_slot.w * rsc;
-	dr.h = size_slot.h * rsc;
+	dr.w = size_slot.w * ui_rsc;
+	dr.h = size_slot.h * ui_rsc;
 
 	for (size_t y = 0; y < NO_FIELDS_Y; y++)
 	{
@@ -308,13 +304,13 @@ void UIInventory::events(SDL_Event* e)
 			// Sets slots sizes
 			if (y == 0)
 			{
-				dr.y = begin_point.y + marginY_slot * rsc;
+				dr.y = begin_point.y + marginY_slot * ui_rsc;
 			}
 			else
 			{
-				dr.y = begin_point.y + marginY_slot * rsc * 3 + (size_slot.w + gap_between_BarInv) * rsc + (y - 1) * (size_slot.h + marginY_slot) * rsc;
+				dr.y = begin_point.y + marginY_slot * ui_rsc * 3 + (size_slot.w + gap_between_BarInv) * ui_rsc + (y - 1) * (size_slot.h + marginY_slot) * ui_rsc;
 			}
-			dr.x = begin_point.x + marginX_slot * rsc + x * (size_slot.w + marginX_slot) * rsc;
+			dr.x = begin_point.x + marginX_slot * ui_rsc + x * (size_slot.w + marginX_slot) * ui_rsc;
 
 			// Check if cursor touch slot
 			if (mp.x > dr.x && mp.x < dr.x + dr.w && mp.y < dr.y + dr.h && mp.y > dr.y)
@@ -353,10 +349,10 @@ void UIInventory::events(SDL_Event* e)
 
 void UIInventory::update()
 {
-	if (old_rsc != rsc)
+	if (old_rsc != ui_rsc)
 	{
-		old_rsc = rsc;
-		amount_font_item = new FontAsset(c->getRender(), font_path, pt_size_font * rsc, font_asset_color);
+		old_rsc = ui_rsc;
+		amount_font_item = new FontAsset(c->getRender(), item_font_path, item_pt_font_size * ui_rsc, item_font_color);
 		txt_item = new UIText(amount_font_item);
 	}
 }

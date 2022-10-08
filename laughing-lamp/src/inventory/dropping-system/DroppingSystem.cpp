@@ -2,11 +2,7 @@
 #include "../../utility/TextureManager.h"
 
 DroppingSystem::DroppingSystem(Camera* c, Player* pl)
-	: rsc(1.3)
 {
-	size_item.w = 32;
-	size_item.h = 32;
-
 	this->c = c;
 	this->pl = pl;
 	drp.clear();
@@ -76,8 +72,8 @@ void DroppingSystem::drawItem(const DropItem* di)
 
 	destR.x = di->p.x;
 	destR.y = di->p.y;
-	destR.w = size_item.w * rsc;
-	destR.h = size_item.h * rsc;
+	destR.w = item_size.w * item_dropped_rsc;
+	destR.h = item_size.h * item_dropped_rsc;
 
 	c->drawDynamic(di->i->getItemTex(), NULL, &destR);
 }
