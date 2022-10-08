@@ -7,8 +7,11 @@
 #include "../utility/Camera.h"
 #include "UIText.h"
 #include <iostream>
+#include "../GEV.h"
 
 #define DISABLED_COLOR {255, 255, 255};
+
+using namespace GEV;
 
 class UIInventory
 {
@@ -93,7 +96,6 @@ private:
 	PSlot hover_slot; // currently hovered slot by mouse
 	int focus_slot_x; // Currnelty focused slot by keys or scroll
 	float old_rsc; // old value of rsc to check is value changed for fonts
-	std::string font_path; // Font of nubmers items
 
 	/* SLOTS DESIGN */
 	SDL_Color default_mod_color; // active if mouse is not touching a slot
@@ -123,8 +125,6 @@ private:
 	int marginY_slot; // size of margin for slot in Y [Value scaled with rsc]
 
 	int gap_between_BarInv; // Size of gap between foucs bar & content inventory [Value scaled with rsc]
-
-	float rsc; // Render scale of UI
 };
 
 #endif

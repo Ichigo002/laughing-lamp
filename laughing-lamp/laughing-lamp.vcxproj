@@ -56,6 +56,7 @@
     <ClInclude Include="src\game-objects\Player.h" />
     <ClInclude Include="src\game-objects\Wall.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GEV.h" />
     <ClInclude Include="src\GUI\FontAsset.h" />
     <ClInclude Include="src\GUI\GUI_Text.h" />
     <ClInclude Include="src\GUI\UIInventory.h" />
