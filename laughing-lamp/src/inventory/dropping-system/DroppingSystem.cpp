@@ -64,6 +64,23 @@ Vector2Int DroppingSystem::getNewPosItem()
 
 	if (pl->isMoving())
 	{
+		// Inversed left with right & top with bottom
+		if (dir.x != 0)
+		{
+			npp.y += (col->h * .75f) - (item_size.h * item_dropped_rsc) / 2;
+			if (dir.x > 0) // right
+				npp.x -= dropsys_spawn_offset_lt.x;
+			else // left
+				npp.x += col->w + dropsys_spawn_offset_rb.x;
+		}
+		if (dir.y != 0)
+		{
+			npp.x += (col->w / 2) - (item_size.w * item_dropped_rsc) / 2;
+			if (dir.y > 0) // bottom
+				npp.y -= dropsys_spawn_offset_lt.y;
+			else // top
+				npp.y += col->h + dropsys_spawn_offset_rb.y;
+		}
 
 	}
 	else
@@ -89,7 +106,7 @@ Vector2Int DroppingSystem::getNewPosItem()
 	return npp;
 }
 
-void DroppingSystem::drawItem(const DropItem* di)
+void DroppingSystem::drawItem(DropItem* di)
 {
 	if (di->i->getItemTex() == nullptr)
 	{
@@ -106,7 +123,31 @@ void DroppingSystem::drawItem(const DropItem* di)
 	destR.w = item_size.w * item_dropped_rsc;
 	destR.h = item_size.h * item_dropped_rsc;
 
-	c->drawDynamic(di->i->getItemTex(), NULL, &destR);
+	SDL_Rect r = destR;
+	r.x += c->getMoveSet().x;
+	r.y += c->getMoveSet().y;
+	SDL_RenderCopyEx(c->getRender(), di->i->getItemTex(), NULL, &r, di->currot, NULL, SDL_FLIP_NONE);
+
+	if (di->clockdir)
+	{
+		di->currot += 1;
+
+		if (di->currot > dropsys_rot_max)
+		{
+			di->currot = dropsys_rot_max;
+			di->clockdir = false;
+		}
+	}
+	else
+	{
+		di->currot -= 1;
+
+		if (di->currot < dropsys_rot_min)
+		{
+			di->currot = dropsys_rot_min;
+			di->clockdir = true;
+		}
+	}
 
 	int st = di->i->getSizeStack();
 	if (st == 1)

@@ -320,7 +320,6 @@ void Game::render()
 {
     SDL_RenderClear(renderer);
     //Draw
-
     hexmap->draw();
     buildmap->draw();
     dropsys->draw();

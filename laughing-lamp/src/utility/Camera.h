@@ -40,7 +40,7 @@ public:
 	/* Draw in the GLB units*/
 	/// <param name="only_in_viewport">If true then texture is rendered only when object is in viewport</param>
 	int drawDynamic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR, bool only_in_viewport = true);
-
+	
 	/* Draw the object who do not get involved into moving by camera */
 	/* Draw in the Screen units*/
 	int drawStatic(SDL_Texture* texture, const SDL_Rect* srcR, const SDL_Rect* destR);
