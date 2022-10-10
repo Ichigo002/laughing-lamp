@@ -53,7 +53,7 @@ void Player::update()
 void Player::events(SDL_Event* eve)
 {
 	// W
-	if (KeyboardHandler::pressedKey(SDLK_w, eve)) velocity.y = -1;  
+	if (KeyboardHandler::pressedKey(SDLK_w, eve)) { resetDir(); velocity.y = dir.y = -1; }
 	if (KeyboardHandler::releasedKey(SDLK_w, eve))
 	{
 		velocity.y = 0;
@@ -62,7 +62,7 @@ void Player::events(SDL_Event* eve)
 		animation->start(2, 2);
 	}
 	// S
-	if (KeyboardHandler::pressedKey(SDLK_s, eve)) velocity.y = 1;
+	if (KeyboardHandler::pressedKey(SDLK_s, eve)) { resetDir(); velocity.y = dir.y = 1; }
 	if (KeyboardHandler::releasedKey(SDLK_s, eve))
 	{
 		velocity.y = 0;
@@ -71,7 +71,7 @@ void Player::events(SDL_Event* eve)
 		animation->start(0, 0);
 	}
 	// A
-	if (KeyboardHandler::pressedKey(SDLK_a, eve)) velocity.x = -1;
+	if (KeyboardHandler::pressedKey(SDLK_a, eve)) { resetDir(); velocity.x = dir.x = -1; }
 	if (KeyboardHandler::releasedKey(SDLK_a, eve))
 	{
 		velocity.x = 0;
@@ -80,7 +80,7 @@ void Player::events(SDL_Event* eve)
 		animation->start(2, 4);
 	}
 	// D
-	if (KeyboardHandler::pressedKey(SDLK_d, eve)) velocity.x = 1;
+	if (KeyboardHandler::pressedKey(SDLK_d, eve)) { resetDir(); velocity.x = dir.x = 1; }
 	if (KeyboardHandler::releasedKey(SDLK_d, eve))
 	{
 		velocity.x = 0;
@@ -127,4 +127,20 @@ void Player::events(SDL_Event* eve)
 void Player::draw()
 {
 	camera->drawDynamic(tex, &srcR, &destR);
+}
+
+Vector2Int Player::getDir()
+{
+	return dir;
+}
+
+bool Player::isMoving()
+{
+	return velocity.x != 0 || velocity.y != 0;
+}
+
+void Player::resetDir()
+{
+	dir.x = 0;
+	dir.y = 0;
 }

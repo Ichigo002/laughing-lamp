@@ -18,10 +18,33 @@ public:
 	virtual void events(SDL_Event* eve);
 	virtual void draw();
 
+	/// <summary>
+	/// Returns direction:
+	/// pos x = right;
+	/// neg x = left;
+	/// pos y = bottom;
+	/// neg y = top;
+	/// </summary>	
+	Vector2Int getDir();
+
+	bool isMoving();
+
 private:
+	/// <summary>
+	/// Resets the direction to 0
+	/// </summary>
+	void resetDir();
 
 	MotionAnimation* animation;
 	Vector2Int velocity;
+
+	/// <summary>
+	/// pos x = right;
+	/// neg x = left;
+	/// pos y = bottom;
+	/// neg y = top;
+	/// </summary>
+	Vector2Int dir;
 
 	float _spd;
 	float std_speed;

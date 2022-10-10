@@ -47,6 +47,9 @@ namespace GEV
 	DSPEC int   hexmap_chunk_size = 16; // Width and height of chunk on hexmap // Size must be dividable by 2
 	DSPEC int   hexmap_generate_edge_offset = 2000; // Extra offset for bug generating
 	DSPEC float hexmap_noise_scale = .3f; // Scale of perlin noise while it's generating
+//--- DroppingSystem settings
+	DSPEC vec2i dropsys_spawn_offset_lt(50, 50); // Distacne between player and spawning object at left top x y
+	DSPEC vec2i dropsys_spawn_offset_rb(-5, 25); // Distacne between player and spawning object at right bottom x y
 
 }
 

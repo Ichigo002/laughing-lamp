@@ -54,8 +54,6 @@ int Game::_init_objects()
     invsys->move_direct(PSlot(0, 0), PSlot(4, 4));
     invsys->del("wood", 5);
 
-    dropsys->drop(invsys->getItem(PSlot(4, 4)));
-
     uinv = new UIInventory(cam, invsys);
 
     return 0;
@@ -325,10 +323,8 @@ void Game::render()
 
     hexmap->draw();
     buildmap->draw();
-    gom->draw();
-
-    //ALWAYS MUST BE TOP
     dropsys->draw();
+    gom->draw();
 
     //UI
     uinv->draw();

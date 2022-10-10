@@ -167,7 +167,8 @@ bool InventorySystem::drop(PSlot s, int amount)
 	{
 		InventoryItemData* it = new InventoryItemData(*set[s.y][s.x]);
 		set[s.y][s.x]->removeFromStack(amount);
-		it->addToStack(amount);
+		it->removeAllFromStack();
+		it->addToStack(amount-1);
 		dropsys->drop(it);
 	}
 }

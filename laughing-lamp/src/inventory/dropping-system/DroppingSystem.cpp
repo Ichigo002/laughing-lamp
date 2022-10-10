@@ -42,6 +42,7 @@ InventoryItemData* DroppingSystem::pickUp(size_t which)
 
 void DroppingSystem::update()
 {
+
 }
 
 // TODO 2 Add rotating animation if dropped
@@ -55,11 +56,36 @@ void DroppingSystem::draw()
 	}
 }
 
-// TODO 2 Make better setting position
 Vector2Int DroppingSystem::getNewPosItem()
 {
 	Vector2Int npp = pl->getPos();
-	npp += 20;
+	SDL_Rect* col = pl->getCollider();
+	Vector2Int dir = pl->getDir();
+
+	if (pl->isMoving())
+	{
+
+	}
+	else
+	{
+		if (dir.x != 0)
+		{
+			npp.y += (col->h * .75f) - (item_size.h * item_dropped_rsc) / 2;
+			if (dir.x > 0) // right
+				npp.x += col->w + dropsys_spawn_offset_rb.x;
+			else // left
+				npp.x -= dropsys_spawn_offset_lt.x;
+		}
+		if (dir.y != 0)
+		{
+			npp.x += (col->w / 2) - (item_size.w * item_dropped_rsc) / 2;
+			if (dir.y > 0) // bottom
+				npp.y += col->h + dropsys_spawn_offset_rb.y;
+			else // top
+				npp.y -= dropsys_spawn_offset_lt.y;
+		}
+	}
+	
 	return npp;
 }
 
