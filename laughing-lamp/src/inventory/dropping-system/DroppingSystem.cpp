@@ -1,6 +1,7 @@
 #include "DroppingSystem.h"
 #include "../../utility/TextureManager.h"
 #include <string>
+#include <math.h>
 
 DroppingSystem::DroppingSystem(Camera* c, Player* pl)
 {
@@ -126,27 +127,21 @@ void DroppingSystem::drawItem(DropItem* di)
 	SDL_Rect r = destR;
 	r.x += c->getMoveSet().x;
 	r.y += c->getMoveSet().y;
-	SDL_RenderCopyEx(c->getRender(), di->i->getItemTex(), NULL, &r, di->currot, NULL, SDL_FLIP_NONE);
+	double rot = dropsys_rot_min + di->rot_time * (dropsys_rot_max - dropsys_rot_min);
 
-	if (di->clockdir)
+	SDL_RenderCopyEx(c->getRender(), di->i->getItemTex(), NULL, &r, rot, NULL, SDL_FLIP_NONE);
+
+	if (!di->backdir)
 	{
-		di->currot += 1;
-
-		if (di->currot > dropsys_rot_max)
-		{
-			di->currot = dropsys_rot_max;
-			di->clockdir = false;
-		}
+		di->rot_time += c->deltaTime() * (abs(dropsys_rot_min) + abs(dropsys_rot_max)) / dropsys_rot_time;
+		if (di->rot_time > 1)
+			di->backdir = true;
 	}
 	else
 	{
-		di->currot -= 1;
-
-		if (di->currot < dropsys_rot_min)
-		{
-			di->currot = dropsys_rot_min;
-			di->clockdir = true;
-		}
+		di->rot_time -= c->deltaTime() * (abs(dropsys_rot_min) + abs(dropsys_rot_max)) / dropsys_rot_time;
+		if (di->rot_time < 0)
+			di->backdir = false;
 	}
 
 	int st = di->i->getSizeStack();

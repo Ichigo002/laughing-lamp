@@ -55,12 +55,16 @@ private:
     std::vector<TextAsset*> debug_txt;
     FontAsset* debug_font;
 
+    // TODO 1 Tidy the variables with FPS to clean scheme
     int FPS;
     int frame_delay;
     Uint32 frame_start;
     int frame_time;
     float ticks;
     int frames;
+
+    Uint32 dt_now;
+    Uint32 dt_last;
 
     int iScreen_W;
     int iScreen_H;

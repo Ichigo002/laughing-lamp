@@ -15,8 +15,8 @@ struct DropItem
 public:
 	InventoryItemData* i; // Just item, nothing more . . .
 	Vector2Int p; // position in GLB units
-	double currot = 0; // Current rotation
-	bool clockdir = true; // Is going in clockwise direction or not
+	double rot_time = 0.5f; // Current rotation time
+	bool backdir = false; // direction of animation
 };
 
 /// <summary>

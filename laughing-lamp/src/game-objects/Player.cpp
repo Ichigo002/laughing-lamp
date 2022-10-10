@@ -8,15 +8,12 @@ Player::Player(Camera* cam)
 	tagname = "Player";
 	renderingScale = 3;
 
-	std_speed = 5;
-	ctrl_speed = 10;
-
 	setPos(Vector2Int(0,0));
 	cam->set(0, 0);
 
 	velocity.x = velocity.y = 0;
 	animation = new MotionAnimation(&srcR, 3, 200);
-	_spd = std_speed;
+	_spd = GEV::player_walk_speed;
 
 	animation->setFrames(2);
 	animation->setDelays(600);
@@ -88,11 +85,11 @@ void Player::events(SDL_Event* eve)
 		animation->setDelays(600);
 		animation->start(1, 4);
 	}
-	//Ctrl
-	if (KeyboardHandler::pressedKey(SDLK_LCTRL, eve)) _spd = ctrl_speed;
+	//run
+	if (KeyboardHandler::pressedKey(SDLK_LSHIFT, eve)) _spd = GEV::player_run_speed;
 
 	//releases
-	if (KeyboardHandler::releasedKey(SDLK_LCTRL, eve)) _spd = std_speed;
+	if (KeyboardHandler::releasedKey(SDLK_LSHIFT, eve)) _spd = GEV::player_walk_speed;
 
 	// ANIMATION PLAYING
 	if (velocity.y > 0) // down
@@ -120,8 +117,8 @@ void Player::events(SDL_Event* eve)
 		animation->start(1, 2);
 	}
 
-	pos.x += _spd * velocity.x;
-	pos.y += _spd * velocity.y;
+	pos.x += _spd * velocity.x * camera->deltaTime();
+	pos.y += _spd * velocity.y * camera->deltaTime();
 }
 
 void Player::draw()

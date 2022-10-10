@@ -5,6 +5,7 @@
 #include "../utility/Vector2Int.h"
 #include "../animations/MotionAnimation.h"
 #include "../utility/Camera.h"
+#include "../GEV.h"
 #include <iostream>
 
 class Player : public GameObject
@@ -47,8 +48,6 @@ private:
 	Vector2Int dir;
 
 	float _spd;
-	float std_speed;
-	float ctrl_speed;
 };
 
 #endif

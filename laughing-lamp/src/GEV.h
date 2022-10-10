@@ -26,7 +26,11 @@ namespace GEV
 	// Number of rows & columns in inventory
 #define NO_FIELDS_X 6 // MAX recommended size is max 10 because, above 10 there's no support for keys 1-9
 #define NO_FIELDS_Y 5
-	DSPEC int invsys_max_stacking = 32; // Maximal size of single stack in inventory
+	DSPEC int    invsys_max_stacking = 32; // Maximal size of single stack in inventory
+
+//--- Player settings
+	DSPEC float  player_walk_speed = 2.6; // Walk speed
+	DSPEC float  player_run_speed = 4.3; // Run speed
 
 //--- Items settings
 	// [ MORE SETTINGS => GUI/UIInventory.cpp ]
@@ -53,7 +57,7 @@ namespace GEV
 	DSPEC vec2i dropsys_spawn_offset_rb(-5, 25); // Distacne between player and spawning object at right bottom x y
 	DSPEC dbl   dropsys_rot_min = -10; // min angle of rotation
 	DSPEC dbl   dropsys_rot_max = 10; // max angle of rotation
-	DSPEC dbl   dropsys_rot_time = 2000; // miliseconds of animation
+	DSPEC dbl   dropsys_rot_time = 1750; // length of animation [miliseconds]
 }
 
 #endif

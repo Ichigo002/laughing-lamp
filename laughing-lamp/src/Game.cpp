@@ -146,8 +146,17 @@ Game::~Game()
 
 void Game::run()
 {
+    dt_now = SDL_GetPerformanceCounter();
+    dt_last = 0;
+    cam->__setDT(0);
+
     while (running)
     {
+        dt_last = dt_now;
+        dt_now = SDL_GetPerformanceCounter();
+
+        cam->__setDT(((dt_now - dt_last) * 100 / (double)SDL_GetPerformanceFrequency()));
+
         frame_start = SDL_GetTicks();
         frames++;
 

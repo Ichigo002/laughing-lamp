@@ -76,12 +76,21 @@ public:
 	/* checks is rect into viewport */
 	bool isIntoViewport(const SDL_Rect* rect);
 
+	/// <summary>
+	/// Returns delta Time between 2 frames
+	/// WARNING delta time is 1/10 of second in frame
+	/// </summary>
+	double deltaTime() { return delta_time; }
+
+	void __setDT(double dt) { delta_time = dt; }
+
 	/* true if resized for 1 frame */
 	inline bool resizedViewport() { return resized; }
 private:
 	SDL_Rect cam;
 	SDL_Renderer* render;
 	Vector2Int cmpos; // current mouse position on screen
+	double delta_time; // length of each frame
 
 	bool resized = false;
 	int extra_offset; // additionl field where objects are rendered
