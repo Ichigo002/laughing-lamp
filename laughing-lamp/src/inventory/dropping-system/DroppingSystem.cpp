@@ -9,7 +9,7 @@ DroppingSystem::DroppingSystem(Camera* c, Player* pl)
 	this->pl = pl;
 	drp.clear();
 
-	font = new FontAsset(c, item_font_path, item_pt_font_size * item_dropped_rsc, item_font_color, "1234567890");
+	font = new FontAsset(c, item_font_path, item_pt_font_size * item_dropped_rsc * 1.7, item_font_color, "1234567890");
 	text = new TextAsset(font, false);
 }
 
@@ -88,7 +88,7 @@ void DroppingSystem::drawItem(const DropItem* di)
 	if (st < 10)
 		destR.x += item_pt_font_size * item_dropped_rsc / 2;
 
-	text->setStartingPos(destR.x + destR.w / 2, destR.y + destR.h / 2);
+	text->setStartingPos(destR.x + destR.w / 2 + item_dropped_no_offset.x, destR.y + destR.h / 2 + item_dropped_no_offset.y);
 	text->setText(std::to_string(st));
 
 	text->draw();

@@ -30,8 +30,9 @@ namespace GEV
 //--- Items settings
 	// [ MORE SETTINGS => GUI/UIInventory.cpp ]
 	DSPEC rect	 item_size = { 0, 0, 32, 32 }; // Size of items
+	DSPEC vec2i  item_dropped_no_offset(-4, -4); // Offset of number stack on dropped item
 	DSPEC int	 item_dropped_rsc = 1.3; // Scale of dropped item
-	DSPEC int	 item_pt_font_size = 13; // Size of small numbers of amount in one stack below items
+	DSPEC int	 item_pt_font_size = 12; // Size of small numbers of amount in one stack below items
 	DSPEC string item_font_path = "assets/fonts/Gemunu/GemunuLibre-Bold.ttf"; // Path to font fot small nubmers below items
 	DSPEC color  item_font_color = { 255, 255, 255 }; // Font color of numbers below items
 
