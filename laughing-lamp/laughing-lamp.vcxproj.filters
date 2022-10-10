@@ -45,7 +45,7 @@
     <ClCompile Include="src\perlin-noise\PerlinNoise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\UIText.cpp">
+    <ClCompile Include="src\GUI\TextAsset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GUI\FontAsset.cpp">
@@ -128,7 +128,7 @@
     <ClInclude Include="src\GUI\GUI_Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GUI\UIText.h">
+    <ClInclude Include="src\GUI\TextAsset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GUI\FontAsset.h">

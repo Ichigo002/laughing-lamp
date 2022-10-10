@@ -1,5 +1,6 @@
 #include "DroppingSystem.h"
 #include "../../utility/TextureManager.h"
+#include <string>
 
 DroppingSystem::DroppingSystem(Camera* c, Player* pl)
 {
@@ -7,6 +8,9 @@ DroppingSystem::DroppingSystem(Camera* c, Player* pl)
 	this->c = c;
 	this->pl = pl;
 	drp.clear();
+
+	font = new FontAsset(c, item_font_path, item_pt_font_size * item_dropped_rsc, item_font_color, "1234567890");
+	text = new TextAsset(font, false);
 }
 
 DroppingSystem::~DroppingSystem()
@@ -77,6 +81,17 @@ void DroppingSystem::drawItem(const DropItem* di)
 	destR.h = item_size.h * item_dropped_rsc;
 
 	c->drawDynamic(di->i->getItemTex(), NULL, &destR);
+
+	int st = di->i->getSizeStack();
+	if (st == 1)
+		return;
+	if (st < 10)
+		destR.x += item_pt_font_size * item_dropped_rsc / 2;
+
+	text->setStartingPos(destR.x + destR.w / 2, destR.y + destR.h / 2);
+	text->setText(std::to_string(st));
+
+	text->draw();
 }
 
 int DroppingSystem::getFreeRoom()

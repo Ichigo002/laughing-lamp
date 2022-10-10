@@ -1,19 +1,19 @@
 #include "FontAsset.h"
 #include <iostream>
 
-FontAsset::FontAsset(SDL_Renderer* r, std::string path, int pt_size, SDL_Color color)
+FontAsset::FontAsset(Camera* c, std::string path, int pt_size, SDL_Color color)
 {
 	loadFont(path, pt_size);
-	createGlyphs(color, r);
-	this->r = r;
+	createGlyphs(color, c->getRender());
+	this->c = c;
 }
 
-FontAsset::FontAsset(SDL_Renderer* r, std::string path, int pt_size, SDL_Color color, std::string chars)
+FontAsset::FontAsset(Camera* c, std::string path, int pt_size, SDL_Color color, std::string chars)
 {
 	loadFont(path, pt_size);
 	this->chars = chars;
-	createGlyphs(color, r);
-	this->r = r;
+	createGlyphs(color, c->getRender());
+	this->c = c;
 }
 
 FontAsset::~FontAsset()

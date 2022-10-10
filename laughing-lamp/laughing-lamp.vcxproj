@@ -31,7 +31,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GUI\FontAsset.cpp" />
     <ClCompile Include="src\GUI\UIInventory.cpp" />
-    <ClCompile Include="src\GUI\UIText.cpp" />
+    <ClCompile Include="src\GUI\TextAsset.cpp" />
     <ClCompile Include="src\inventory\dropping-system\DroppingSystem.cpp" />
     <ClCompile Include="src\inventory\InventoryItemData.cpp" />
     <ClCompile Include="src\inventory\InventorySystem.cpp" />
@@ -60,7 +60,7 @@
     <ClInclude Include="src\GUI\FontAsset.h" />
     <ClInclude Include="src\GUI\GUI_Text.h" />
     <ClInclude Include="src\GUI\UIInventory.h" />
-    <ClInclude Include="src\GUI\UIText.h" />
+    <ClInclude Include="src\GUI\TextAsset.h" />
     <ClInclude Include="src\inventory\dropping-system\DroppingSystem.h" />
     <ClInclude Include="src\inventory\InventoryItemData.h" />
     <ClInclude Include="src\inventory\InventorySystem.h" />

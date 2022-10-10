@@ -84,16 +84,16 @@ int Game::_init_debug()
     debug_mode = false;
 
     SDL_Color clr = { 0, 0, 0 };
-    debug_font = new FontAsset(renderer, "assets/fonts/Lato-Regular.ttf", 36, clr);
+    debug_font = new FontAsset(cam, "assets/fonts/Lato-Regular.ttf", 36, clr);
 
-    debug_txt.push_back(new UIText(debug_font, "Laughing Lamp / v1.0.0"));
-    debug_txt.push_back(new UIText(debug_font, "Seed: " + std::to_string(hexmap->getSeed())));
-    debug_txt.push_back(new UIText(debug_font, "FPS: "));
-    debug_txt.push_back(new UIText(debug_font, "==================="));
-    debug_txt.push_back(new UIText(debug_font, "GLB"));
-    //debug_txt.push_back(new UIText(debug_font, "GLBR"));
-    debug_txt.push_back(new UIText(debug_font, "LCL"));
-    debug_txt.push_back(new UIText(debug_font, "Chunk"));
+    debug_txt.push_back(new TextAsset(debug_font, "Laughing Lamp / v1.0.0"));
+    debug_txt.push_back(new TextAsset(debug_font, "Seed: " + std::to_string(hexmap->getSeed())));
+    debug_txt.push_back(new TextAsset(debug_font, "FPS: "));
+    debug_txt.push_back(new TextAsset(debug_font, "==================="));
+    debug_txt.push_back(new TextAsset(debug_font, "GLB"));
+    //debug_txt.push_back(new TextAsset(debug_font, "GLBR"));
+    debug_txt.push_back(new TextAsset(debug_font, "LCL"));
+    debug_txt.push_back(new TextAsset(debug_font, "Chunk"));
 
     for (size_t i = 0; i < debug_txt.size(); i++)
     {

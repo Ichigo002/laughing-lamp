@@ -2,7 +2,8 @@
 #define DROPPING_SYSTEM_H
 
 #include "../InventoryItemData.h"
-#include "../../game-objects/Player.h";
+#include "../../game-objects/Player.h"
+#include "../../GUI/TextAsset.h"
 #include <vector>
 #include <iostream>
 #include "../../GEV.h"
@@ -69,6 +70,9 @@ private:
 private:
 	Camera* c;
 	Player* pl;
+
+	FontAsset* font; // Font of numbers for items
+	TextAsset* text; // Texto to display numbers
 
 	// nullptr -> none
 	// NOT nullptr -> some item

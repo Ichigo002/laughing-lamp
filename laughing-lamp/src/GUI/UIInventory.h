@@ -5,7 +5,7 @@
 #include "../inventory/InventorySystem.h"
 #include "../utility/Vector2Int.h"
 #include "../utility/Camera.h"
-#include "UIText.h"
+#include "TextAsset.h"
 #include <iostream>
 #include "../GEV.h"
 
@@ -93,7 +93,7 @@ private:
 
 	bool isOpened; // is inventory opened
 	bool holdCTRL; // is holded ctrl by finger?
-	UIText* txt_item; // text to render amounts
+	TextAsset* txt_item; // text to render amounts
 	PSlot hover_slot; // currently hovered slot by mouse
 	int focus_slot_x; // currently focused slot by keys or scroll
 	float old_rsc; // old value of rsc to check is value changed for fonts

@@ -9,7 +9,7 @@
 #include "map/HexMap.h"
 #include "game-objects/GameObjectManager.h"
 #include "utility/Camera.h"
-#include "GUI/UIText.h"
+#include "GUI/TextAsset.h"
 #include "GUI/FontAsset.h"
 #include "GUI/UIInventory.h"
 #include "build-map/BuildMap.h"
@@ -52,7 +52,7 @@ private:
     bool running;
 
     bool debug_mode;
-    std::vector<UIText*> debug_txt;
+    std::vector<TextAsset*> debug_txt;
     FontAsset* debug_font;
 
     int FPS;

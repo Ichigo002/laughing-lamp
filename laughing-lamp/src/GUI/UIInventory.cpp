@@ -362,8 +362,8 @@ void UIInventory::update()
 	if (old_rsc != ui_rsc)
 	{
 		old_rsc = ui_rsc;
-		amount_font_item = new FontAsset(c->getRender(), item_font_path, item_pt_font_size * ui_rsc, item_font_color);
-		txt_item = new UIText(amount_font_item);
+		amount_font_item = new FontAsset(c, item_font_path, item_pt_font_size * ui_rsc, item_font_color, "1234567890");
+		txt_item = new TextAsset(amount_font_item);
 	}
 }
 

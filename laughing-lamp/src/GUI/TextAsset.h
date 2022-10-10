@@ -1,17 +1,20 @@
-#ifndef UI_TEXT_H
-#define UI_TEXT_H
+#ifndef TEXT_ASSET_H
+#define TEXT_ASSET_H
 
 #include <SDL.h>
 #include "FontAsset.h"
 #include "../utility/Vector2Int.h"
 
-class UIText
+class TextAsset
 {
 public:
-	UIText(FontAsset* asset);
-	UIText(FontAsset* asset, Vector2Int start_pos, int letter_spacing);
-	UIText(FontAsset* asset, std::string txt);
-	~UIText();
+	/// ui_mode -> if true then text is drown as UI not as object in game
+	TextAsset(FontAsset* asset, bool ui_mode = true);
+	/// ui_mode -> if true then text is drown as UI not as object in game
+	TextAsset(FontAsset* asset, Vector2Int start_pos, int letter_spacing, bool ui_mode = true);
+	/// ui_mode -> if true then text is drown as UI not as object in game
+	TextAsset(FontAsset* asset, std::string txt, bool ui_mode = true);
+	~TextAsset();
 
 	/// <summary>
 	/// Set Text to render
@@ -41,6 +44,7 @@ private:
 	std::string txt;
 	Vector2Int start_pos;
 	int spacing;
+	bool ui_mode;
 };
 
 #endif
