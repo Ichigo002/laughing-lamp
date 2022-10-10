@@ -1,9 +1,9 @@
 #include "InventorySystem.h"
 #include <iostream>
 
-InventorySystem::InventorySystem(int max_size_stacking)
+InventorySystem::InventorySystem(DroppingSystem* dropsys)
 {
-	this->max_size_stacking = max_size_stacking;
+	this->dropsys = dropsys;
 	// New table
 	set = new InventoryItemData ** [NO_FIELDS_Y];
 	for (size_t i = 0; i < NO_FIELDS_Y; i++)
@@ -154,7 +154,22 @@ InventoryItemData* InventorySystem::move_getItem()
 
 bool InventorySystem::drop(PSlot s, int amount)
 {
-	return false;
+	if (!validateSlot(s) || set[s.y][s.x] == nullptr)
+		return false;
+
+	if (amount < 0 || set[s.y][s.x]->getSizeStack()-1 < amount)
+	{
+		dropsys->drop(set[s.y][s.x]);
+		set[s.y][s.x] = nullptr;
+		return true;
+	}
+	else
+	{
+		InventoryItemData* it = new InventoryItemData(*set[s.y][s.x]);
+		set[s.y][s.x]->removeFromStack(amount);
+		it->addToStack(amount);
+		dropsys->drop(it);
+	}
 }
 
 bool InventorySystem::checkFull()

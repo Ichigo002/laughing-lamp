@@ -9,7 +9,7 @@
 #include <iostream>
 #include "../GEV.h"
 
-#define DISABLED_COLOR {255, 255, 255};
+#define DISABLED_COLOR {255, 255, 255, 255};
 
 using namespace GEV;
 
@@ -92,6 +92,7 @@ private:
 	InventorySystem* invsys; // Main inventory system
 
 	bool isOpened; // is inventory opened
+	bool holdCTRL; // is holded ctrl by finger?
 	UIText* txt_item; // text to render amounts
 	PSlot hover_slot; // currently hovered slot by mouse
 	int focus_slot_x; // currently focused slot by keys or scroll

@@ -3,6 +3,7 @@
 
 DroppingSystem::DroppingSystem(Camera* c, Player* pl)
 {
+	destR = { 0,0,0,0 };
 	this->c = c;
 	this->pl = pl;
 	drp.clear();

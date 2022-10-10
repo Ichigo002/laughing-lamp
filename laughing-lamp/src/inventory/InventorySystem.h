@@ -4,9 +4,10 @@
 #include <string>
 #include "InventoryItemData.h"
 #include "items/Items.h"
+#include "dropping-system/DroppingSystem.h"
+#include "../GEV.h"
 
-#define NO_FIELDS_X 6 // MAX recommended size is max 10 because, above 10 there's no support for keys 1-9
-#define NO_FIELDS_Y 5
+using GEV::invsys_max_stacking;
 
 /// <summary>
 /// Position of slot in the inventory system
@@ -61,7 +62,7 @@ class InventorySystem
 public:
 
 	/// <param name="max_size_stacking">Recommended sizes are next results of multiplying 2; e.g.: 2,4,8,16,32,64...</param>
-	InventorySystem(int max_size_stacking = 32);
+	InventorySystem(DroppingSystem* dropsys);
 	~InventorySystem();
 
 	// SET OF ITEMS METHODS
@@ -119,14 +120,14 @@ public:
 	/// </summary>
 	InventoryItemData* move_getItem();
 
-	// TODO 4 Drop method to do
 	/// <summary>
 	/// Drops the item from the inventory on the ground.
+	/// If amount of items is -1 then drops all items
 	/// </summary>
 	/// <param name="s">slot of item to drop</param>
 	/// <param name="amount">Number of items to drop</param>
 	/// <returns>if everything runs successful then returns true</returns>
-	bool drop(PSlot s, int amount = 1);
+	bool drop(PSlot s, int amount = -1);
 
 	/// <summary>
 	/// Returns true if the inventory is full
@@ -140,7 +141,7 @@ public:
 	InventoryItemData* getItem(PSlot s);
 
 	/// <summary>
-	/// Returns the set of items. Size of table is defined in NO_FIELD_X & Y
+	/// Returns the set of items. Size of table is defined in GEV
 	/// </summary>
 	InventoryItemData*** getSet();
 
@@ -196,24 +197,20 @@ private:
 	/// <param name="s">slot to check</param>
 	bool validateSlot(PSlot s);
 
-	/// <summary>
-	/// Check is slot empty or busy
-	/// </summary>
-	//bool checkBusySlot(PSlot s);
-
+private:
 	PSlot mov_old_slot; // Old slot of moving
 	InventoryItemData* mov_item; // Current moving item
 
 	PSlot current_item_slot; // current item ready to use
 	InventoryItemData*** set; // set of all items
 
-	int max_size_stacking; // max stacking size of items in a single slot
+	DroppingSystem* dropsys; // Drooping system reference
 };
 
 template <class T>
 bool InventorySystem::add(int amount)
 {
-	InventoryItemData* _n = new T(max_size_stacking);
+	InventoryItemData* _n = new T(invsys_max_stacking);
 	PSlot fs = getFreeStackSlot(_n->getName()); // free space
 	if (fs.isNeg())
 		return false;

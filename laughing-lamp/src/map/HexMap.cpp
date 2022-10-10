@@ -12,14 +12,11 @@ HexMap::HexMap(Camera* camera)
     srand(time(NULL));
     seed = rand() % 9000000000;
 
-    noise_scale = 2;
-    chunk_size = 16;
-
     anim_delay = 300;
     anim_once = false;
 
     current_water_anim = 0;
-    generating_edge_offset = 2000;
+    hexmap_generate_edge_offset = 2000;
 }
 
 HexMap::~HexMap()
@@ -33,23 +30,13 @@ void HexMap::setSeed(int seed)
     this->seed = seed;
 }
 
-void HexMap::setFactor(float noise_scale)
-{
-    this->noise_scale = noise_scale;
-}
-
-void HexMap::setChunkSize(int size)
-{
-    chunk_size = size;
-}
-
 Vector2Int HexMap::convertGLB_Chunk(Vector2Int pos)
 {
     if (pos.x < 0)
         pos.x -= w_chunk;
     if (pos.y < 0)
         pos.y -= h_chunk;
-    return Vector2Int(pos.x / (HEX_WIDTH * chunk_size * MAP_RENDER_SCALE), pos.y / (HEX_HEIGHT * RATIOHEX_H * chunk_size * MAP_RENDER_SCALE));
+    return Vector2Int(pos.x / (HEX_WIDTH * hexmap_chunk_size * MAP_RENDER_SCALE), pos.y / (HEX_HEIGHT * RATIOHEX_H * hexmap_chunk_size * MAP_RENDER_SCALE));
 }
 
 void HexMap::updateAnimation()
@@ -74,7 +61,7 @@ void HexMap::updateAnimation()
 
     for (auto& chunk : map)
     {
-        SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * MAP_RENDER_SCALE, chunk_size * HEX_HEIGHT * .75f * MAP_RENDER_SCALE };
+        SDL_Rect rc = { chunk->pos.x, chunk->pos.y, hexmap_chunk_size * HEX_WIDTH * MAP_RENDER_SCALE, hexmap_chunk_size * HEX_HEIGHT * .75f * MAP_RENDER_SCALE };
         if (camera->isIntoViewport(&rc))
         {
             for (size_t y = 0; y < chunk->size; y++)
@@ -99,8 +86,8 @@ void HexMap::updateAnimation()
 
 void HexMap::updateGenerator()
 {
-    Vector2Int pp(camera->getPos() - generating_edge_offset);
-    Vector2Int edge_sc(camera->getPos().x + camera->getWHScreen().x + generating_edge_offset, camera->getPos().y + camera->getWHScreen().y + generating_edge_offset);
+    Vector2Int pp(camera->getPos() - hexmap_generate_edge_offset);
+    Vector2Int edge_sc(camera->getPos().x + camera->getWHScreen().x + hexmap_generate_edge_offset, camera->getPos().y + camera->getWHScreen().y + hexmap_generate_edge_offset);
 
     while (pp.x < edge_sc.x)
     {
@@ -116,7 +103,7 @@ void HexMap::updateGenerator()
             pp.y += h_chunk;
         }
         pp.x += w_chunk;
-        pp.y = camera->getPos().y - generating_edge_offset;
+        pp.y = camera->getPos().y - hexmap_generate_edge_offset;
     }
 }
 
@@ -148,14 +135,14 @@ void HexMap::setupWorld()
     destR.w = HEX_WIDTH * MAP_RENDER_SCALE;
     destR.h = HEX_HEIGHT * MAP_RENDER_SCALE;
 
-    w_chunk = HEX_WIDTH * chunk_size * MAP_RENDER_SCALE;
-    h_chunk = HEX_HEIGHT * RATIOHEX_H * chunk_size * MAP_RENDER_SCALE;
+    w_chunk = HEX_WIDTH * hexmap_chunk_size * MAP_RENDER_SCALE;
+    h_chunk = HEX_HEIGHT * RATIOHEX_H * hexmap_chunk_size * MAP_RENDER_SCALE;
 }
 
 void HexMap::generateChunk(Vector2Int pos)
 {
     PerlinNoise pn(seed);
-    Chunk* c = new Chunk(pos, chunk_size);
+    Chunk* c = new Chunk(pos, hexmap_chunk_size);
     
     if(debug_mode)
         std::cout << "---\nNew Chunk at: " << pos << std::endl;
@@ -168,8 +155,8 @@ void HexMap::generateChunk(Vector2Int pos)
 
     int _r = 0, _c = 0; // r row, c col
 
-    if (pos.x != 0) { pxs = static_cast<double>(pos.x) / w_chunk * chunk_size; }
-    if (pos.y != 0) { pys = static_cast<double>(pos.y) / h_chunk * chunk_size; }
+    if (pos.x != 0) { pxs = static_cast<double>(pos.x) / w_chunk * hexmap_chunk_size; }
+    if (pos.y != 0) { pys = static_cast<double>(pos.y) / h_chunk * hexmap_chunk_size; }
 
     for (size_t y = 0; y < c->size; y++)
     {
@@ -178,10 +165,10 @@ void HexMap::generateChunk(Vector2Int pos)
             rel_x = x + pxs;
             rel_y = y + pys;
 
-            double px = rel_x / ((double)chunk_size);
-            double py = rel_y / ((double)chunk_size);
+            double px = rel_x / ((double)hexmap_chunk_size);
+            double py = rel_y / ((double)hexmap_chunk_size);
 
-            double n = pn.noise(noise_scale * px, noise_scale * py, .8f);
+            double n = pn.noise(hexmap_noise_scale * px, hexmap_noise_scale * py, .8f);
 
             drawRules(&n, &_r, &_c);
             c->map[y][x] = encodeTile(&_r, &_c);
@@ -286,7 +273,7 @@ void HexMap::drawRules(const double* v, int* row, int* col)
 
 void HexMap::drawChunk(const Chunk* chunk)
 {
-    SDL_Rect rc = { chunk->pos.x, chunk->pos.y, chunk_size * HEX_WIDTH * MAP_RENDER_SCALE, chunk_size * HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE};
+    SDL_Rect rc = { chunk->pos.x, chunk->pos.y, hexmap_chunk_size * HEX_WIDTH * MAP_RENDER_SCALE, hexmap_chunk_size * HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE};
     if (!camera->isIntoViewport(&rc))
         return;
 

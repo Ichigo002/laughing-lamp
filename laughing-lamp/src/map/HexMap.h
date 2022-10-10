@@ -8,6 +8,9 @@
 #include "Chunk.h"
 #include <vector>
 #include <cstdlib>
+#include "../GEV.h"
+
+using namespace GEV;
 
 /* Direct position to source to take the hex picture */
 struct TileEncode
@@ -81,8 +84,6 @@ private:
     void getRandSrcRow(int* src_row, int* src_col, int dest_col, int leng);
 
     int seed;
-    float noise_scale;
-    int chunk_size;
 
     std::vector<Chunk*> map;
     std::vector<TileEncode> encoded_tiles;
@@ -94,12 +95,10 @@ private:
     int anim_delay;
     bool anim_once;
 
-    int generating_edge_offset;
+    int current_water_anim;
 
     int w_chunk;
     int h_chunk;
-
-    int current_water_anim;
 };
 
 #endif

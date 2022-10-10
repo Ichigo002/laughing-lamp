@@ -46,7 +46,7 @@ int Game::_init_objects()
     //Dropping System
     dropsys = new DroppingSystem(cam, dynamic_cast<Player*>(gom->getObject(0)));
     //Inventory System
-    invsys = new InventorySystem();
+    invsys = new InventorySystem(dropsys);
 
     invsys->setCurrentSlot(PSlot(4, 4));
     invsys->add<Item_BrickBlock>(40);
@@ -69,8 +69,6 @@ int Game::_init_maps()
     
     // HexMap
     hexmap = new HexMap(cam);
-    hexmap->setChunkSize(16);
-    hexmap->setFactor(.2f);
     hexmap->setSeed(seed);
     hexmap->setupWorld();
 

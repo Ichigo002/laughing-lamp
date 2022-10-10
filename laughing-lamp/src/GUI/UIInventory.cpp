@@ -212,11 +212,11 @@ void UIInventory::events(SDL_Event* e)
 	if (KeyboardHandler::pressedKey(SDLK_ESCAPE, e) && invsys->move_ready())
 		invsys->move_cancel();
 
-	/*if (KeyboardHandler::pressedKey(SDLK_q, e))
-	{
-		std::cout << "Factor ui_rsc: ";
-		std::cin >> ui_rsc;
-	}*/
+	/// CTRL events
+	if (KeyboardHandler::pressedKey(SDLK_LCTRL, e))
+		holdCTRL = true;
+	if (KeyboardHandler::releasedKey(SDLK_LCTRL, e))
+		holdCTRL = false;
 
 
 	if (KeyboardHandler::pressedKey(SDLK_TAB, e))
@@ -287,6 +287,11 @@ void UIInventory::events(SDL_Event* e)
 	if (focus_slot_x > NO_FIELDS_X - 1)
 		focus_slot_x = 0;
 
+	if (KeyboardHandler::pressedKey(SDLK_q, e))
+	{
+		invsys->drop(PSlot(focus_slot_x, 0), holdCTRL ? -1 : 1);
+	}
+
 	//Open inventory
 	if (!isOpened)
 		return;
@@ -335,6 +340,11 @@ void UIInventory::events(SDL_Event* e)
 						if(e->button.button == 2)
 							invsys->move_init(PSlot(x, y), 1);
 					}
+				}
+				//Drops
+				else if (KeyboardHandler::pressedKey(SDLK_q, e))
+				{
+					invsys->drop(PSlot(x, y), holdCTRL ? -1 : 1);
 				}
 			}
 			// TODO 3 cursor with item is out of inventory and drop

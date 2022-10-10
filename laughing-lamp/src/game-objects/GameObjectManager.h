@@ -9,7 +9,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <utility>
 
-constexpr size_t MAX_NUMBER_OBJECTS = 32;
+// I love future and mysterious felliato
 
 // TODO 1 Add static method with template to convert gameobject into specified obejct by dynamic_cast<T>() method
 
