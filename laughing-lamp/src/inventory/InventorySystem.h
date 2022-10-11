@@ -2,8 +2,8 @@
 #define INVENTORY_SYSTEM_H
 
 #include <string>
-#include <map>
-#include "InventoryItemData.h"
+//FUCKING LNK2005 ERROR AND REDEFINITION!!!!
+#include "accessible-items-map/AccessibleItemsMap.h"
 #include "items/Items.h"
 #include "dropping-system/DroppingSystem.h"
 #include "../GEV.h"
@@ -215,8 +215,7 @@ private:
 	PSlot current_item_slot; // current item ready to use
 	InventoryItemData*** set; // set of all items
 
-	std::map<std::string, InventoryItemData*> mapit; // Map of all available items
-
+	AccessibleItemsMap mapitem; // Map of items
 	DroppingSystem* dropsys; // Dropping system reference
 };
 

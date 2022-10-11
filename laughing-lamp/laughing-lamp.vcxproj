@@ -32,6 +32,7 @@
     <ClCompile Include="src\GUI\FontAsset.cpp" />
     <ClCompile Include="src\GUI\UIInventory.cpp" />
     <ClCompile Include="src\GUI\TextAsset.cpp" />
+    <ClCompile Include="src\inventory\accessible-items-map\AccessibleItemsMap.cpp" />
     <ClCompile Include="src\inventory\dropping-system\DroppingSystem.cpp" />
     <ClCompile Include="src\inventory\InventoryItemData.cpp" />
     <ClCompile Include="src\inventory\InventorySystem.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="src\utility\Vector2Int.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\inventory\accessible-items-map\AccessibleItemsMap.h" />
     <ClInclude Include="src\build-map\Blocks\BBrick.h" />
     <ClInclude Include="src\build-map\Blocks\BCircle.h" />
     <ClInclude Include="src\animations\MotionAnimation.h" />

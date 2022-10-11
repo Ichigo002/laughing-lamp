@@ -81,6 +81,9 @@
     <ClCompile Include="src\inventory\dropping-system\DroppingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\inventory\accessible-items-map\AccessibleItemsMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -183,6 +186,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GEV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inventory\accessible-items-map\AccessibleItemsMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
