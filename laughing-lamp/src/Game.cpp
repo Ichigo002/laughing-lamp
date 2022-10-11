@@ -49,10 +49,10 @@ int Game::_init_objects()
     invsys = new InventorySystem(dropsys);
 
     invsys->setCurrentSlot(PSlot(4, 4));
-    invsys->add<Item_BrickBlock>(40);
-    invsys->add<Item_Wood>(64);
+    invsys->add("brick_block", 40);
+    invsys->add("wooden_block", 64);
     invsys->move_direct(PSlot(0, 0), PSlot(4, 4));
-    invsys->del("wood", 5);
+    invsys->del("wooden_block", 5);
 
     uinv = new UIInventory(cam, invsys);
 

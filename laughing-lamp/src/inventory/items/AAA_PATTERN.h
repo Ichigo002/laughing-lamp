@@ -1,7 +1,8 @@
-/// Pattern made by Victor developer C++
+/// Pattern made by Wiktor developer C++
 ///
 /// To make item available, add: include "YourItem.h" at file Items.h
-/// And then add it by InventorySystem::add<YourItemClass>(int amount)!!
+/// And then add it in InventorySystem::initItems() your class!
+/// And just call item with your name. here: "pattern"
 /// Below pattern shows out how every item shall be done
 /// ====================================================
 

@@ -18,6 +18,14 @@ InventorySystem::InventorySystem(DroppingSystem* dropsys)
 			set[y][x] = nullptr;
 		}
 	}
+
+	initItems();
+}
+
+void InventorySystem::initItems()
+{
+	mapitem.add<Item_BrickBlock>();
+	mapitem.add<Item_Wood>();
 }
 
 InventorySystem::~InventorySystem()
@@ -29,9 +37,39 @@ InventorySystem::~InventorySystem()
 	delete[] set;
 }
 
+bool InventorySystem::add(std::string nameitem, int amount)
+{
+	InventoryItemData* _n = mapitem.make(nameitem);
+	PSlot fs = getFreeStackSlot(_n->getName()); // free space
+	if (fs.isNeg() || _n == nullptr)
+		return false;
+
+	if (set[fs.y][fs.x] == nullptr)
+	{
+		set[fs.y][fs.x] = _n;
+		return add(nameitem, amount - 1);
+	}
+
+	int extant = set[fs.y][fs.x]->getExtantSpace();
+	amount -= extant;
+
+	if (amount > 0)
+	{
+		set[fs.y][fs.x]->addToStack(extant);
+		return add(nameitem, amount);
+	}
+	else
+	{
+		set[fs.y][fs.x]->addToStack(amount + extant);
+	}
+	return true;
+}
+
 bool InventorySystem::add(InventoryItemData* item)
 {
-	return false;
+	if (item == nullptr)
+		return false;
+	return add(item->getName(), item->getSizeStack());
 }
 
 bool InventorySystem::del(std::string item_name, int amount)
@@ -182,7 +220,7 @@ void InventorySystem::update()
 {
 	if (InventoryItemData* iid = dropsys->tryPickUp(); iid != nullptr)
 	{
-		std::cout << " Picked up " << iid->getSizeStack() << " items: " << iid->getName() << std::endl;
+		add(iid);
 	}
 }
 

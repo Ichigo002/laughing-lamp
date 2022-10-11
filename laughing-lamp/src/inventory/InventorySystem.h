@@ -6,9 +6,6 @@
 #include "accessible-items-map/AccessibleItemsMap.h"
 #include "items/Items.h"
 #include "dropping-system/DroppingSystem.h"
-#include "../GEV.h"
-
-using GEV::invsys_max_stacking;
 
 /// <summary>
 /// Position of slot in the inventory system
@@ -69,12 +66,15 @@ public:
 	// SET OF ITEMS METHODS
 
 	/// <summary>
-	/// Adds new item to the inventory
+	/// Adds new item into inventory
 	/// </summary>
-	/// <typeparam name="T">Inherited object from InventoryItemData</typeparam>
-	/// <returns>if inventory is full then return false.</returns>
-	template<class T>
-	bool add(int amount = 1);
+	/// <param name="nameitem">name of item</param>
+	/// <param name="amount">amount of items</param>
+	/// <returns>
+	/// if there's no empty slot in inventory, will return false
+	/// if name is invalid, will return false
+	/// </returns>
+	bool add(std::string nameitem, int amount = 1);
 
 	/// <summary>
 	///  Adds new custom item back to the inventory
@@ -190,6 +190,11 @@ public:
 private:
 
 	/// <summary>
+	/// INITS DEFAULT ITEMS
+	/// </summary>
+	void initItems();
+
+	/// <summary>
 	/// Returns first found free slot at set
 	/// </summary>
 	/// <returns>If there's no empty slot then return negative slot</returns>
@@ -218,34 +223,5 @@ private:
 	AccessibleItemsMap mapitem; // Map of items
 	DroppingSystem* dropsys; // Dropping system reference
 };
-
-template <class T>
-bool InventorySystem::add(int amount)
-{
-	InventoryItemData* _n = new T(invsys_max_stacking);
-	PSlot fs = getFreeStackSlot(_n->getName()); // free space
-	if (fs.isNeg())
-		return false;
-
-	if (set[fs.y][fs.x] == nullptr)
-	{
-		set[fs.y][fs.x] = _n;
-		return add<T>(amount - 1);
-	}
-
-	int extant = set[fs.y][fs.x]->getExtantSpace();
-	amount -= extant;
-
-	if (amount > 0)
-	{
-		set[fs.y][fs.x]->addToStack(extant);
-		return add<T>(amount);
-	}
-	else
-	{
-		set[fs.y][fs.x]->addToStack(amount + extant);
-	}
-	return true;
-}
 
 #endif
