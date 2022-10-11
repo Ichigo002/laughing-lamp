@@ -47,6 +47,9 @@ namespace GEV
 	DSPEC string ui_font_path = "assets/fonts/Gemunu/GemunuLibre-Bold.ttf"; // Path to font for UI
 	DSPEC int    ui_pt_font_size = 15; // Size of font in UI
 	DSPEC int    ui_rsc = 2; // Render scale of UI
+	// TODO 1 Future animation of opening animation
+	DSPEC bool   ui_inv_anim_enabled = true; // Animation of moving inventory enabled
+	DSPEC dbl    ui_inv_anim_time = 10000; // Length of animation for opening inventory [miliseconds]
 
 //--- HexMap settings
 	DSPEC int   hexmap_chunk_size = 16; // Width and height of chunk on hexmap // Size must be dividable by 2
