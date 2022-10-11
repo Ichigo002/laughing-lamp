@@ -11,8 +11,6 @@
 
 // I love future and mysterious felliato
 
-// TODO 1 Add static method with template to convert gameobject into specified obejct by dynamic_cast<T>() method
-
 /* You can add only the objects which inherit from GameObject class */
 /* Main Manager of Objects. */
 class GameObjectManager

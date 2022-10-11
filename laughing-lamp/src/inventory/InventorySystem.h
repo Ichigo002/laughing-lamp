@@ -124,6 +124,11 @@ public:
 	bool move_ready();
 
 	/// <summary>
+	/// Just reset, do not returns item to his old slot
+	/// </summary>
+	void move_reset();
+
+	/// <summary>
 	/// Returns move item from buffor
 	/// </summary>
 	InventoryItemData* move_getItem();
@@ -136,6 +141,11 @@ public:
 	/// <param name="amount">Number of items to drop</param>
 	/// <returns>if everything runs successful then returns true</returns>
 	bool drop(PSlot s, int amount = -1);
+
+	/// <summary>
+	/// Returns reference to dropping system
+	/// </summary>
+	DroppingSystem* getDroppingSystem();
 
 	void update();
 

@@ -190,6 +190,11 @@ bool InventorySystem::move_ready()
 	return mov_item != nullptr;
 }
 
+void InventorySystem::move_reset()
+{
+	mov_item = nullptr;
+}
+
 InventoryItemData* InventorySystem::move_getItem()
 {
 	return mov_item;
@@ -214,6 +219,11 @@ bool InventorySystem::drop(PSlot s, int amount)
 		it->addToStack(amount-1);
 		dropsys->drop(it);
 	}
+}
+
+DroppingSystem* InventorySystem::getDroppingSystem()
+{
+	return dropsys;
 }
 
 void InventorySystem::update()

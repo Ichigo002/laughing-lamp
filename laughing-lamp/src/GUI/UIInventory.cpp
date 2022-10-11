@@ -347,14 +347,30 @@ void UIInventory::events(SDL_Event* e)
 					invsys->drop(PSlot(x, y), holdCTRL ? -1 : 1);
 				}
 			}
-			// TODO 3 cursor with item is out of inventory and drop
-			// 
-			//else if ()
-			//{
-			//
-			//}
+			
 		}
 	}
+	// TODO 3 cursor with item is out of inventory and drop
+	/*dr.x = begin_point.x;
+	dr.y = begin_point.x + marginY_slot * ui_rsc * 2 + (size_slot.h + gap_between_BarInv) * ui_rsc;
+	dr.w = marginX_slot * ui_rsc + NO_FIELDS_X * (size_slot.w + marginX_slot) * ui_rsc;
+	dr.h = marginY_slot * ui_rsc + (NO_FIELDS_Y - 1) * (size_slot.h + marginY_slot) * ui_rsc;
+
+	if (mp.x > dr.x && mp.x < dr.x + dr.w && mp.y < dr.y + dr.h && mp.y > dr.y)
+	{
+		if (e->type == SDL_MOUSEBUTTONDOWN)
+		{
+			if (invsys->move_ready())
+			{
+				invsys->getDroppingSystem()->drop(invsys->move_getItem());
+				invsys->move_reset();
+			}
+		}
+	}
+	else
+	{
+		
+	}*/
 }
 
 void UIInventory::update()
