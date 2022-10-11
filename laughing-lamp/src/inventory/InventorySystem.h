@@ -2,6 +2,7 @@
 #define INVENTORY_SYSTEM_H
 
 #include <string>
+#include <map>
 #include "InventoryItemData.h"
 #include "items/Items.h"
 #include "dropping-system/DroppingSystem.h"
@@ -214,7 +215,9 @@ private:
 	PSlot current_item_slot; // current item ready to use
 	InventoryItemData*** set; // set of all items
 
-	DroppingSystem* dropsys; // Drooping system reference
+	std::map<std::string, InventoryItemData*> mapit; // Map of all available items
+
+	DroppingSystem* dropsys; // Dropping system reference
 };
 
 template <class T>

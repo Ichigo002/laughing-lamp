@@ -18,6 +18,15 @@ InventorySystem::InventorySystem(DroppingSystem* dropsys)
 			set[y][x] = nullptr;
 		}
 	}
+
+	std::map<std::string, InventoryItemData*> m;
+	m["ssd"] = new Item_BrickBlock(invsys_max_stacking);
+	InventoryItemData* iid = m["ssd"];
+	if (auto srh = m.find("ssd"); srh != m.end())
+	{
+
+	}
+	
 }
 
 InventorySystem::~InventorySystem()
