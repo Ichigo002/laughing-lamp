@@ -76,6 +76,13 @@ public:
 	bool add(int amount = 1);
 
 	/// <summary>
+	///  Adds new custom item back to the inventory
+	/// </summary>
+	/// <param name="item">item to add</param>
+	/// <returns>if inventory is full or object is null then return false </returns>
+	bool add(InventoryItemData* item);
+
+	/// <summary>
 	/// Deletes the x items
 	/// </summary>
 	/// <param name="item_name">name of item to delete</param>
@@ -129,6 +136,8 @@ public:
 	/// <returns>if everything runs successful then returns true</returns>
 	bool drop(PSlot s, int amount = -1);
 
+	void update();
+
 	/// <summary>
 	/// Returns true if the inventory is full
 	/// </summary>
@@ -152,6 +161,7 @@ public:
 	/// <param name="amount">Number of items to check</param>
 	bool contains(std::string item_name, int amount = 1);
 
+	// TODO 1 Fix count method
 	/// <summary>
 	/// Returns the number of all items with this name
 	/// </summary>

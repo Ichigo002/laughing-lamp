@@ -36,10 +36,11 @@ public:
 	void drop(InventoryItemData* item);
 
 	/// <summary>
-	/// Picks up item from the ground and deletes from drp
+	/// Executed in inventory system.
+	/// If player tries pick up any item, item will be returned by method
+	/// At the same time item is removed from dropping system
 	/// </summary>
-	/// <param name="which">what number from vector shall be picked up</param>
-	InventoryItemData* pickUp(size_t which);
+	InventoryItemData* tryPickUp();
 
 	/// <summary>
 	/// Updates items

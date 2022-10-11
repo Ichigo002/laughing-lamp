@@ -5,7 +5,7 @@
 
 #ifndef UTILITIES_H
 #define UTILITIES_H
-
+ 
 namespace Util
 {
     /* Split the string into vector of strings each time when it finds splitter sign */

@@ -36,8 +36,36 @@ void DroppingSystem::drop(InventoryItemData* item)
 	drp[room] = dip;
 }
 
-InventoryItemData* DroppingSystem::pickUp(size_t which)
+InventoryItemData* DroppingSystem::tryPickUp()
 {
+	Vector2Int proj;
+	SDL_Rect* o = pl->getCollider();
+	SDL_Rect* t = new SDL_Rect();
+	t->w = item_size.w * item_dropped_rsc;
+	t->h = item_size.h * item_dropped_rsc;
+
+	for (auto& item : drp)
+	{
+		if (item == nullptr)
+			continue;
+		t->x = item->p.x;
+		t->y = item->p.y;
+
+		// test overlap in x axis
+		proj.x = std::max(t->x + t->w, o->x + o->w) - std::min(t->x, o->x);
+		if (proj.x < t->w + o->w)
+		{
+			// test overlap in y axis
+			proj.y = std::max(t->y + t->h, o->y + o->h) - std::min(t->y, o->y);
+			if (proj.y < t->h + o->h)
+			{
+				//COLLISION DETECTED HERE
+				InventoryItemData* it = item->i;
+				item = nullptr;
+				return it;
+			}
+		}
+	}
 	return nullptr;
 }
 
@@ -46,7 +74,6 @@ void DroppingSystem::update()
 
 }
 
-// TODO 2 Add rotating animation if dropped
 void DroppingSystem::draw()
 {
 	for (auto& d : drp)

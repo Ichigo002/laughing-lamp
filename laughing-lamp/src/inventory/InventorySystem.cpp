@@ -29,6 +29,11 @@ InventorySystem::~InventorySystem()
 	delete[] set;
 }
 
+bool InventorySystem::add(InventoryItemData* item)
+{
+	return false;
+}
+
 bool InventorySystem::del(std::string item_name, int amount)
 {
 	for (int y = NO_FIELDS_Y-1; y >= 0; y--)
@@ -170,6 +175,14 @@ bool InventorySystem::drop(PSlot s, int amount)
 		it->removeAllFromStack();
 		it->addToStack(amount-1);
 		dropsys->drop(it);
+	}
+}
+
+void InventorySystem::update()
+{
+	if (InventoryItemData* iid = dropsys->tryPickUp(); iid != nullptr)
+	{
+		std::cout << " Picked up " << iid->getSizeStack() << " items: " << iid->getName() << std::endl;
 	}
 }
 

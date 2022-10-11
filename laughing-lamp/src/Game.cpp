@@ -194,6 +194,7 @@ void Game::update()
     buildmap->update();
     uinv->update();
     dropsys->update();
+    invsys->update();
 
     if (debug_mode)
     {

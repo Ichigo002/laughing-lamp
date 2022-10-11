@@ -57,7 +57,7 @@ namespace GEV
 	DSPEC float hexmap_noise_scale = .3f; // Scale of perlin noise while it's generating
 //--- DroppingSystem settings
 	DSPEC vec2i dropsys_spawn_offset_lt(50, 50); // Distacne between player and spawning object at left top x y
-	DSPEC vec2i dropsys_spawn_offset_rb(-5, 25); // Distacne between player and spawning object at right bottom x y
+	DSPEC vec2i dropsys_spawn_offset_rb(0, 25); // Distacne between player and spawning object at right bottom x y
 	DSPEC dbl   dropsys_rot_min = -10; // min angle of rotation
 	DSPEC dbl   dropsys_rot_max = 10; // max angle of rotation
 	DSPEC dbl   dropsys_rot_time = 1750; // length of animation [miliseconds]
