@@ -14,6 +14,7 @@ public:
 	Vector2Int lcl; // position of block
 };
 
+// TODO 999 refactor this class for InevntoryItemData*!!!
 class BuildMap
 {
 public:
