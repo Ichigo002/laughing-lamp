@@ -15,10 +15,12 @@ class Item_Pattern : public InventoryItemData
 {
 public:
 	Item_Pattern(int max_stack)
-		: InventoryItemData("pattern")
+		: InventoryItemData("pattern", max_stack)
 	{
-		//stackable = true;
-		//this->max_stack = max_stack;
+		attrs = 
+			DT_STACKABLE | 
+			DT_BUILDABLE | 
+			DT_DROPABLE; // all available tags under DT_
 	}
 };
 

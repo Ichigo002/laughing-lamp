@@ -54,16 +54,7 @@
     <ClCompile Include="src\build-map\BuildMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\build-map\Blocks\BFun.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\build-map\Blocks\BCircle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\build-map\Blocks\BBrick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\build-map\Blocks\BWood.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\inventory\InventorySystem.cpp">
@@ -143,19 +134,7 @@
     <ClInclude Include="src\build-map\Blocks\BBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\build-map\Blocks\Blocks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\build-map\Blocks\BFun.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\build-map\Blocks\BCircle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\build-map\Blocks\BBrick.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\build-map\Blocks\BWood.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\inventory\InventorySystem.h">

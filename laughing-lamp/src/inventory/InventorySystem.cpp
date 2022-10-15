@@ -202,7 +202,7 @@ InventoryItemData* InventorySystem::move_getItem()
 
 bool InventorySystem::drop(PSlot s, int amount)
 {
-	if (!validateSlot(s) || set[s.y][s.x] == nullptr)
+	if (!validateSlot(s) || set[s.y][s.x] == nullptr || !set[s.y][s.x]->attr(DT_DROPABLE))
 		return false;
 
 	if (amount < 0 || set[s.y][s.x]->getSizeStack()-1 < amount)
@@ -336,7 +336,7 @@ PSlot InventorySystem::getFreeStackSlot(std::string item_name)
 					nullspace.unsetNeg();
 				}
 			}
-			else if (set[y][x]->getName() == item_name && set[y][x]->isStackable() && !set[y][x]->isStackFull())
+			else if (set[y][x]->getName() == item_name && set[y][x]->attr(DT_STACKABLE) && !set[y][x]->isStackFull())
 			{
 				return PSlot(x, y);
 			}

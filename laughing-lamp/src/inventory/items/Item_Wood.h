@@ -7,10 +7,12 @@ class Item_Wood : public InventoryItemData
 {
 public:
 	Item_Wood(int max_stack)
-		: InventoryItemData("wooden_block")
+		: InventoryItemData("wooden_block", max_stack)
 	{
-		stackable = true;
-		this->max_stack = max_stack;
+		attrs =
+			DT_DROPABLE  |
+			DT_STACKABLE |
+			DT_BUILDABLE;
 	}
 };
 

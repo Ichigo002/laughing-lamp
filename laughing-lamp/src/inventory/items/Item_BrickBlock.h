@@ -7,10 +7,12 @@ class Item_BrickBlock : public InventoryItemData
 {
 public:
 	Item_BrickBlock(int max_stack)
-		: InventoryItemData("brick_block")
+		: InventoryItemData("brick_block", max_stack)
 	{
-		stackable = true;
-		this->max_stack = max_stack;
+		attrs =
+			DT_DROPABLE  |
+			DT_STACKABLE |
+			DT_BUILDABLE;
 	}
 
 };

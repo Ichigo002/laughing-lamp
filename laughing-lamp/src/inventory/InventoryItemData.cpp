@@ -1,8 +1,10 @@
 #include "InventoryItemData.h"
+#include <iostream>
 
-InventoryItemData::InventoryItemData(std::string _item_name) :
-	item_name(_item_name), stackable(false), max_stack(2)
+InventoryItemData::InventoryItemData(std::string _item_name, int max_st) :
+	item_name(_item_name), max_stack(max_st)
 {
+	attrs = 0;
 	item_tex = nullptr;
 	stack = 0;
 }
@@ -13,7 +15,7 @@ InventoryItemData::~InventoryItemData()
 
 int InventoryItemData::addToStack(int amount)
 {
-	if (!isStackable())
+	if (!attr(DT_STACKABLE))
 		return -1;
 
 	stack += amount;
@@ -28,7 +30,7 @@ int InventoryItemData::addToStack(int amount)
 
 int InventoryItemData::removeFromStack(int amount)
 {
-	if (!isStackable())
+	if (!attr(DT_STACKABLE))
 		return -1;
 
 	stack -= amount;
@@ -61,14 +63,14 @@ int InventoryItemData::getExtantSpace()
 	return max_stack - 1 - stack > 0 ? max_stack - stack - 1 : 0;
 }
 
-bool InventoryItemData::isStackable()
-{
-	return stackable;
-}
-
 bool InventoryItemData::isStackFull()
 {
 	return stack == max_stack - 1;
+}
+
+bool InventoryItemData::attr(DataTags dt)
+{
+	return attrs & dt;
 }
 
 SDL_Texture* InventoryItemData::getItemTex()

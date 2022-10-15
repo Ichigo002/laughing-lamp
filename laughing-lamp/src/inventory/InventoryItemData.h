@@ -4,10 +4,18 @@
 #include <string>
 #include <SDL.h>
 
+// Tags for attributes of item in data
+enum DataTags
+{
+	DT_STACKABLE = 1 << 0,
+	DT_DROPABLE  = 1 << 1,
+	DT_BUILDABLE = 1 << 2,
+};
+
 class InventoryItemData 
 {
 public:
-	InventoryItemData(std::string _item_name);
+	InventoryItemData(std::string _item_name, int max_st);
 	~InventoryItemData();
 	/// <summary>
 	/// Returns the name of item
@@ -49,14 +57,14 @@ public:
 	int getExtantSpace();
 
 	/// <summary>
-	/// Returns can item be stacked
-	/// </summary>
-	bool isStackable();
-
-	/// <summary>
 	/// Returns if stack is full
 	/// </summary>
 	bool isStackFull();
+
+	/// <summary>
+	/// Retruns true if item has attribute
+	/// </summary>
+	bool attr(DataTags dt);
 
 	/// <summary>
 	/// Returns item texture
@@ -68,17 +76,17 @@ public:
 	/// </summary>
 	void __setTex(SDL_Texture* t);
 protected: // to init parameters of item
+
 	std::string item_name; // for instance: black_wool
 
-	bool stackable; // if true that item can be stacked in groups at inventory
-	bool dropable;  // if true that item can be dropped on the ground
-	bool buildable; // if true that item can be built in the world as static block
-	int max_stack;  // used when stackable value true. Sets maximum stack in one slot
+	int attrs; // Attributes of items
 	
 	SDL_Texture* item_tex; // Texture loaded while it is created. Texture is loaded from file with name i.e. 'wooden_block.png';
 	// item_tex is initialized if it needs to be rendered. First init is in UIInevntory.
+
 private:
 	int stack;
+	int max_stack;  // Sets maximum stack in one slot
 };
 
 #endif
