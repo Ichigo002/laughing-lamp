@@ -5,8 +5,9 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Camera.h"
+#include "../GEV.h"
 
-#define DEF_PATH_TEX "assets/textures/" // Default path to texture : "assets/textures/"
+#define DEF_PATH_TEX "resourcepacks/" // Default folder
 
 class TextureManager
 {
@@ -42,7 +43,7 @@ public:
     /// <returns>Ready texture pointer</returns>
     static SDL_Texture* load(SDL_Renderer* r, std::string cat_dir, std::string filename)
     {
-        std::string s = DEF_PATH_TEX + cat_dir + "/" + filename;
+        std::string s = DEF_PATH_TEX + GEV::txm_resourcepack + "/" + cat_dir + "/" + filename;
         SDL_Surface* tmpSrf = IMG_Load(s.c_str());
         return SDL_CreateTextureFromSurface(r, tmpSrf);
     }

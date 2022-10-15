@@ -21,6 +21,10 @@ using std::string;
 /// </summary>
 namespace GEV
 {
+//--- Texture Manager
+	DSPEC string txm_resourcepack = "default"; // Resourcepack name
+	// default path is: .../resourcepacks/default/
+
 //--- Inventory System settings
 
 	// Number of rows & columns in inventory

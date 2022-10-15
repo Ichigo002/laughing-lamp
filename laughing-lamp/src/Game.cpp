@@ -19,8 +19,8 @@ int Game::_init_SDL()
     Uint32 flags = SDL_WINDOW_SHOWN;
     flags += SDL_WINDOW_RESIZABLE;
     
-    //iScreen_W = 1920; iScreen_H = 1080; flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
-    iScreen_W = 1200; iScreen_H = 720;
+    iScreen_W = 1920; iScreen_H = 1080; flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
+    //iScreen_W = 1200; iScreen_H = 720;
 
 
     window = SDL_CreateWindow("Laughing Lamp", 2100, SDL_WINDOWPOS_CENTERED, iScreen_W, iScreen_H, flags);
@@ -84,18 +84,17 @@ int Game::_init_debug()
     SDL_Color clr = { 0, 0, 0 };
     debug_font = new FontAsset(cam, "assets/fonts/Lato-Regular.ttf", 36, clr);
 
-    debug_txt.push_back(new TextAsset(debug_font, "Laughing Lamp / v1.0.0"));
-    debug_txt.push_back(new TextAsset(debug_font, "Seed: " + std::to_string(hexmap->getSeed())));
-    debug_txt.push_back(new TextAsset(debug_font, "FPS: "));
-    debug_txt.push_back(new TextAsset(debug_font, "==================="));
-    debug_txt.push_back(new TextAsset(debug_font, "GLB"));
-    //debug_txt.push_back(new TextAsset(debug_font, "GLBR"));
-    debug_txt.push_back(new TextAsset(debug_font, "LCL"));
-    debug_txt.push_back(new TextAsset(debug_font, "Chunk"));
+    debug_txt.push_back(new TextAsset(debug_font, "Laughing Lamp / v1.0.0", true));
+    debug_txt.push_back(new TextAsset(debug_font, "Seed: " + std::to_string(hexmap->getSeed()), true));
+    debug_txt.push_back(new TextAsset(debug_font, "FPS: ", true));
+    debug_txt.push_back(new TextAsset(debug_font, "===================", true));
+    debug_txt.push_back(new TextAsset(debug_font, "GLB", true));
+    debug_txt.push_back(new TextAsset(debug_font, "LCL", true));
+    debug_txt.push_back(new TextAsset(debug_font, "Chunk", true));
 
     for (size_t i = 0; i < debug_txt.size(); i++)
     {
-        debug_txt[i]->setStartingPos(5, i * 40);
+        debug_txt[i]->setStartingPos(400, i * 40);
     }
 
     return 0;
