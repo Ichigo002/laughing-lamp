@@ -18,6 +18,8 @@ public:
 		: InventoryItemData("pattern", max_stack)
 	{
 		attrs = 
+			DT_TAG_ITEM  |
+			DT_TAG_BLOCK |
 			DT_STACKABLE | 
 			DT_BUILDABLE | 
 			DT_DROPABLE; // all available tags under DT_

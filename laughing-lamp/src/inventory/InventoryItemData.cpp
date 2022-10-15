@@ -13,6 +13,32 @@ InventoryItemData::~InventoryItemData()
 {
 }
 
+void InventoryItemData::_initTex(Camera* c)
+{
+	if (getItemTex() == nullptr)
+	{
+		if (attr(DT_TAG_ITEM))
+		{
+			if (attr(DT_TAG_BLOCK))
+				std::cout << "WARNING: DT_TAG_ITEM and DT_TAG_BLOCK in item '" << getName() << "' exist at the same time." << std::endl;
+
+			item_tex = TextureManager::load(c, "items", getName() + ".png");
+		}
+		if (attr(DT_TAG_BLOCK))
+		{
+			if (attr(DT_TAG_ITEM))
+				std::cout << "WARNING: DT_TAG_ITEM and DT_TAG_BLOCK in item '" << getName() << "' exist at the same time." << std::endl;
+			item_tex = TextureManager::load(c, "blocks", getName() + ".png");
+		}
+		
+		//success
+		if (getItemTex() != nullptr)
+			return;
+		// error
+		std::cout << "ERROR: Couldn't load " << getName() << "'s texture. Make sure you added correct tags (DT_TAG_ITEM or DT_TAG_BLOCK) or image file exists." << std::endl;
+	}
+}
+
 int InventoryItemData::addToStack(int amount)
 {
 	if (!attr(DT_STACKABLE))
@@ -76,9 +102,4 @@ bool InventoryItemData::attr(DataTags dt)
 SDL_Texture* InventoryItemData::getItemTex()
 {
 	return item_tex;
-}
-
-void InventoryItemData::__setTex(SDL_Texture* t)
-{
-	item_tex = t;
 }

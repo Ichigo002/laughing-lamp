@@ -2,14 +2,20 @@
 #define INVENTORY_ITEM_DATA_H
 
 #include <string>
+#include "../utility/Camera.h"
+#include "../utility/TextureManager.h"
 #include <SDL.h>
 
 // Tags for attributes of item in data
 enum DataTags
 {
-	DT_STACKABLE = 1 << 0,
-	DT_DROPABLE  = 1 << 1,
-	DT_BUILDABLE = 1 << 2,
+	//must-have
+	DT_TAG_BLOCK = 1 << 0,
+	DT_TAG_ITEM  = 1 << 1,
+
+	DT_STACKABLE = 1 << 2,
+	DT_DROPABLE  = 1 << 3,
+	DT_BUILDABLE = 1 << 4,
 };
 
 class InventoryItemData 
@@ -17,6 +23,13 @@ class InventoryItemData
 public:
 	InventoryItemData(std::string _item_name, int max_st);
 	~InventoryItemData();
+
+	/// <summary>
+	/// Initialize texture only if it's needed
+	/// </summary>
+	/// <param name="c"></param>
+	void _initTex(Camera* c);
+
 	/// <summary>
 	/// Returns the name of item
 	/// </summary>
@@ -62,7 +75,7 @@ public:
 	bool isStackFull();
 
 	/// <summary>
-	/// Retruns true if item has attribute
+	/// Retruns true if item includes attribute
 	/// </summary>
 	bool attr(DataTags dt);
 
@@ -71,10 +84,6 @@ public:
 	/// </summary>
 	SDL_Texture* getItemTex();
 
-	/// <summary>
-	/// sets the texture of item on init in UIInventory
-	/// </summary>
-	void __setTex(SDL_Texture* t);
 protected: // to init parameters of item
 
 	std::string item_name; // for instance: black_wool

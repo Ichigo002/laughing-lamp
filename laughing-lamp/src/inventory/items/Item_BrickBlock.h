@@ -10,6 +10,7 @@ public:
 		: InventoryItemData("brick_block", max_stack)
 	{
 		attrs =
+			DT_TAG_BLOCK |
 			DT_DROPABLE  |
 			DT_STACKABLE |
 			DT_BUILDABLE;

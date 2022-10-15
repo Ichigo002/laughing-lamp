@@ -39,15 +39,7 @@ void UIInventory::drawItem(const SDL_Rect* uislot_rect, InventoryItemData* item)
 {
 	if (item == nullptr)
 		return;
-	if (item->getItemTex() == nullptr)
-	{
-		item->__setTex(TextureManager::load(c, "items", item->getName() + ".png"));
-		if (item->getItemTex() == nullptr)
-		{
-			std::cout << "UIInventory::drawItem(SDL_Rect*, PSlot): Couldn't load item texture from '" << DEF_PATH_TEX << "items/" << item->getName() << ".png' " << std::endl;
-			return;
-		}
-	}
+	item->_initTex(c);
 
 	SDL_Rect r = *uislot_rect;
 	r.x += padding_item * ui_rsc;

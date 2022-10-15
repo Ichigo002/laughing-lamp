@@ -136,15 +136,7 @@ Vector2Int DroppingSystem::getNewPosItem()
 
 void DroppingSystem::drawItem(DropItem* di)
 {
-	if (di->i->getItemTex() == nullptr)
-	{
-		di->i->__setTex(TextureManager::load(c, "items", di->i->getName() + ".png"));
-		if (di->i->getItemTex() == nullptr)
-		{
-			std::cout << "DroppingSystem::drawItem(const DropItem* di): Couldn't load item texture from '" << DEF_PATH_TEX << "items/" << di->i->getName() << ".png' " << std::endl;
-			return;
-		}
-	}
+	di->i->_initTex(c);
 
 	destR.x = di->p.x;
 	destR.y = di->p.y;
