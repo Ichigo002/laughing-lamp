@@ -8,8 +8,6 @@
 #include "game-objects/GameObject.h"
 #include <string>
 
-#include "build-map/BuildMap.h"
-
 int Game::_init_SDL()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -71,8 +69,6 @@ int Game::_init_maps()
     hexmap->setupWorld();
 
     // BuildMap
-    buildmap = new BuildMap(cam, gom);
-    buildmap->hexmode = false;
 
     return 0;
 }
@@ -190,7 +186,6 @@ void Game::update()
     hexmap->updateAnimation();
     hexmap->updateGenerator();
     gom->update();
-    buildmap->update();
     uinv->update();
     dropsys->update();
     invsys->update();
@@ -220,7 +215,6 @@ void Game::handleEvents()
     }
 
     cam->update(&_event);
-    buildmap->events(&_event);
     gom->events(&_event);
     uinv->events(&_event);
 
@@ -235,15 +229,6 @@ void Game::handleEvents()
             debug_mode = true;
 
         hexmap->debug_mode = debug_mode;
-        buildmap->debug_mode = debug_mode;
-    }
-    if (KeyboardHandler::pressedKey(SDLK_F9, &_event))
-    {
-        buildmap->enableCursorPlacing("brick", -1);
-    }
-    if (KeyboardHandler::pressedKey(SDLK_F10, &_event))
-    {
-        buildmap->enableCursorPlacing("wood", -1);
     }
 
     if (KeyboardHandler::pressedKey(SDLK_F7, &_event))
@@ -330,7 +315,6 @@ void Game::render()
     SDL_RenderClear(renderer);
     //Draw
     hexmap->draw();
-    buildmap->draw();
     dropsys->draw();
     gom->draw();
 

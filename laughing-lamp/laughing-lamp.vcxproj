@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\build-map\Blocks\BBrick.cpp" />
     <ClCompile Include="src\animations\MotionAnimation.cpp" />
     <ClCompile Include="src\build-map\BuildMap.cpp" />
     <ClCompile Include="src\game-objects\GameObjectManager.cpp" />
@@ -41,11 +40,11 @@
     <ClCompile Include="src\utility\Vector2Int.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\build-map\BuildMap.h" />
     <ClInclude Include="src\inventory\accessible-items-map\AccessibleItemsMap.h" />
     <ClInclude Include="src\build-map\Blocks\BBrick.h" />
     <ClInclude Include="src\animations\MotionAnimation.h" />
     <ClInclude Include="src\build-map\Blocks\BBlock.h" />
-    <ClInclude Include="src\build-map\BuildMap.h" />
     <ClInclude Include="src\game-objects\GameObject.h" />
     <ClInclude Include="src\game-objects\GameObjectManager.h" />
     <ClInclude Include="src\game-objects\Player.h" />

@@ -51,12 +51,6 @@
     <ClCompile Include="src\GUI\FontAsset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\build-map\BuildMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\build-map\Blocks\BBrick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\inventory\InventorySystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,6 +67,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\inventory\accessible-items-map\AccessibleItemsMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\build-map\BuildMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,9 +125,6 @@
     <ClInclude Include="src\GUI\FontAsset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\build-map\BuildMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\build-map\Blocks\BBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -168,6 +162,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\inventory\accessible-items-map\AccessibleItemsMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\build-map\BuildMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

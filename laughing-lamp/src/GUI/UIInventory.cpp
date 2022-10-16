@@ -13,8 +13,8 @@ UIInventory::UIInventory(Camera* c, InventorySystem* invsys)
 
 	bg_alpha = 180;
 
-	size_slot.w = 28;
-	size_slot.h = 28;
+	size_slot.w = 32; // 28
+	size_slot.h = 36; // 32
 
 	marginX_slot = 2;
 	marginY_slot = 2;

@@ -15,7 +15,10 @@ enum DataTags
 
 	DT_STACKABLE = 1 << 2,
 	DT_DROPABLE  = 1 << 3,
+
 	DT_BUILDABLE = 1 << 4,
+		DT_COLLIDABLE = 1 << 5, // Works if DT_BUILDABLE enabled
+		DT_PLACEOVERABLE = 1 << 6, // Works if DT_BUILDABLE enabled. Make possible placing this on other object during building
 };
 
 class InventoryItemData 
@@ -23,6 +26,10 @@ class InventoryItemData
 public:
 	InventoryItemData(std::string _item_name, int max_st);
 	~InventoryItemData();
+
+	// Future Feature
+	// TODO 2 if animation will be needed
+	//virtual void updateAnimation(...);
 
 	/// <summary>
 	/// Initialize texture only if it's needed
@@ -92,6 +99,9 @@ protected: // to init parameters of item
 	
 	SDL_Texture* item_tex; // Texture loaded while it is created. Texture is loaded from file with name i.e. 'wooden_block.png';
 	// item_tex is initialized if it needs to be rendered. First init is in UIInevntory.
+
+	SDL_Rect destR; // Rect on the screen relative to size of Hex
+	SDL_Rect colliderR; // Rect of collision if item's got DT_COLLIDABLE 
 
 private:
 	int stack;

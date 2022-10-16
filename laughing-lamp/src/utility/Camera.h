@@ -59,14 +59,8 @@ public:
     /* Converts the GLB position into LCL position */
     Vector2Int convertGLB_LCL(Vector2Int pos);
 
-	/* Converts the GLB position into the build blocks position */
-    Vector2Int convertGLB_BBL(Vector2Int pos);
-
     /* Converts the LCL position into GLB position */
     Vector2Int convertLCL_GLB(Vector2Int pos);
-
-	/* Converts the BBL position into GLB position*/
-	Vector2Int convertBBL_GLB(Vector2Int pos);
 
 	void update(SDL_Event* eve);
 

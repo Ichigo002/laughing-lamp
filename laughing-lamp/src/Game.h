@@ -12,7 +12,6 @@
 #include "GUI/TextAsset.h"
 #include "GUI/FontAsset.h"
 #include "GUI/UIInventory.h"
-#include "build-map/BuildMap.h"
 #include "inventory/InventorySystem.h"
 #include "inventory/dropping-system/DroppingSystem.h"
 
@@ -39,7 +38,6 @@ public:
 
 private:
     HexMap* hexmap;
-    BuildMap* buildmap;
     GameObjectManager* gom;
     Camera* cam;
     UIInventory* uinv;
