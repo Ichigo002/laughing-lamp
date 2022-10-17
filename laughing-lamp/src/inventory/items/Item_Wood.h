@@ -11,9 +11,10 @@ public:
 	{
 		attrs =
 			DT_TAG_BLOCK |
-			DT_DROPABLE  |
+			DT_DROPABLE |
 			DT_STACKABLE |
-			DT_BUILDABLE;
+			DT_BUILDABLE |
+			DT_PLACEOVERABLE;
 	}
 };
 

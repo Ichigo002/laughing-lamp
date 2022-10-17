@@ -5,6 +5,8 @@ BuildMap::BuildMap(Camera* c, GameObjectManager* gom)
 	this->c = c;
 	this->gom = gom;
 
+	top_layer = 0;
+
 	destR.w = HEX_WIDTH * MAP_RENDER_SCALE;
 	destR.h = HEX_HEIGHT * MAP_RENDER_SCALE;
 }
@@ -24,6 +26,15 @@ int BuildMap::settleCursor(InventoryItemData* item)
 	_new->item = item;
 	_new->lcl = c->convertGLB_LCL(c->translateMouseToGLB());
 
+	int tlayer = getTopLayerByLCL(_new->lcl);
+	_new->layer = tlayer+1;
+
+	if (tlayer != -1 && !item->attr(DT_PLACEOVERABLE))
+		return -1;
+
+	if (_new->layer > top_layer)
+		top_layer = _new->layer;
+
 	pushBlock(_new);
 
 	return 0;
@@ -40,10 +51,13 @@ void BuildMap::fixedUpdate()
 
 void BuildMap::draw()
 {
-	for (auto& _blocks : map_block)
+	for (size_t i = 0; i < top_layer+1; i++)
 	{
-		if (_blocks != nullptr)
-			drawBlock(_blocks);
+		for (auto& _block : map_block)
+		{
+			if (_block != nullptr && _block->layer == i)
+				drawBlock(_block);
+		}
 	}
 }
 
@@ -60,6 +74,17 @@ void BuildMap::pushBlock(Block* b)
 		}
 	}
 	map_block.push_back(b);
+}
+
+int BuildMap::getTopLayerByLCL(Vector2Int lclp)
+{
+	int tl = -1;
+	for (auto& _block : map_block)
+	{
+		if (_block->lcl == lclp && _block->layer > tl)
+			tl = _block->layer;
+	}
+	return tl;
 }
 
 Block* BuildMap::popBlockByLCL(Vector2Int lclp)
@@ -80,13 +105,13 @@ void BuildMap::drawBlock(Block* b)
 {
 	b->item->_initTex(c);
 
-	destR.x = HEX_WIDTH * MAP_RENDER_SCALE + c->convertLCL_GLB(b->lcl).x;
-	destR.y = HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE + c->convertLCL_GLB(b->lcl).y;
+	destR.x = c->convertLCL_GLB(b->lcl).x;
+	destR.y = c->convertLCL_GLB(b->lcl).y;
 
-	//if (destR.y % destR.y - b->lcl.y == 0)
-	//{
-	//	destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
-	//}
+	if ((b->lcl.y+1) % 2 == 0)
+	{
+		destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
+	}
 
 	c->drawDynamic(b->item->getItemTex(), NULL, &destR);
 }

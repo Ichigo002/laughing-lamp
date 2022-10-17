@@ -15,6 +15,7 @@ struct Block
 {
 	InventoryItemData* item; // original item
 	Vector2Int lcl; // position of block in LCL units
+	int layer;
 };
 
 class BuildMap
@@ -29,7 +30,7 @@ public:
 	/// <param name="item">item to place</param>
 	/// <returns>
 	/// 0 on success
-	/// -1 on access denied by item [lack of DT_BUILDABLE]
+	/// -1 on access denied by item [lack of required attributes]
 	/// -2 on invalid item or nullptr
 	/// </returns>
 	int settleCursor(InventoryItemData* item);
@@ -61,6 +62,16 @@ private:
 	void pushBlock(Block* b);
 
 	/// <summary>
+	/// Finds topest layer in LCL position
+	/// </summary>
+	/// <param name="lclp">LCL position</param>
+	/// <returns>
+	/// top, highest layer
+	/// if not found, returns -1
+	/// </returns>
+	int getTopLayerByLCL(Vector2Int lclp);
+
+	/// <summary>
 	/// Pops block from map by LCL position
 	/// </summary>
 	/// <param name="lclp">position in LCL units</param>
@@ -82,6 +93,7 @@ private:
 
 	std::vector<Block*> map_block; // vector of blocks built on map
 	SDL_Rect destR; // Rect of drawing single block
+	int top_layer; // top layer
 
 };
 

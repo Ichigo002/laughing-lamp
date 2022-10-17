@@ -17,8 +17,8 @@ enum DataTags
 	DT_DROPABLE  = 1 << 3,
 
 	DT_BUILDABLE = 1 << 4,
-		DT_COLLIDABLE = 1 << 5, // Works if DT_BUILDABLE enabled
-		DT_PLACEOVERABLE = 1 << 6, // Works if DT_BUILDABLE enabled. Make possible placing this on other object during building
+		DT_COLLIDABLE = 1 << 5,
+		DT_PLACEOVERABLE = 1 << 6, // Make possible placing THIS ON OTHER object during building
 };
 
 class InventoryItemData 

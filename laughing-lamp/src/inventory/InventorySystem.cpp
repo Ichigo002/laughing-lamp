@@ -222,9 +222,22 @@ bool InventorySystem::drop(PSlot s, int amount)
 	}
 }
 
-int InventorySystem::placeFocusedItem()
+void InventorySystem::placeFocusedItem()
 {
-	return buildmap->settleCursor(set[current_item_slot.y][current_item_slot.x]);
+	if (buildmap->settleCursor(set[current_item_slot.y][current_item_slot.x]) == 0)
+	{
+		if (set[current_item_slot.y][current_item_slot.x]->removeFromStack() == 1)
+			set[current_item_slot.y][current_item_slot.x] = nullptr;
+	}
+}
+
+void InventorySystem::destroyPlacedItem()
+{
+	if (InventoryItemData* iid = buildmap->unsettleCursor(); iid != nullptr)
+	{
+		//dropsys->dropAtLCL(iid, lclpos);
+		// TODO 9 end this to destroy item and drop item in lcl position of old block
+	}
 }
 
 DroppingSystem* InventorySystem::getDroppingSystem()

@@ -32,7 +32,7 @@ SDL_Renderer* Camera::getRender()
 
 Vector2Int Camera::translateMouseToGLB()
 {
-	return Vector2Int(cmpos.x - getMoveSet().x, cmpos.y - getMoveSet().y);
+	return Vector2Int(cmpos.x - getMoveSet().x - HEX_WIDTH/2, cmpos.y - getMoveSet().y);
 }
 
 Vector2Int Camera::translateGLBToScreen(Vector2Int v)

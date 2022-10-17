@@ -283,14 +283,17 @@ void UIInventory::events(SDL_Event* e)
 
 	if (KeyboardHandler::pressedKey(SDLK_q, e))
 	{
-		//invsys->drop(PSlot(focus_slot_x, 0), holdCTRL ? -1 : 1);
-		invsys->placeFocusedItem();
+		invsys->drop(PSlot(focus_slot_x, 0), holdCTRL ? -1 : 1);
 	}
 
-	/*if (!isOpened && e->type == SDL_MOUSEBUTTONDOWN && e->button.button == 1) // left
+	if (!isOpened && e->type == SDL_MOUSEBUTTONDOWN && e->button.button == 1) // left
 	{
 		invsys->placeFocusedItem();
-	}*/
+	}
+	if (!isOpened && e->type == SDL_MOUSEBUTTONDOWN && e->button.button == 3) // right
+	{
+		invsys->destroyPlacedItem();
+	}
 
 	//Open inventory
 	if (!isOpened)

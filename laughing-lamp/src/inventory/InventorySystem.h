@@ -146,12 +146,12 @@ public:
 	/// <summary>
 	/// Place focused item in hotbar by player
 	/// </summary>
-	/// <returns>
-	/// 0 on success
-	/// -1 on access denied by item [lack of DT_BUILDABLE]
-	/// -2 on invalid item or nullptr
-	/// </returns>
-	int placeFocusedItem();
+	void placeFocusedItem();
+
+	/// <summary>
+	/// Destroy item palced at cursor's position
+	/// </summary>
+	void destroyPlacedItem();
 
 	/// <summary>
 	/// Returns reference to dropping system
