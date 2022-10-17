@@ -78,13 +78,15 @@ Block* BuildMap::popBlockByLCL(Vector2Int lclp)
 
 void BuildMap::drawBlock(Block* b)
 {
+	b->item->_initTex(c);
+
 	destR.x = HEX_WIDTH * MAP_RENDER_SCALE + c->convertLCL_GLB(b->lcl).x;
 	destR.y = HEX_HEIGHT * RATIOHEX_H * MAP_RENDER_SCALE + c->convertLCL_GLB(b->lcl).y;
 
-	if (destR.y % destR.y - b->lcl.y == 0)
-	{
-		destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
-	}
+	//if (destR.y % destR.y - b->lcl.y == 0)
+	//{
+	//	destR.x += HEX_WIDTH / 2 * MAP_RENDER_SCALE;
+	//}
 
 	c->drawDynamic(b->item->getItemTex(), NULL, &destR);
 }

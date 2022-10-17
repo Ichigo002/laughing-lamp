@@ -43,8 +43,10 @@ int Game::_init_objects()
     gom->add<Player>();
     //Dropping System
     dropsys = new DroppingSystem(cam, dynamic_cast<Player*>(gom->getObject(0)));
+    // BuildMap
+    buildmap = new BuildMap(cam, gom);
     //Inventory System
-    invsys = new InventorySystem(dropsys);
+    invsys = new InventorySystem(dropsys, buildmap);
 
     invsys->setCurrentSlot(PSlot(4, 4));
     invsys->add("brick_block", 40);
@@ -67,9 +69,6 @@ int Game::_init_maps()
     hexmap = new HexMap(cam);
     hexmap->setSeed(seed);
     hexmap->setupWorld();
-
-    // BuildMap
-    buildmap = new BuildMap(cam, gom);
 
     return 0;
 }

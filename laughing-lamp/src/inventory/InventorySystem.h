@@ -6,6 +6,7 @@
 #include "accessible-items-map/AccessibleItemsMap.h"
 #include "items/Items.h"
 #include "dropping-system/DroppingSystem.h"
+#include "../build-map/BuildMap.h"
 
 /// <summary>
 /// Position of slot in the inventory system
@@ -60,7 +61,7 @@ class InventorySystem
 public:
 
 	/// <param name="max_size_stacking">Recommended sizes are next results of multiplying 2; e.g.: 2,4,8,16,32,64...</param>
-	InventorySystem(DroppingSystem* dropsys);
+	InventorySystem(DroppingSystem* dropsys, BuildMap* buildmap);
 	~InventorySystem();
 
 	// SET OF ITEMS METHODS
@@ -141,6 +142,16 @@ public:
 	/// <param name="amount">Number of items to drop</param>
 	/// <returns>if everything runs successful then returns true</returns>
 	bool drop(PSlot s, int amount = -1);
+
+	/// <summary>
+	/// Place focused item in hotbar by player
+	/// </summary>
+	/// <returns>
+	/// 0 on success
+	/// -1 on access denied by item [lack of DT_BUILDABLE]
+	/// -2 on invalid item or nullptr
+	/// </returns>
+	int placeFocusedItem();
 
 	/// <summary>
 	/// Returns reference to dropping system
@@ -232,6 +243,7 @@ private:
 
 	AccessibleItemsMap mapitem; // Map of items
 	DroppingSystem* dropsys; // Dropping system reference
+	BuildMap* buildmap;
 };
 
 #endif

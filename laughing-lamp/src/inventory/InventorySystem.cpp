@@ -1,9 +1,10 @@
 #include "InventorySystem.h"
 #include <iostream>
 
-InventorySystem::InventorySystem(DroppingSystem* dropsys)
+InventorySystem::InventorySystem(DroppingSystem* dropsys, BuildMap* buildmap)
 {
 	this->dropsys = dropsys;
+	this->buildmap = buildmap;
 	// New table
 	set = new InventoryItemData ** [NO_FIELDS_Y];
 	for (size_t i = 0; i < NO_FIELDS_Y; i++)
@@ -219,6 +220,11 @@ bool InventorySystem::drop(PSlot s, int amount)
 		it->addToStack(amount-1);
 		dropsys->drop(it);
 	}
+}
+
+int InventorySystem::placeFocusedItem()
+{
+	return buildmap->settleCursor(set[current_item_slot.y][current_item_slot.x]);
 }
 
 DroppingSystem* InventorySystem::getDroppingSystem()

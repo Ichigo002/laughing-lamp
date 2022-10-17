@@ -279,10 +279,18 @@ void UIInventory::events(SDL_Event* e)
 	if (focus_slot_x > NO_FIELDS_X - 1)
 		focus_slot_x = 0;
 
+	invsys->setCurrentSlot(PSlot(focus_slot_x, 0));
+
 	if (KeyboardHandler::pressedKey(SDLK_q, e))
 	{
-		invsys->drop(PSlot(focus_slot_x, 0), holdCTRL ? -1 : 1);
+		//invsys->drop(PSlot(focus_slot_x, 0), holdCTRL ? -1 : 1);
+		invsys->placeFocusedItem();
 	}
+
+	/*if (!isOpened && e->type == SDL_MOUSEBUTTONDOWN && e->button.button == 1) // left
+	{
+		invsys->placeFocusedItem();
+	}*/
 
 	//Open inventory
 	if (!isOpened)
