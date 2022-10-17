@@ -56,10 +56,15 @@ namespace GEV
 	DSPEC bool   ui_inv_anim_enabled = true; // Animation of moving inventory enabled
 	DSPEC dbl    ui_inv_anim_time = 10000; // Length of animation for opening inventory [miliseconds]
 
-//--- HexMap settings
+//--- Map settings
 	DSPEC int   hexmap_chunk_size = 16; // Width and height of chunk on hexmap // Size must be dividable by 2
 	DSPEC int   hexmap_generate_edge_offset = 2000; // Extra offset for bug generating
 	DSPEC float hexmap_noise_scale = .3f; // Scale of perlin noise while it's generating
+	#define HEX_WIDTH 28
+	#define HEX_HEIGHT 32
+	#define MAP_RENDER_SCALE 2
+	#define RATIOHEX_H .75f // ratio of height to width
+
 //--- DroppingSystem settings
 	DSPEC vec2i dropsys_spawn_offset_lt(50, 50); // Distacne between player and spawning object at left top x y
 	DSPEC vec2i dropsys_spawn_offset_rb(0, 25); // Distacne between player and spawning object at right bottom x y

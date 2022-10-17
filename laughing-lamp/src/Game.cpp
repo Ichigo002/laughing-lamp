@@ -69,6 +69,7 @@ int Game::_init_maps()
     hexmap->setupWorld();
 
     // BuildMap
+    buildmap = new BuildMap(cam, gom);
 
     return 0;
 }
@@ -186,6 +187,7 @@ void Game::update()
     hexmap->updateAnimation();
     hexmap->updateGenerator();
     gom->update();
+    buildmap->fixedUpdate();
     uinv->update();
     dropsys->update();
     invsys->update();
@@ -218,9 +220,6 @@ void Game::handleEvents()
     gom->events(&_event);
     uinv->events(&_event);
 
-   // if (KeyboardHandler::pressedKey(SDLK_BACKQUOTE, &_event))
-    //    cmd_execute();
-
     if (KeyboardHandler::pressedKey(SDLK_F8, &_event))
     {
         if(debug_mode)
@@ -238,8 +237,6 @@ void Game::handleEvents()
         hexmap->setupWorld();
         debug_txt[1]->setText("Seed: " + std::to_string(seed));
     }
-
-    
 
     if (debug_mode && _event.type == SDL_WINDOWEVENT) {
         switch (_event.window.event) {
@@ -315,6 +312,7 @@ void Game::render()
     SDL_RenderClear(renderer);
     //Draw
     hexmap->draw();
+    buildmap->draw();
     dropsys->draw();
     gom->draw();
 

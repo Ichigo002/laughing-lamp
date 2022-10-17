@@ -92,7 +92,6 @@ public:
 	SDL_Texture* getItemTex();
 
 protected: // to init parameters of item
-
 	std::string item_name; // for instance: black_wool
 
 	int attrs; // Attributes of items

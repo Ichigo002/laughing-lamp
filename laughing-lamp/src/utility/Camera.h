@@ -3,11 +3,7 @@
 
 #include <SDL.h>
 #include "Vector2Int.h"
-
-#define HEX_WIDTH 28
-#define HEX_HEIGHT 32
-#define MAP_RENDER_SCALE 2
-#define RATIOHEX_H .75f // ratio of hegiht adn width
+#include "../GEV.h"
 
 /* Main class to draw Objects depended on current position of Camera */
 class Camera

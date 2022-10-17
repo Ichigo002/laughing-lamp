@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 #include "map/HexMap.h"
+#include "build-map/BuildMap.h"
 #include "game-objects/GameObjectManager.h"
 #include "utility/Camera.h"
 #include "GUI/TextAsset.h"
@@ -38,6 +39,7 @@ public:
 
 private:
     HexMap* hexmap;
+    BuildMap* buildmap;
     GameObjectManager* gom;
     Camera* cam;
     UIInventory* uinv;
