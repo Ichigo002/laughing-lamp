@@ -283,7 +283,9 @@ int InventorySystem::count(std::string item_name)
 		for (size_t x = 0; x < NO_FIELDS_X; x++)
 		{
 			if (set[y][x] != nullptr && set[y][x]->getName() == item_name)
-				c++;
+			{
+				c += set[y][x]->getSizeStack() + 1;
+			}
 		}
 	}
 	return c;

@@ -183,7 +183,6 @@ public:
 	/// <param name="amount">Number of items to check</param>
 	bool contains(std::string item_name, int amount = 1);
 
-	// TODO 1 Fix count method
 	/// <summary>
 	/// Returns the number of all items with this name
 	/// </summary>

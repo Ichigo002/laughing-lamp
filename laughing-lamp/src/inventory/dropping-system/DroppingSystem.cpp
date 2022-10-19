@@ -26,9 +26,15 @@ void DroppingSystem::drop(InventoryItemData* item, const Vector2Int* ipos)
 	DropItem* dip = new DropItem();
 	dip->i = item;
 	if (ipos == DEFAULT_POS_ITEM)
+	{
 		dip->p = getNewPosItem();
+	}
 	else
-		dip->p = *ipos;
+	{
+		dip->p = c->convertLCL_GLB(*ipos);
+		dip->p.x += item_size.w * item_dropped_rsc / 4;
+		dip->p.y += item_size.h * item_dropped_rsc / 4;
+	}
 
 	int room = getFreeRoom();
 	if (room == -1)
