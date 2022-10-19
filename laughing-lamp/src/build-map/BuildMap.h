@@ -25,7 +25,8 @@ public:
 	~BuildMap();
 
 	/// <summary>
-	/// Place on map item as object where cursor is
+	/// Place on map item as object where cursor is.
+	/// Method copies the item and reset stakc of item to 0. [1 element itself]
 	/// </summary>
 	/// <param name="item">item to place</param>
 	/// <returns>
@@ -38,11 +39,12 @@ public:
 	/// <summary>
 	/// Destroy block where cursor is
 	/// </summary>
+	/// <param name="ipos">returns to pointer last alive position before die</param>
 	/// <returns>
 	/// Nullptr if in position of cursor is nothing
 	/// Item if object has destroyed
 	/// </returns>
-	InventoryItemData* unsettleCursor();
+	InventoryItemData* unsettleCursor(Vector2Int* ipos);
 
 	/// <summary>
 	/// Updates all collision between GameObjectManager's objects and buildmap's blocks

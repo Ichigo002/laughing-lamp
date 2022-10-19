@@ -18,14 +18,17 @@ DroppingSystem::~DroppingSystem()
 {
 }
 
-void DroppingSystem::drop(InventoryItemData* item)
+void DroppingSystem::drop(InventoryItemData* item, const Vector2Int* ipos)
 {
 	if (item == nullptr)
 		return;
 
 	DropItem* dip = new DropItem();
 	dip->i = item;
-	dip->p = getNewPosItem();
+	if (ipos == DEFAULT_POS_ITEM)
+		dip->p = getNewPosItem();
+	else
+		dip->p = *ipos;
 
 	int room = getFreeRoom();
 	if (room == -1)

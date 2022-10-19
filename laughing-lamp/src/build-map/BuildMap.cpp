@@ -23,7 +23,8 @@ int BuildMap::settleCursor(InventoryItemData* item)
 		return -1;
 
 	Block* _new = new Block();
-	_new->item = item;
+	_new->item = new InventoryItemData(*item);
+	_new->item->removeAllFromStack();
 	_new->lcl = c->convertGLB_LCL(c->translateMouseToGLB());
 
 	int tlayer = getTopLayerByLCL(_new->lcl);
@@ -40,8 +41,20 @@ int BuildMap::settleCursor(InventoryItemData* item)
 	return 0;
 }
 
-InventoryItemData* BuildMap::unsettleCursor()
+InventoryItemData* BuildMap::unsettleCursor(Vector2Int* ipos)
 {
+	Vector2Int p = c->convertGLB_LCL(c->translateMouseToGLB());
+	for (auto& _block : map_block)
+	{
+
+		if (_block != nullptr && _block->lcl == p)
+		{
+			InventoryItemData* tmpit = _block->item;
+			*ipos = _block->lcl;
+			_block = nullptr;
+			return tmpit;
+		}
+	}
 	return nullptr;
 }
 
@@ -65,11 +78,11 @@ void BuildMap::pushBlock(Block* b)
 {
 	if (b == nullptr)
 		return;
-	for(auto& _block : map_block)
+	for (size_t i = 0; i < map_block.size(); i++)
 	{
-		if (_block == nullptr)
+		if (!map_block[i])
 		{
-			_block == b;
+			map_block[i] = b;
 			return;
 		}
 	}
@@ -81,7 +94,7 @@ int BuildMap::getTopLayerByLCL(Vector2Int lclp)
 	int tl = -1;
 	for (auto& _block : map_block)
 	{
-		if (_block->lcl == lclp && _block->layer > tl)
+		if (_block != nullptr && _block->lcl == lclp && _block->layer > tl)
 			tl = _block->layer;
 	}
 	return tl;

@@ -10,6 +10,8 @@
 
 using namespace GEV;
 
+#define DEFAULT_POS_ITEM nullptr
+
 struct DropItem
 {
 public:
@@ -33,7 +35,8 @@ public:
 	/// Drops the item on the ground and add item to drp
 	/// </summary>
 	/// <param name="item">item's data</param>
-	void drop(InventoryItemData* item);
+	/// <param name="ipos">specific position at LCL units. If default then get player position</param>
+	void drop(InventoryItemData* item, const Vector2Int* ipos = DEFAULT_POS_ITEM);
 
 	/// <summary>
 	/// Executed in inventory system.

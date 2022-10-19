@@ -233,10 +233,10 @@ void InventorySystem::placeFocusedItem()
 
 void InventorySystem::destroyPlacedItem()
 {
-	if (InventoryItemData* iid = buildmap->unsettleCursor(); iid != nullptr)
+	Vector2Int* pos = new Vector2Int();
+	if (InventoryItemData* iid = buildmap->unsettleCursor(pos); iid != nullptr)
 	{
-		//dropsys->dropAtLCL(iid, lclpos);
-		// TODO 9 end this to destroy item and drop item in lcl position of old block
+		dropsys->drop(iid, pos);
 	}
 }
 

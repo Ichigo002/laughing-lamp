@@ -281,18 +281,18 @@ void UIInventory::events(SDL_Event* e)
 
 	invsys->setCurrentSlot(PSlot(focus_slot_x, 0));
 
+	//Dropping items
 	if (KeyboardHandler::pressedKey(SDLK_q, e))
 	{
 		invsys->drop(PSlot(focus_slot_x, 0), holdCTRL ? -1 : 1);
 	}
-
-	if (!isOpened && e->type == SDL_MOUSEBUTTONDOWN && e->button.button == 1) // left
+	// Building
+	if (!isOpened && e->type == SDL_MOUSEBUTTONDOWN)
 	{
-		invsys->placeFocusedItem();
-	}
-	if (!isOpened && e->type == SDL_MOUSEBUTTONDOWN && e->button.button == 3) // right
-	{
-		invsys->destroyPlacedItem();
+		if(e->button.button == 3) // right
+			invsys->placeFocusedItem();
+		if (e->button.button == 1) // left
+			invsys->destroyPlacedItem();
 	}
 
 	//Open inventory

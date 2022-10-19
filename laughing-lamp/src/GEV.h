@@ -36,7 +36,7 @@ namespace GEV
 //--- Player settings
 	DSPEC float  player_walk_speed = 2.6; // Walk speed
 	DSPEC float  player_run_speed = 4.3; // Run speed
-
+	 
 //--- Items settings
 	// [ MORE SETTINGS => GUI/UIInventory.cpp ]
 	DSPEC rect	 item_size = { 0, 0, 28, 32 }; // Size of items
