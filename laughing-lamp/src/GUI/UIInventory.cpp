@@ -211,7 +211,7 @@ void UIInventory::events(SDL_Event* e)
 		holdCTRL = false;
 
 
-	if (KeyboardHandler::pressedKey(SDLK_TAB, e))
+	if (KeyboardHandler::pressedKey(SDLK_TAB, e) || KeyboardHandler::pressedKey(SDLK_i, e))
 	{
 		if (isOpened)
 			close();

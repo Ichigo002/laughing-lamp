@@ -15,13 +15,13 @@ int Game::_init_SDL()
 
 
     Uint32 flags = SDL_WINDOW_SHOWN;
-    flags += SDL_WINDOW_RESIZABLE;
+    //flags += SDL_WINDOW_RESIZABLE;
     
-    iScreen_W = 1920; iScreen_H = 1080; flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
-    //iScreen_W = 1200; iScreen_H = 720;
+    //iScreen_W = 1920; iScreen_H = 1080; flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
+    iScreen_W = 1280; iScreen_H = 720;
 
 
-    window = SDL_CreateWindow("Laughing Lamp", 2100, SDL_WINDOWPOS_CENTERED, iScreen_W, iScreen_H, flags);
+    window = SDL_CreateWindow("Laughing Lamp", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, iScreen_W, iScreen_H, flags);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
     if (window == NULL)
@@ -90,7 +90,7 @@ int Game::_init_debug()
 
     for (size_t i = 0; i < debug_txt.size(); i++)
     {
-        debug_txt[i]->setStartingPos(400, i * 40);
+        debug_txt[i]->setStartingPos(450, i * 40);
     }
 
     return 0;
