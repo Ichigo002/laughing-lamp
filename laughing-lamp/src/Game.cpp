@@ -28,6 +28,9 @@ int Game::_init_SDL()
         return -2;
     if (window == NULL)
         return -3;
+    SDL_Surface* sico = IMG_Load("assets/icon/winico.png");
+    SDL_SetWindowIcon(window, sico);
+    SDL_FreeSurface(sico);
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
